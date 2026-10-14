@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="78e2c8f955124b91a0fc232547b8ecfb" Name="Diagram1">
+        <EntityTypeShape EntityType="GuaridaModel.Categoria" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.Cliente" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.Compra" Width="1.5" PointX="10" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.CompraDetalle" Width="1.5" PointX="12.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.Empleado" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.Producto" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.Proveedor" Width="1.5" PointX="7.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.Usuario" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.Venta" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuaridaModel.VentaDetalle" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="GuaridaModel.fk_Producto_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="GuaridaModel.fk_Venta_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="GuaridaModel.fk_CD_Compra" ManuallyRouted="false" />
+        <AssociationConnector Association="GuaridaModel.fk_Compra_Proveedor" ManuallyRouted="false" />
+        <AssociationConnector Association="GuaridaModel.fk_CD_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="GuaridaModel.fk_Usuario_Empleado" ManuallyRouted="false" />
+        <AssociationConnector Association="GuaridaModel.fk_VD_Producto" ManuallyRouted="false" />
+        <AssociationConnector Association="GuaridaModel.fk_Venta_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="GuaridaModel.fk_VD_Venta" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

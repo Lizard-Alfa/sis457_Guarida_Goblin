@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CadGuarida/CadGuarida.csproj" Id="9cce85e8-5d9a-4cb3-b239-5e3dc46ff223" />
+  <Project Path="ClnGuarida/ClnGuarida.csproj" Id="98122866-1944-4440-a144-c34a63303cbf" />
+  <Project Path="CpGuarida/CpGuarida.csproj" Id="fde48457-4752-4269-86cd-41699c78fa74" />
+</Solution>
