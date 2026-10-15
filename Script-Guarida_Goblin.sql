@@ -109,7 +109,6 @@ CREATE TABLE Producto (
     codigo VARCHAR(30) NOT NULL,
     nombre VARCHAR(150) NOT NULL,
     descripcion VARCHAR(500) NULL,
-    unidad VARCHAR(20) NOT NULL DEFAULT 'Unidad',
     pesoKg DECIMAL(5,2) NULL,
     precioCostoUsd DECIMAL(10,2) NULL,
     precioVentaBob DECIMAL(10,2) NOT NULL,
@@ -206,50 +205,41 @@ GO
 -- Listar productos con búsqueda
 DROP PROC IF EXISTS paProductoListar;
 GO
-CREATE PROC paProductoListar
-    @parametro VARCHAR(100)
+CREATE PROC paProductoListar @parametro VARCHAR(100)
 AS
 BEGIN
-    SELECT 
-        p.id, p.idCategoria, c.nombre AS categoria,
-        p.codigo, p.nombre, p.descripcion, p.unidad, p.pesoKg,
-        p.precioCostoUsd, p.precioVentaBob,
-        p.stockActual, p.stockMinimo,
-        p.usuarioRegistro, p.fechaRegistro, p.estado
+    SELECT p.id, p.idCategoria, c.nombre AS categoria,
+           p.codigo, p.nombre, p.descripcion, p.pesoKg,
+           p.precioCostoUsd, p.precioVentaBob,
+           p.stockActual, p.stockMinimo,
+           p.usuarioRegistro, p.fechaRegistro, p.estado
     FROM Producto p
     LEFT JOIN Categoria c ON c.id = p.idCategoria
     WHERE p.estado = 1 
-      AND (p.codigo + ' ' + p.nombre + ' ' + ISNULL(p.descripcion,'') + ' ' + c.nombre) 
-          LIKE '%' + @parametro + '%'
+      AND (p.codigo + ' ' + p.nombre + ' ' + ISNULL(p.descripcion,'') + ' ' + c.nombre) LIKE '%' + @parametro + '%'
     ORDER BY p.nombre;
 END
 GO
 
-EXEC paProductoListar 'Catan';
-
 -- Listar clientes
 DROP PROC IF EXISTS paClienteListar;
 GO
-CREATE PROC paClienteListar
-    @parametro VARCHAR(100)
+CREATE PROC paClienteListar @parametro VARCHAR(100)
 AS
 BEGIN
     SELECT id, cedulaIdentidad, nombres, apellidos, celular, direccion, email,
            usuarioRegistro, fechaRegistro, estado
     FROM Cliente
     WHERE estado = 1
-      AND (nombres + ' ' + ISNULL(apellidos,'') + ' ' + ISNULL(cedulaIdentidad,'') + ' ' + ISNULL(celular,'')) 
-          LIKE '%' + @parametro + '%'
+      AND (nombres + ' ' + ISNULL(apellidos,'') + ' ' + ISNULL(cedulaIdentidad,'') + ' ' + ISNULL(celular,'')) LIKE '%' + @parametro + '%'
     ORDER BY nombres;
 END
 GO
 
--- Listar proveedores (con filtro por tipo)
+-- Listar proveedores
 DROP PROC IF EXISTS paProveedorListar;
 GO
-CREATE PROC paProveedorListar
-    @tipo VARCHAR(20),
-    @parametro VARCHAR(100)
+CREATE PROC paProveedorListar @tipo VARCHAR(20), @parametro VARCHAR(100)
 AS
 BEGIN
     SELECT id, tipo, razonSocial, nit, contacto, email, telefono, pais,
@@ -257,8 +247,7 @@ BEGIN
     FROM Proveedor
     WHERE estado = 1
       AND (@tipo = 'AMBOS' OR tipo = @tipo)
-      AND (razonSocial + ' ' + ISNULL(nit,'') + ' ' + ISNULL(contacto,'')) 
-          LIKE '%' + @parametro + '%'
+      AND (razonSocial + ' ' + ISNULL(nit,'') + ' ' + ISNULL(contacto,'')) LIKE '%' + @parametro + '%'
     ORDER BY razonSocial;
 END
 GO
@@ -266,8 +255,7 @@ GO
 -- Listar empleados
 DROP PROC IF EXISTS paEmpleadoListar;
 GO
-CREATE PROC paEmpleadoListar
-    @parametro VARCHAR(100)
+CREATE PROC paEmpleadoListar @parametro VARCHAR(100)
 AS
 BEGIN
     SELECT id, cedulaIdentidad, nombres, primerApellido, segundoApellido,
@@ -275,149 +263,81 @@ BEGIN
            usuarioRegistro, fechaRegistro, estado
     FROM Empleado
     WHERE estado = 1
-      AND (cedulaIdentidad + ' ' + nombres + ' ' + ISNULL(primerApellido,'') + ' ' + ISNULL(segundoApellido,'')) 
-          LIKE '%' + @parametro + '%'
+      AND (cedulaIdentidad + ' ' + nombres + ' ' + ISNULL(primerApellido,'') + ' ' + ISNULL(segundoApellido,'')) LIKE '%' + @parametro + '%'
     ORDER BY nombres;
 END
 GO
 
--- Validar usuario (login)
+-- Validar usuario
 DROP PROC IF EXISTS paUsuarioValidar;
 GO
-CREATE PROC paUsuarioValidar
-    @usuario VARCHAR(20),
-    @clave VARCHAR(255)
+CREATE PROC paUsuarioValidar @usuario VARCHAR(20), @clave VARCHAR(255)
 AS
 BEGIN
     SELECT u.id, u.idEmpleado, u.usuario, u.clave,
-           e.nombres + ' ' + e.primerApellido AS nombreCompleto,
-           e.cargo
+           e.nombres + ' ' + e.primerApellido AS nombreCompleto, e.cargo
     FROM Usuario u
     INNER JOIN Empleado e ON e.id = u.idEmpleado
-    WHERE u.usuario = @usuario 
-      AND u.clave = @clave 
-      AND u.estado = 1
-      AND e.estado = 1;
+    WHERE u.usuario = @usuario AND u.clave = @clave AND u.estado = 1 AND e.estado = 1;
 END
 GO
 
--- Registrar venta
+-- Registrar Venta 
 DROP PROC IF EXISTS paVentaRegistrar;
 GO
-CREATE PROC paVentaRegistrar
-    @idCliente INT,
-    @idUsuario INT,
-    @detalles NVARCHAR(MAX),
-    @total DECIMAL(10,2)
+CREATE PROC paVentaRegistrar @idCliente INT, @idUsuario INT, @detalles NVARCHAR(MAX), @total DECIMAL(10,2)
 AS
 BEGIN
     BEGIN TRY
         BEGIN TRAN;
-        
         DECLARE @idVenta INT;
         
         INSERT INTO Venta (idCliente, idUsuario, total, usuarioRegistro, fechaRegistro, estado)
         VALUES (@idCliente, @idUsuario, @total, SUSER_NAME(), GETDATE(), 1);
-        
         SET @idVenta = SCOPE_IDENTITY();
         
-        -- Procesar Venta detalle
         INSERT INTO VentaDetalle (idVenta, idProducto, cantidad, precioUnitario, subtotal, usuarioRegistro, fechaRegistro, estado)
-        SELECT 
-            @idVenta,
-            j.idProducto,
-            j.cantidad,
-            j.precioUnitario,
-            j.subtotal,
-            SUSER_NAME(),
-            GETDATE(),
-            1
-        FROM OPENJSON(@detalles)
-        WITH (
-            idProducto INT '$.idProducto',
-            cantidad INT '$.cantidad',
-            precioUnitario DECIMAL(10,2) '$.precioUnitario',
-            subtotal DECIMAL(10,2) '$.subtotal'
-        ) j;
+        SELECT @idVenta, j.idProducto, j.cantidad, j.precioUnitario, j.subtotal, SUSER_NAME(), GETDATE(), 1
+        FROM OPENJSON(@detalles) WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad', precioUnitario DECIMAL(10,2) '$.precioUnitario', subtotal DECIMAL(10,2) '$.subtotal') j;
         
-        -- Actualizar stock de productos
-        UPDATE p
-        SET p.stockActual = p.stockActual - j.cantidad
-        FROM Producto p
-        INNER JOIN OPENJSON(@detalles)
-        WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad') j
-        ON p.id = j.idProducto;
+        UPDATE p SET p.stockActual = p.stockActual - j.cantidad
+        FROM Producto p INNER JOIN OPENJSON(@detalles) WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad') j ON p.id = j.idProducto;
         
         COMMIT TRAN;
-        
         SELECT @idVenta AS idVenta;
     END TRY
     BEGIN CATCH
-        ROLLBACK TRAN;
-        THROW;
+        ROLLBACK TRAN; THROW;
     END CATCH
 END
 GO
 
--- Registrar compra
+-- Registrar Compra
 DROP PROC IF EXISTS paCompraRegistrar;
 GO
-CREATE PROC paCompraRegistrar
-    @idProveedor INT,
-    @trackingNumber VARCHAR(100),
-    @estadoEnvio VARCHAR(50),
-    @fechaEstimada DATE,
-    @detalles NVARCHAR(MAX),
-    @total DECIMAL(10,2)
+CREATE PROC paCompraRegistrar @idProveedor INT, @trackingNumber VARCHAR(100), @estadoEnvio VARCHAR(50), @fechaEstimada DATE, @detalles NVARCHAR(MAX), @total DECIMAL(10,2)
 AS
 BEGIN
     BEGIN TRY
         BEGIN TRAN;
-        
         DECLARE @idCompra INT;
         
-        INSERT INTO Compra (idProveedor, total, trackingNumber, estadoEnvio, fechaEstimada, 
-                           usuarioRegistro, fechaRegistro, estado)
-        VALUES (@idProveedor, @total, @trackingNumber, @estadoEnvio, @fechaEstimada,
-                SUSER_NAME(), GETDATE(), 1);
-        
+        INSERT INTO Compra (idProveedor, total, trackingNumber, estadoEnvio, fechaEstimada, usuarioRegistro, fechaRegistro, estado)
+        VALUES (@idProveedor, @total, @trackingNumber, @estadoEnvio, @fechaEstimada, SUSER_NAME(), GETDATE(), 1);
         SET @idCompra = SCOPE_IDENTITY();
         
-        -- Procesar Compra detalle
-        INSERT INTO CompraDetalle (idCompra, idProducto, cantidad, precioUnitario, subtotal, 
-                                   usuarioRegistro, fechaRegistro, estado)
-        SELECT 
-            @idCompra,
-            j.idProducto,
-            j.cantidad,
-            j.precioUnitario,
-            j.subtotal,
-            SUSER_NAME(),
-            GETDATE(),
-            1
-        FROM OPENJSON(@detalles)
-        WITH (
-            idProducto INT '$.idProducto',
-            cantidad INT '$.cantidad',
-            precioUnitario DECIMAL(10,2) '$.precioUnitario',
-            subtotal DECIMAL(10,2) '$.subtotal'
-        ) j;
+        INSERT INTO CompraDetalle (idCompra, idProducto, cantidad, precioUnitario, subtotal, usuarioRegistro, fechaRegistro, estado)
+        SELECT @idCompra, j.idProducto, j.cantidad, j.precioUnitario, j.subtotal, SUSER_NAME(), GETDATE(), 1
+        FROM OPENJSON(@detalles) WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad', precioUnitario DECIMAL(10,2) '$.precioUnitario', subtotal DECIMAL(10,2) '$.subtotal') j;
         
-        -- Aumentar stock de productos
-        UPDATE p
-        SET p.stockActual = p.stockActual + j.cantidad
-        FROM Producto p
-        INNER JOIN OPENJSON(@detalles)
-        WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad') j
-        ON p.id = j.idProducto;
+        UPDATE p SET p.stockActual = p.stockActual + j.cantidad
+        FROM Producto p INNER JOIN OPENJSON(@detalles) WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad') j ON p.id = j.idProducto;
         
         COMMIT TRAN;
-        
         SELECT @idCompra AS idCompra;
     END TRY
     BEGIN CATCH
-        ROLLBACK TRAN;
-        THROW;
+        ROLLBACK TRAN; THROW;
     END CATCH
 END
 GO
@@ -438,7 +358,7 @@ INSERT INTO Proveedor (tipo, razonSocial, pais, contacto) VALUES
 ('Internacional', 'Wizards of the Coast', 'USA', 'Ventas WotC'),
 ('Internacional', 'Devir Argentina', 'Argentina', 'Arkana Comics'),
 ('Nacional', 'Distribuidora de Juegos La Paz', 'Bolivia', 'Juan Perez'),
-('Nacional', 'El mercader errante Santa Cruz', 'Bolivia', 'Judith Villa');
+('Nacional', 'El mercader errante Santa Cruz', 'Bolivia', 'Judith Villagomez');
 
 -- Clientes
 INSERT INTO Cliente (nombres, apellidos, celular) VALUES
@@ -447,22 +367,22 @@ INSERT INTO Cliente (nombres, apellidos, celular) VALUES
 
 -- Empleados
 INSERT INTO Empleado (cedulaIdentidad, nombres, primerApellido, fechaNacimiento, direccion, celular, cargo) VALUES
-('1234567', 'Admin', 'Sistema', '1990-01-01', 'Sucre', '77777777', 'Gerente');
+('1234567', 'Juan', 'Fernández', '2006-01-31', 'Calle Siempre viva #123', 72856559, 'Gerente');
 
 -- Usuarios
 INSERT INTO Usuario (idEmpleado, usuario, clave) VALUES
-(1, 'admin', 'admin123');
+(1, 'admin', 's1udM8c0+VgaifwGKuOcBUMvh0U8nyJQt6XKeBTNb2s='); --"juego123"
 
 -- Productos de ejemplo
-INSERT INTO Producto (idCategoria, codigo, nombre, descripcion, unidad, pesoKg, precioCostoUsd, precioVentaBob, stockActual, stockMinimo) VALUES
-(1, 'JDM-CATAN', 'Juego de Mesa Catan', 'Juego de estrategia y comercio', 'Unidad', 1.50, 40.00, 400.00, 3, 1),
-(2, 'DND-PH-5E', 'Player''s Handbook D&D 5e', 'Manual básico de D&D 5ta edición', 'Unidad', 1.20, 35.00, 350.00, 5, 2),
-(3, 'FIG-TYRWHR', 'Figura Tiránido Warhammer', 'Miniatura de Warhammer 40k', 'Unidad', 0.15, 20.00, 200.00, 2, 1),
-(4, 'JDC-MAGIC', 'Magic The Gathering Booster', 'Sobre de cartas Magic', 'Unidad', 0.05, 4.00, 50.00, 20, 5),
-(5, 'ACC-DADOS', 'Set de Dados D&D (7 piezas)', 'Dados poliédricos para rol', 'Unidad', 0.10, 8.00, 80.00, 10, 3),
-(1, 'JDM-DTL01', 'Juego de Mesa Distilled', 'Juego de estrategia', 'Unidad', 1.80, 130.00, 1500.00, 4, 1),
-(1, 'JDM-AGRC4', 'Juego de Mesa Agricola', 'Juego de comercio', 'Unidad', 2.30, 240.00, 2800.00, 2, 1),
-(1, 'JDM-PAMP3', 'Juego de Mesa Pampero', 'Juego de rol y avance', 'Unidad', 1.80, 215.00, 2500.00, 3, 1);
+INSERT INTO Producto (idCategoria, codigo, nombre, descripcion, pesoKg, precioCostoUsd, precioVentaBob, stockActual, stockMinimo) VALUES
+(1, 'JDM-CATAN', 'Juego de Mesa Catan', 'Juego de estrategia y comercio', 1.50, 40.00, 400.00, 3, 1),
+(2, 'DND-PH-5E', 'Player''s Handbook D&D 5e', 'Manual básico de D&D 5ta edición', 1.20, 35.00, 350.00, 5, 2),
+(3, 'FIG-TYRWHR', 'Figura Tiránido Warhammer', 'Miniatura de Warhammer 40k', 0.15, 20.00, 200.00, 2, 1),
+(4, 'JDC-MAGIC', 'Magic The Gathering Booster', 'Sobre de cartas Magic', 0.05, 4.00, 50.00, 20, 5),
+(5, 'ACC-DADOS', 'Set de Dados D&D (7 piezas)', 'Dados poliédricos para rol', 0.10, 8.00, 80.00, 10, 3),
+(1, 'JDM-DTL01', 'Juego de Mesa Distilled', 'Juego de estrategia', 1.80, 130.00, 1500.00, 4, 1),
+(1, 'JDM-AGRC4', 'Juego de Mesa Agricola', 'Juego de comercio', 2.30, 240.00, 2800.00, 2, 1),
+(1, 'JDM-PAMP3', 'Juego de Mesa Pampero', 'Juego de rol y avance', 1.80, 215.00, 2500.00, 3, 1);
 
 GO
 

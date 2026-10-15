@@ -12,7 +12,7 @@ namespace ClnGuarida
     {
         public static int crear(Producto producto)
         {
-            using (var context = new GuaridaEntities())
+            using (var context = new GuaridaEntities ())
             {
                 var existe = context.Producto.Where(x => x.codigo == producto.codigo).FirstOrDefault();
                 if (existe != null) throw new Exception($"El producto {producto.codigo} ya existe");
@@ -33,7 +33,6 @@ namespace ClnGuarida
                 existe.codigo = producto.codigo;
                 existe.nombre = producto.nombre;
                 existe.descripcion = producto.descripcion;
-                existe.unidad = producto.unidad;
                 existe.pesoKg = producto.pesoKg;
                 existe.precioCostoUsd = producto.precioCostoUsd;
                 existe.precioVentaBob = producto.precioVentaBob;
@@ -52,7 +51,7 @@ namespace ClnGuarida
                 var existe = context.Producto.Find(id);
                 if (existe == null) throw new Exception($"El producto con id {id} no exite");
 
-                existe.estado = -1;
+                existe.estado = (short)Estado.Eliminado;
                 existe.usuarioRegistro = usuario;
                 return context.SaveChanges();
             }
@@ -72,7 +71,7 @@ namespace ClnGuarida
         {
             using (var context = new GuaridaEntities())
             {
-                return context.Producto.Where(x=> x.estado == 1).OrderBy(x=> x.nombre).ToList();
+                return context.Producto.Where(x=> x.estado == (short)Estado.Activo).OrderBy(x=> x.nombre).ToList();
             }
         }
 
