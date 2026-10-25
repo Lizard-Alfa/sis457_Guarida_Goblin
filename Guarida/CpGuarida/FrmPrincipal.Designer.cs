@@ -50,6 +50,7 @@
             this.btnCaCategoria = new C1.Win.Ribbon.RibbonButton();
             this.btnCaProveedores = new C1.Win.Ribbon.RibbonButton();
             this.btnCaClientes = new C1.Win.Ribbon.RibbonButton();
+            this.btnCaVentas = new C1.Win.Ribbon.RibbonButton();
             ((System.ComponentModel.ISupportInitialize)(this.c1Ribbon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -115,8 +116,9 @@
             // 
             // ribbonGroup2
             // 
+            this.ribbonGroup2.Items.Add(this.btnCaVentas);
             this.ribbonGroup2.Name = "ribbonGroup2";
-            this.ribbonGroup2.Text = "Group";
+            this.ribbonGroup2.Text = "Ventas";
             // 
             // ribbonTab3
             // 
@@ -195,6 +197,13 @@
             this.btnCaClientes.Text = "Clientes";
             this.btnCaClientes.ToolTip = "Gestion de Clientes";
             // 
+            // btnCaVentas
+            // 
+            this.btnCaVentas.Name = "btnCaVentas";
+            this.btnCaVentas.Text = "Registrar Venta";
+            this.btnCaVentas.ToolTip = "Registro de Ventas";
+            this.btnCaVentas.Click += new System.EventHandler(this.btnCaVentas_Click);
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -239,6 +248,7 @@
         private C1.Win.Ribbon.RibbonButton btnCaCategoria;
         private C1.Win.Ribbon.RibbonButton btnCaProveedores;
         private C1.Win.Ribbon.RibbonButton btnCaClientes;
+        private C1.Win.Ribbon.RibbonButton btnCaVentas;
         private C1.Win.Ribbon.RibbonButton btnCaProductos;
         private System.Windows.Forms.PictureBox pictureBox1;
     }

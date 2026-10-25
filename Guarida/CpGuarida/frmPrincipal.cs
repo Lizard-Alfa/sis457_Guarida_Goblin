@@ -28,5 +28,10 @@ namespace CpGuarida
         {
             new FrmProducto().ShowDialog();
         }
+
+        private void btnCaVentas_Click(object sender, EventArgs e)
+        {
+            new FrmVenta().ShowDialog();
+        }
     }
 }
