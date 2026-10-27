@@ -61,6 +61,7 @@
     <Compile Include="UsuarioCln.cs" />
     <Compile Include="VentaCln.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="VentaDetalleCln.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -145,7 +145,7 @@
             this.pnlAcciones.Controls.Add(this.btnEditar);
             this.pnlAcciones.Controls.Add(this.btnCerrar);
             this.pnlAcciones.Controls.Add(this.btnEliminar);
-            this.pnlAcciones.Location = new System.Drawing.Point(18, 270);
+            this.pnlAcciones.Location = new System.Drawing.Point(18, 271);
             this.pnlAcciones.Name = "pnlAcciones";
             this.pnlAcciones.Size = new System.Drawing.Size(848, 49);
             this.pnlAcciones.TabIndex = 6;

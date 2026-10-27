@@ -31,12 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPrincipal));
             this.c1Ribbon1 = new C1.Win.Ribbon.C1Ribbon();
             this.ribbonApplicationMenu1 = new C1.Win.Ribbon.RibbonApplicationMenu();
-            this.ribbonQat1 = new C1.Win.Ribbon.RibbonQat();
-            this.ribbonConfigToolBar1 = new C1.Win.Ribbon.RibbonConfigToolBar();
-            this.ribbonTopToolBar1 = new C1.Win.Ribbon.RibbonTopToolBar();
             this.ribbonBottomToolBar1 = new C1.Win.Ribbon.RibbonBottomToolBar();
+            this.ribbonConfigToolBar1 = new C1.Win.Ribbon.RibbonConfigToolBar();
+            this.ribbonQat1 = new C1.Win.Ribbon.RibbonQat();
             this.ribbonTab1 = new C1.Win.Ribbon.RibbonTab();
             this.ribbonGroup1 = new C1.Win.Ribbon.RibbonGroup();
+            this.btnCaProductos = new C1.Win.Ribbon.RibbonButton();
             this.ribbonTab2 = new C1.Win.Ribbon.RibbonTab();
             this.ribbonGroup2 = new C1.Win.Ribbon.RibbonGroup();
             this.ribbonTab3 = new C1.Win.Ribbon.RibbonTab();
@@ -45,12 +45,14 @@
             this.ribbonGroup4 = new C1.Win.Ribbon.RibbonGroup();
             this.ribbonTab5 = new C1.Win.Ribbon.RibbonTab();
             this.ribbonGroup5 = new C1.Win.Ribbon.RibbonGroup();
-            this.btnCaProductos = new C1.Win.Ribbon.RibbonButton();
+            this.ribbonTopToolBar1 = new C1.Win.Ribbon.RibbonTopToolBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnCaCategoria = new C1.Win.Ribbon.RibbonButton();
             this.btnCaProveedores = new C1.Win.Ribbon.RibbonButton();
             this.btnCaClientes = new C1.Win.Ribbon.RibbonButton();
             this.btnCaVentas = new C1.Win.Ribbon.RibbonButton();
+            this.btnVentaDetalles = new C1.Win.Ribbon.RibbonButton();
+            this.ribbonGroup6 = new C1.Win.Ribbon.RibbonGroup();
             ((System.ComponentModel.ISupportInitialize)(this.c1Ribbon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -76,21 +78,17 @@
             // 
             this.ribbonApplicationMenu1.Name = "ribbonApplicationMenu1";
             // 
-            // ribbonQat1
+            // ribbonBottomToolBar1
             // 
-            this.ribbonQat1.Name = "ribbonQat1";
+            this.ribbonBottomToolBar1.Name = "ribbonBottomToolBar1";
             // 
             // ribbonConfigToolBar1
             // 
             this.ribbonConfigToolBar1.Name = "ribbonConfigToolBar1";
             // 
-            // ribbonTopToolBar1
+            // ribbonQat1
             // 
-            this.ribbonTopToolBar1.Name = "ribbonTopToolBar1";
-            // 
-            // ribbonBottomToolBar1
-            // 
-            this.ribbonBottomToolBar1.Name = "ribbonBottomToolBar1";
+            this.ribbonQat1.Name = "ribbonQat1";
             // 
             // ribbonTab1
             // 
@@ -108,17 +106,26 @@
             this.ribbonGroup1.Name = "ribbonGroup1";
             this.ribbonGroup1.Text = "Gestión de Catalogos";
             // 
+            // btnCaProductos
+            // 
+            this.btnCaProductos.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(512, 512), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaProductos.IconSet")))));
+            this.btnCaProductos.Name = "btnCaProductos";
+            this.btnCaProductos.Text = "Productos";
+            this.btnCaProductos.ToolTip = "Gestion de Productos";
+            this.btnCaProductos.Click += new System.EventHandler(this.btnCaProductos_Click);
+            // 
             // ribbonTab2
             // 
             this.ribbonTab2.Groups.Add(this.ribbonGroup2);
+            this.ribbonTab2.Groups.Add(this.ribbonGroup6);
             this.ribbonTab2.Name = "ribbonTab2";
             this.ribbonTab2.Text = "Caja";
             // 
             // ribbonGroup2
             // 
             this.ribbonGroup2.Items.Add(this.btnCaVentas);
+            this.ribbonGroup2.Items.Add(this.btnVentaDetalles);
             this.ribbonGroup2.Name = "ribbonGroup2";
-            this.ribbonGroup2.Text = "Ventas";
             // 
             // ribbonTab3
             // 
@@ -153,14 +160,9 @@
             this.ribbonGroup5.Name = "ribbonGroup5";
             this.ribbonGroup5.Text = "Group";
             // 
-            // btnCaProductos
+            // ribbonTopToolBar1
             // 
-            this.btnCaProductos.IconSet.Add(new C1.Framework.C1BitmapIcon("DefaultImage", new System.Drawing.Size(16, 16), System.Drawing.Color.Transparent, "DefaultImage", -1));
-            this.btnCaProductos.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(512, 512), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaProductos.IconSet")))));
-            this.btnCaProductos.Name = "btnCaProductos";
-            this.btnCaProductos.Text = "Productos";
-            this.btnCaProductos.ToolTip = "Gestion de Productos";
-            this.btnCaProductos.Click += new System.EventHandler(this.btnCaProductos_Click);
+            this.ribbonTopToolBar1.Name = "ribbonTopToolBar1";
             // 
             // pictureBox1
             // 
@@ -168,14 +170,13 @@
             this.pictureBox1.Image = global::CpGuarida.Properties.Resources.principal;
             this.pictureBox1.Location = new System.Drawing.Point(0, 161);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(949, 180);
+            this.pictureBox1.Size = new System.Drawing.Size(949, 254);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
             // btnCaCategoria
             // 
-            this.btnCaCategoria.IconSet.Add(new C1.Framework.C1BitmapIcon("DefaultImage", new System.Drawing.Size(16, 16), System.Drawing.Color.Transparent, "DefaultImage", -1));
             this.btnCaCategoria.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaCategoria.IconSet")))));
             this.btnCaCategoria.Name = "btnCaCategoria";
             this.btnCaCategoria.Text = "Categoria";
@@ -199,17 +200,29 @@
             // 
             // btnCaVentas
             // 
+            this.btnCaVentas.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaVentas.IconSet")))));
             this.btnCaVentas.Name = "btnCaVentas";
             this.btnCaVentas.Text = "Registrar Venta";
             this.btnCaVentas.ToolTip = "Registro de Ventas";
             this.btnCaVentas.Click += new System.EventHandler(this.btnCaVentas_Click);
+            // 
+            // btnVentaDetalles
+            // 
+            this.btnVentaDetalles.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnVentaDetalles.IconSet")))));
+            this.btnVentaDetalles.Name = "btnVentaDetalles";
+            this.btnVentaDetalles.Text = "Ventas";
+            this.btnVentaDetalles.Click += new System.EventHandler(this.btnVentaDetalles_Click);
+            // 
+            // ribbonGroup6
+            // 
+            this.ribbonGroup6.Name = "ribbonGroup6";
             // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(949, 341);
+            this.ClientSize = new System.Drawing.Size(949, 415);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.c1Ribbon1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -251,5 +264,7 @@
         private C1.Win.Ribbon.RibbonButton btnCaVentas;
         private C1.Win.Ribbon.RibbonButton btnCaProductos;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private C1.Win.Ribbon.RibbonButton btnVentaDetalles;
+        private C1.Win.Ribbon.RibbonGroup ribbonGroup6;
     }
 }

@@ -20,7 +20,19 @@ namespace ClnGuarida
                 {
                     try
                     {
-                        decimal subtotal = 0m;
+                        // 1. Configuramos y guardamos PRIMERO la cabecera de la venta
+                        venta.fecha = DateTime.Now;
+                        venta.fechaRegistro = DateTime.Now;
+                        venta.estado = (short)Estado.Activo;
+                        venta.subtotal = 0m; // Se actualizará al final
+                        venta.total = 0m;    // Se actualizará al final
+
+                        context.Venta.Add(venta);
+                        context.SaveChanges(); // 👈 ¡Aquí SQL Server genera el id real de la venta!
+
+                        decimal subtotalGeneral = 0m;
+
+                        // 2. Procesamos cada detalle utilizando el ID real de la venta ya guardada
                         foreach (var detalle in detalles)
                         {
                             var producto = context.Producto.Find(detalle.idProducto);
@@ -29,30 +41,37 @@ namespace ClnGuarida
                             if (producto.stockActual < detalle.cantidad)
                                 throw new Exception($"Stock insuficiente de {producto.nombre}. Disponible: {producto.stockActual}");
 
+                            // Descontamos stock del producto
                             producto.stockActual = producto.stockActual - detalle.cantidad;
+
+                            // Asignamos explícitamente el idVenta para que queden vinculados correctamente
+                            detalle.idVenta = venta.id;
                             detalle.precioUnitario = producto.precioVentaBob;
                             detalle.subtotal = detalle.cantidad * detalle.precioUnitario;
                             detalle.usuarioRegistro = venta.usuarioRegistro;
                             detalle.fechaRegistro = DateTime.Now;
                             detalle.estado = (short)Estado.Activo;
 
-                            subtotal += detalle.subtotal;
-                            venta.VentaDetalle.Add(detalle);
+                            subtotalGeneral += detalle.subtotal;
+
+                            // Agregamos el detalle al contexto de forma independiente pero atado al idVenta
+                            context.VentaDetalle.Add(detalle);
                         }
 
-                        venta.fecha = DateTime.Now;
-                        venta.subtotal = subtotal;
-                        venta.total = subtotal;
-                        venta.fechaRegistro = DateTime.Now;
-                        venta.estado = (short)Estado.Activo;
+                        // 3. Actualizamos los montos totales en la cabecera de la venta
+                        venta.subtotal = subtotalGeneral;
+                        venta.total = subtotalGeneral;
 
-                        context.Venta.Add(venta);
+                        // Guardamos los cambios de los detalles y los nuevos totales de la venta
                         context.SaveChanges();
+
+                        // Si todo salió bien, confirmamos la transacción en la base de datos
                         transaccion.Commit();
                         return venta.id;
                     }
                     catch
                     {
+                        // Si ocurre cualquier error, se revierte todo (stock y registros)
                         transaccion.Rollback();
                         throw;
                     }
