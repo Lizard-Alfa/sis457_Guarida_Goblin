@@ -28,7 +28,7 @@ namespace ClnGuarida
                         venta.total = 0m;    // Se actualizará al final
 
                         context.Venta.Add(venta);
-                        context.SaveChanges(); // 👈 ¡Aquí SQL Server genera el id real de la venta!
+                        context.SaveChanges(); //¡Aquí SQL Server genera el id real de la venta!
 
                         decimal subtotalGeneral = 0m;
 
@@ -78,5 +78,20 @@ namespace ClnGuarida
                 }
             }
         }
+        public static List<Venta> listar()
+        {
+            using (var context = new GuaridaEntities())
+            {
+                return context.Venta.Where(x => x.estado == (short)Estado.Activo).OrderBy(x => x.id).ToList();
+            }
+        }
+        public static List<paVentaListar_Result> listarPa(DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            using (var context = new GuaridaEntities())
+            {
+                return context.paVentaListar(fechaInicio,fechaFin).ToList();
+            }
+        }
     }
+
 }

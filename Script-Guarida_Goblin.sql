@@ -341,6 +341,30 @@ BEGIN
     END CATCH
 END
 GO
+--Para listar Venta--
+DROP PROC IF EXISTS paVentaListar;
+GO
+CREATE PROC paVentaListar
+    @fechaInicio DATETIME = NULL,
+    @fechaFin DATETIME = NULL
+AS
+BEGIN
+    SELECT 
+        v.id,c.nombres + ' ' + c.apellidos AS Cliente,u.usuario,v.transaccion,v.fecha,v.subtotal,
+        v.total,v.observaciones,v.usuarioRegistro,v.fechaRegistro,v.estado
+    FROM Venta v
+    INNER JOIN Cliente c ON v.idCliente = c.id
+    INNER JOIN Usuario u ON v.idUsuario = u.id
+    WHERE v.estado IN (1, -1)
+      AND (@fechaInicio IS NULL OR v.fecha >= @fechaInicio)
+      AND (@fechaFin IS NULL OR v.fecha <= @fechaFin)
+    ORDER BY v.id;
+END
+GO
+EXEC paVentaListar ;
+EXEC paVentaListarr '2026-01-01', '2026-10-31';
+-- Listar venta
+
 
 -- 6. DML
 
@@ -386,4 +410,5 @@ INSERT INTO Producto (idCategoria, codigo, nombre, descripcion, pesoKg, precioCo
 
 GO
 
-SELECT * FROM Producto;
+SELECT * FROM Venta;
+

@@ -189,6 +189,23 @@ public partial class GuaridaEntities : DbContext
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("paVentaRegistrar", idClienteParameter, idUsuarioParameter, detallesParameter, totalParameter);
     }
 
+
+    public virtual ObjectResult<paVentaListar_Result> paVentaListar(Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+    {
+
+        var fechaInicioParameter = fechaInicio.HasValue ?
+            new ObjectParameter("fechaInicio", fechaInicio) :
+            new ObjectParameter("fechaInicio", typeof(System.DateTime));
+
+
+        var fechaFinParameter = fechaFin.HasValue ?
+            new ObjectParameter("fechaFin", fechaFin) :
+            new ObjectParameter("fechaFin", typeof(System.DateTime));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<paVentaListar_Result>("paVentaListar", fechaInicioParameter, fechaFinParameter);
+    }
+
 }
 
 }

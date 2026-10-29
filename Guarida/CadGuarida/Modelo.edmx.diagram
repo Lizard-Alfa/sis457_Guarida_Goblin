@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="530389259857437abdd3bbb4df504c10" Name="Diagram1">
+      <Diagram DiagramId="530389259857437abdd3bbb4df504c10" Name="Diagram1" ZoomLevel="62">
         <EntityTypeShape EntityType="GuaridaModel.Categoria" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.Cliente" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.Compra" Width="1.5" PointX="10" PointY="6" IsExpanded="true" />

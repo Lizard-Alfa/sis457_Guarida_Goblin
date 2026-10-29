@@ -38,13 +38,17 @@
             this.dtpInicio = new System.Windows.Forms.DateTimePicker();
             this.lblsup1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblbus2 = new System.Windows.Forms.Label();
-            this.lblbus3 = new System.Windows.Forms.Label();
-            this.dtpFinal = new System.Windows.Forms.DateTimePicker();
             this.btnBuscar = new System.Windows.Forms.Button();
+            this.dtpFinal = new System.Windows.Forms.DateTimePicker();
+            this.lblbus3 = new System.Windows.Forms.Label();
+            this.lblbus2 = new System.Windows.Forms.Label();
+            this.gbxListar = new System.Windows.Forms.GroupBox();
+            this.dgvListar = new System.Windows.Forms.DataGridView();
             this.pnlAcciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.gbxListar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListar)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitulo
@@ -53,7 +57,7 @@
             this.lblTitulo.Font = new System.Drawing.Font("Stencil", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitulo.Location = new System.Drawing.Point(1, 1);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(993, 106);
+            this.lblTitulo.Size = new System.Drawing.Size(918, 106);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Detalles de ventas";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -66,7 +70,7 @@
             this.pnlAcciones.Controls.Add(this.btnDetalles);
             this.pnlAcciones.Location = new System.Drawing.Point(-1, 476);
             this.pnlAcciones.Name = "pnlAcciones";
-            this.pnlAcciones.Size = new System.Drawing.Size(995, 68);
+            this.pnlAcciones.Size = new System.Drawing.Size(920, 68);
             this.pnlAcciones.TabIndex = 2;
             // 
             // btnCerrar
@@ -76,7 +80,7 @@
             this.btnCerrar.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnCerrar.Image = global::CpGuarida.Properties.Resources.close1;
             this.btnCerrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCerrar.Location = new System.Drawing.Point(753, 13);
+            this.btnCerrar.Location = new System.Drawing.Point(729, 12);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(133, 45);
             this.btnCerrar.TabIndex = 2;
@@ -151,35 +155,8 @@
             this.panel1.Controls.Add(this.lblsup1);
             this.panel1.Location = new System.Drawing.Point(-1, 110);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(995, 100);
+            this.panel1.Size = new System.Drawing.Size(920, 71);
             this.panel1.TabIndex = 5;
-            // 
-            // lblbus2
-            // 
-            this.lblbus2.AutoSize = true;
-            this.lblbus2.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblbus2.Location = new System.Drawing.Point(160, 36);
-            this.lblbus2.Name = "lblbus2";
-            this.lblbus2.Size = new System.Drawing.Size(60, 21);
-            this.lblbus2.TabIndex = 5;
-            this.lblbus2.Text = "Desde:";
-            // 
-            // lblbus3
-            // 
-            this.lblbus3.AutoSize = true;
-            this.lblbus3.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblbus3.Location = new System.Drawing.Point(467, 36);
-            this.lblbus3.Name = "lblbus3";
-            this.lblbus3.Size = new System.Drawing.Size(46, 21);
-            this.lblbus3.TabIndex = 6;
-            this.lblbus3.Text = "Asta:";
-            // 
-            // dtpFinal
-            // 
-            this.dtpFinal.Location = new System.Drawing.Point(529, 32);
-            this.dtpFinal.Name = "dtpFinal";
-            this.dtpFinal.Size = new System.Drawing.Size(200, 27);
-            this.dtpFinal.TabIndex = 7;
             // 
             // btnBuscar
             // 
@@ -193,6 +170,60 @@
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
+            // dtpFinal
+            // 
+            this.dtpFinal.Location = new System.Drawing.Point(529, 32);
+            this.dtpFinal.Name = "dtpFinal";
+            this.dtpFinal.Size = new System.Drawing.Size(200, 27);
+            this.dtpFinal.TabIndex = 7;
+            // 
+            // lblbus3
+            // 
+            this.lblbus3.AutoSize = true;
+            this.lblbus3.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblbus3.Location = new System.Drawing.Point(467, 36);
+            this.lblbus3.Name = "lblbus3";
+            this.lblbus3.Size = new System.Drawing.Size(46, 21);
+            this.lblbus3.TabIndex = 6;
+            this.lblbus3.Text = "Asta:";
+            // 
+            // lblbus2
+            // 
+            this.lblbus2.AutoSize = true;
+            this.lblbus2.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblbus2.Location = new System.Drawing.Point(160, 36);
+            this.lblbus2.Name = "lblbus2";
+            this.lblbus2.Size = new System.Drawing.Size(60, 21);
+            this.lblbus2.TabIndex = 5;
+            this.lblbus2.Text = "Desde:";
+            // 
+            // gbxListar
+            // 
+            this.gbxListar.Controls.Add(this.dgvListar);
+            this.gbxListar.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbxListar.Location = new System.Drawing.Point(6, 187);
+            this.gbxListar.Name = "gbxListar";
+            this.gbxListar.Size = new System.Drawing.Size(913, 283);
+            this.gbxListar.TabIndex = 7;
+            this.gbxListar.TabStop = false;
+            this.gbxListar.Text = "Lista de ventas";
+            // 
+            // dgvListar
+            // 
+            this.dgvListar.AllowUserToAddRows = false;
+            this.dgvListar.AllowUserToDeleteRows = false;
+            this.dgvListar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvListar.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvListar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvListar.Location = new System.Drawing.Point(6, 28);
+            this.dgvListar.MultiSelect = false;
+            this.dgvListar.Name = "dgvListar";
+            this.dgvListar.ReadOnly = true;
+            this.dgvListar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvListar.Size = new System.Drawing.Size(894, 249);
+            this.dgvListar.TabIndex = 0;
             // 
             // FrmVentaDetalle
             // 
@@ -200,8 +231,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(994, 545);
+            this.ClientSize = new System.Drawing.Size(921, 545);
             this.ControlBox = false;
+            this.Controls.Add(this.gbxListar);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlAcciones);
             this.Controls.Add(this.pictureBox1);
@@ -219,6 +251,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.gbxListar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -238,5 +272,7 @@
         private System.Windows.Forms.DateTimePicker dtpFinal;
         private System.Windows.Forms.Label lblbus3;
         private System.Windows.Forms.Button btnBuscar;
+        private System.Windows.Forms.GroupBox gbxListar;
+        private System.Windows.Forms.DataGridView dgvListar;
     }
 }
