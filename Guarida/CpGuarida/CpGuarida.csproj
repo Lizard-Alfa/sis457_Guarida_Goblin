@@ -75,6 +75,12 @@
     <Compile Include="FrmAutenticacion.Designer.cs">
       <DependentUpon>FrmAutenticacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmDetalle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDetalle.Designer.cs">
+      <DependentUpon>FrmDetalle.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     <Compile Include="Util.cs" />
     <EmbeddedResource Include="FrmAutenticacion.resx">
       <DependentUpon>FrmAutenticacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDetalle.resx">
+      <DependentUpon>FrmDetalle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPrincipal.resx">
       <DependentUpon>FrmPrincipal.cs</DependentUpon>
@@ -208,6 +217,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\vendedores.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\recargar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

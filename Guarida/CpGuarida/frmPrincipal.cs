@@ -38,5 +38,10 @@ namespace CpGuarida
         {
             new FrmVentaDetalle().ShowDialog();
         }
+
+        private void FrmPrincipal_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

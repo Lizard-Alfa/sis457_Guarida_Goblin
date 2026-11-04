@@ -31,10 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmVentaDetalle));
             this.lblTitulo = new System.Windows.Forms.Label();
             this.pnlAcciones = new System.Windows.Forms.Panel();
+            this.btxRegarcar = new System.Windows.Forms.Button();
             this.btnCerrar = new System.Windows.Forms.Button();
             this.btnAnular = new System.Windows.Forms.Button();
             this.btnDetalles = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dtpInicio = new System.Windows.Forms.DateTimePicker();
             this.lblsup1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -44,11 +44,12 @@
             this.lblbus2 = new System.Windows.Forms.Label();
             this.gbxListar = new System.Windows.Forms.GroupBox();
             this.dgvListar = new System.Windows.Forms.DataGridView();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlAcciones.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.gbxListar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitulo
@@ -65,6 +66,7 @@
             // pnlAcciones
             // 
             this.pnlAcciones.BackColor = System.Drawing.Color.RoyalBlue;
+            this.pnlAcciones.Controls.Add(this.btxRegarcar);
             this.pnlAcciones.Controls.Add(this.btnCerrar);
             this.pnlAcciones.Controls.Add(this.btnAnular);
             this.pnlAcciones.Controls.Add(this.btnDetalles);
@@ -72,6 +74,21 @@
             this.pnlAcciones.Name = "pnlAcciones";
             this.pnlAcciones.Size = new System.Drawing.Size(920, 68);
             this.pnlAcciones.TabIndex = 2;
+            // 
+            // btxRegarcar
+            // 
+            this.btxRegarcar.BackColor = System.Drawing.Color.AliceBlue;
+            this.btxRegarcar.Font = new System.Drawing.Font("Yu Gothic UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btxRegarcar.Image = global::CpGuarida.Properties.Resources.recargar;
+            this.btxRegarcar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btxRegarcar.Location = new System.Drawing.Point(247, 12);
+            this.btxRegarcar.Name = "btxRegarcar";
+            this.btxRegarcar.Size = new System.Drawing.Size(147, 45);
+            this.btxRegarcar.TabIndex = 3;
+            this.btxRegarcar.Text = "Recargar";
+            this.btxRegarcar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btxRegarcar.UseVisualStyleBackColor = false;
+            this.btxRegarcar.Click += new System.EventHandler(this.btxRegarcar_Click);
             // 
             // btnCerrar
             // 
@@ -95,13 +112,14 @@
             this.btnAnular.Font = new System.Drawing.Font("Yu Gothic UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAnular.Image = global::CpGuarida.Properties.Resources.fallado;
             this.btnAnular.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAnular.Location = new System.Drawing.Point(384, 13);
+            this.btnAnular.Location = new System.Drawing.Point(503, 13);
             this.btnAnular.Name = "btnAnular";
             this.btnAnular.Size = new System.Drawing.Size(133, 45);
             this.btnAnular.TabIndex = 1;
             this.btnAnular.Text = "Anular";
             this.btnAnular.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAnular.UseVisualStyleBackColor = false;
+            this.btnAnular.Click += new System.EventHandler(this.btnAnular_Click);
             // 
             // btnDetalles
             // 
@@ -116,17 +134,7 @@
             this.btnDetalles.Text = "Detalle";
             this.btnDetalles.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDetalles.UseVisualStyleBackColor = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pictureBox1.Image = global::CpGuarida.Properties.Resources.vendedor;
-            this.pictureBox1.Location = new System.Drawing.Point(-1, 1);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(178, 106);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.btnDetalles.Click += new System.EventHandler(this.btnDetalles_Click);
             // 
             // dtpInicio
             // 
@@ -224,6 +232,18 @@
             this.dgvListar.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvListar.Size = new System.Drawing.Size(894, 249);
             this.dgvListar.TabIndex = 0;
+            this.dgvListar.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvListar_CellFormatting);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.pictureBox1.Image = global::CpGuarida.Properties.Resources.vendedor;
+            this.pictureBox1.Location = new System.Drawing.Point(-1, 1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(178, 106);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // FrmVentaDetalle
             // 
@@ -248,11 +268,11 @@
             this.Text = ":::Venta-Detalle:::";
             this.Load += new System.EventHandler(this.FrmVentaDetalle_Load);
             this.pnlAcciones.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.gbxListar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvListar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -274,5 +294,6 @@
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.GroupBox gbxListar;
         private System.Windows.Forms.DataGridView dgvListar;
+        private System.Windows.Forms.Button btxRegarcar;
     }
 }

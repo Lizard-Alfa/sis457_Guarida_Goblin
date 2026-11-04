@@ -78,18 +78,42 @@ namespace ClnGuarida
                 }
             }
         }
-        public static List<Venta> listar()
+
+        public static int anular(int id, string usuario)
         {
             using (var context = new GuaridaEntities())
             {
-                return context.Venta.Where(x => x.estado == (short)Estado.Activo).OrderBy(x => x.id).ToList();
+                var venta = context.Venta.Find(id);
+                if (venta == null) throw new Exception($"La venta con id {id} no existe");
+                if (venta.estado != (short)Estado.Activo) throw new Exception("La venta ya está anulada");
+
+                foreach (var d in context.VentaDetalle.Where(x => x.idVenta == id).ToList())
+                    context.Producto.Find(d.idProducto).stockActual += d.cantidad;
+
+                venta.estado = (short)Estado.Inactivo;
+                venta.usuarioRegistro = usuario;
+                return context.SaveChanges();
             }
         }
-        public static List<paVentaListar_Result> listarPa(DateTime? fechaInicio, DateTime? fechaFin)
+        public static Venta obtenerUno(int id)
         {
             using (var context = new GuaridaEntities())
             {
-                return context.paVentaListar(fechaInicio,fechaFin).ToList();
+                var venta = context.Venta.Find(id);
+                if (venta == null) throw new Exception($"La venta con id {id} no existe");
+                return venta;
+            }
+        }
+
+        // Todas las ventas activas y anuladas (las eliminadas no se muestran)
+        public static List<paVentaListar_Result> listarPa(DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin.Value.Date < fechaInicio.Value.Date)
+                throw new Exception("La fecha final no puede ser menor a la fecha de inicio");
+
+            using (var context = new GuaridaEntities())
+            {
+                return context.paVentaListar(fechaInicio, fechaFin).ToList();
             }
         }
     }

@@ -36,9 +36,15 @@
             this.ribbonQat1 = new C1.Win.Ribbon.RibbonQat();
             this.ribbonTab1 = new C1.Win.Ribbon.RibbonTab();
             this.ribbonGroup1 = new C1.Win.Ribbon.RibbonGroup();
+            this.btnCaCategoria = new C1.Win.Ribbon.RibbonButton();
             this.btnCaProductos = new C1.Win.Ribbon.RibbonButton();
+            this.btnCaProveedores = new C1.Win.Ribbon.RibbonButton();
+            this.btnCaClientes = new C1.Win.Ribbon.RibbonButton();
             this.ribbonTab2 = new C1.Win.Ribbon.RibbonTab();
             this.ribbonGroup2 = new C1.Win.Ribbon.RibbonGroup();
+            this.btnCaVentas = new C1.Win.Ribbon.RibbonButton();
+            this.btnVentaDetalles = new C1.Win.Ribbon.RibbonButton();
+            this.ribbonGroup6 = new C1.Win.Ribbon.RibbonGroup();
             this.ribbonTab3 = new C1.Win.Ribbon.RibbonTab();
             this.ribbonGroup3 = new C1.Win.Ribbon.RibbonGroup();
             this.ribbonTab4 = new C1.Win.Ribbon.RibbonTab();
@@ -47,12 +53,6 @@
             this.ribbonGroup5 = new C1.Win.Ribbon.RibbonGroup();
             this.ribbonTopToolBar1 = new C1.Win.Ribbon.RibbonTopToolBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnCaCategoria = new C1.Win.Ribbon.RibbonButton();
-            this.btnCaProveedores = new C1.Win.Ribbon.RibbonButton();
-            this.btnCaClientes = new C1.Win.Ribbon.RibbonButton();
-            this.btnCaVentas = new C1.Win.Ribbon.RibbonButton();
-            this.btnVentaDetalles = new C1.Win.Ribbon.RibbonButton();
-            this.ribbonGroup6 = new C1.Win.Ribbon.RibbonGroup();
             ((System.ComponentModel.ISupportInitialize)(this.c1Ribbon1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -106,6 +106,13 @@
             this.ribbonGroup1.Name = "ribbonGroup1";
             this.ribbonGroup1.Text = "Gestión de Catalogos";
             // 
+            // btnCaCategoria
+            // 
+            this.btnCaCategoria.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaCategoria.IconSet")))));
+            this.btnCaCategoria.Name = "btnCaCategoria";
+            this.btnCaCategoria.Text = "Categoria";
+            this.btnCaCategoria.ToolTip = "Gestion de Categoria";
+            // 
             // btnCaProductos
             // 
             this.btnCaProductos.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(512, 512), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaProductos.IconSet")))));
@@ -113,6 +120,22 @@
             this.btnCaProductos.Text = "Productos";
             this.btnCaProductos.ToolTip = "Gestion de Productos";
             this.btnCaProductos.Click += new System.EventHandler(this.btnCaProductos_Click);
+            // 
+            // btnCaProveedores
+            // 
+            this.btnCaProveedores.IconSet.Add(new C1.Framework.C1BitmapIcon("DefaultImage", new System.Drawing.Size(16, 16), System.Drawing.Color.Transparent, "DefaultImage", -1));
+            this.btnCaProveedores.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaProveedores.IconSet")))));
+            this.btnCaProveedores.Name = "btnCaProveedores";
+            this.btnCaProveedores.Text = "Proveedores";
+            this.btnCaProveedores.ToolTip = "Gestion de Proveedores";
+            // 
+            // btnCaClientes
+            // 
+            this.btnCaClientes.IconSet.Add(new C1.Framework.C1BitmapIcon("DefaultImage", new System.Drawing.Size(16, 16), System.Drawing.Color.Transparent, "DefaultImage", -1));
+            this.btnCaClientes.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaClientes.IconSet")))));
+            this.btnCaClientes.Name = "btnCaClientes";
+            this.btnCaClientes.Text = "Clientes";
+            this.btnCaClientes.ToolTip = "Gestion de Clientes";
             // 
             // ribbonTab2
             // 
@@ -126,6 +149,25 @@
             this.ribbonGroup2.Items.Add(this.btnCaVentas);
             this.ribbonGroup2.Items.Add(this.btnVentaDetalles);
             this.ribbonGroup2.Name = "ribbonGroup2";
+            // 
+            // btnCaVentas
+            // 
+            this.btnCaVentas.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaVentas.IconSet")))));
+            this.btnCaVentas.Name = "btnCaVentas";
+            this.btnCaVentas.Text = "Registrar Venta";
+            this.btnCaVentas.ToolTip = "Registro de Ventas";
+            this.btnCaVentas.Click += new System.EventHandler(this.btnCaVentas_Click);
+            // 
+            // btnVentaDetalles
+            // 
+            this.btnVentaDetalles.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnVentaDetalles.IconSet")))));
+            this.btnVentaDetalles.Name = "btnVentaDetalles";
+            this.btnVentaDetalles.Text = "Ventas";
+            this.btnVentaDetalles.Click += new System.EventHandler(this.btnVentaDetalles_Click);
+            // 
+            // ribbonGroup6
+            // 
+            this.ribbonGroup6.Name = "ribbonGroup6";
             // 
             // ribbonTab3
             // 
@@ -175,48 +217,6 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // btnCaCategoria
-            // 
-            this.btnCaCategoria.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaCategoria.IconSet")))));
-            this.btnCaCategoria.Name = "btnCaCategoria";
-            this.btnCaCategoria.Text = "Categoria";
-            this.btnCaCategoria.ToolTip = "Gestion de Categoria";
-            // 
-            // btnCaProveedores
-            // 
-            this.btnCaProveedores.IconSet.Add(new C1.Framework.C1BitmapIcon("DefaultImage", new System.Drawing.Size(16, 16), System.Drawing.Color.Transparent, "DefaultImage", -1));
-            this.btnCaProveedores.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaProveedores.IconSet")))));
-            this.btnCaProveedores.Name = "btnCaProveedores";
-            this.btnCaProveedores.Text = "Proveedores";
-            this.btnCaProveedores.ToolTip = "Gestion de Proveedores";
-            // 
-            // btnCaClientes
-            // 
-            this.btnCaClientes.IconSet.Add(new C1.Framework.C1BitmapIcon("DefaultImage", new System.Drawing.Size(16, 16), System.Drawing.Color.Transparent, "DefaultImage", -1));
-            this.btnCaClientes.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaClientes.IconSet")))));
-            this.btnCaClientes.Name = "btnCaClientes";
-            this.btnCaClientes.Text = "Clientes";
-            this.btnCaClientes.ToolTip = "Gestion de Clientes";
-            // 
-            // btnCaVentas
-            // 
-            this.btnCaVentas.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnCaVentas.IconSet")))));
-            this.btnCaVentas.Name = "btnCaVentas";
-            this.btnCaVentas.Text = "Registrar Venta";
-            this.btnCaVentas.ToolTip = "Registro de Ventas";
-            this.btnCaVentas.Click += new System.EventHandler(this.btnCaVentas_Click);
-            // 
-            // btnVentaDetalles
-            // 
-            this.btnVentaDetalles.IconSet.Add(new C1.Framework.C1BitmapIcon(null, new System.Drawing.Size(32, 32), System.Drawing.Color.Transparent, ((System.Drawing.Image)(resources.GetObject("btnVentaDetalles.IconSet")))));
-            this.btnVentaDetalles.Name = "btnVentaDetalles";
-            this.btnVentaDetalles.Text = "Ventas";
-            this.btnVentaDetalles.Click += new System.EventHandler(this.btnVentaDetalles_Click);
-            // 
-            // ribbonGroup6
-            // 
-            this.ribbonGroup6.Name = "ribbonGroup6";
-            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -233,6 +233,7 @@
             this.Text = "::: Menú Principal - Guarida Goblin :::";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmPrincipal_FormClosing);
+            this.Load += new System.EventHandler(this.FrmPrincipal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.c1Ribbon1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

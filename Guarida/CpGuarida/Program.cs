@@ -16,7 +16,7 @@ namespace CpGuarida
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmVentaDetalle());
+            Application.Run(new FrmAutenticacion());
         }
     }
 }
