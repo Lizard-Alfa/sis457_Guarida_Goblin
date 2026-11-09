@@ -282,69 +282,11 @@ BEGIN
 END
 GO
 
--- Registrar Venta 
-DROP PROC IF EXISTS paVentaRegistrar;
-GO
-CREATE PROC paVentaRegistrar @idCliente INT, @idUsuario INT, @detalles NVARCHAR(MAX), @total DECIMAL(10,2)
-AS
-BEGIN
-    BEGIN TRY
-        BEGIN TRAN;
-        DECLARE @idVenta INT;
-        
-        INSERT INTO Venta (idCliente, idUsuario, total, usuarioRegistro, fechaRegistro, estado)
-        VALUES (@idCliente, @idUsuario, @total, SUSER_NAME(), GETDATE(), 1);
-        SET @idVenta = SCOPE_IDENTITY();
-        
-        INSERT INTO VentaDetalle (idVenta, idProducto, cantidad, precioUnitario, subtotal, usuarioRegistro, fechaRegistro, estado)
-        SELECT @idVenta, j.idProducto, j.cantidad, j.precioUnitario, j.subtotal, SUSER_NAME(), GETDATE(), 1
-        FROM OPENJSON(@detalles) WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad', precioUnitario DECIMAL(10,2) '$.precioUnitario', subtotal DECIMAL(10,2) '$.subtotal') j;
-        
-        UPDATE p SET p.stockActual = p.stockActual - j.cantidad
-        FROM Producto p INNER JOIN OPENJSON(@detalles) WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad') j ON p.id = j.idProducto;
-        
-        COMMIT TRAN;
-        SELECT @idVenta AS idVenta;
-    END TRY
-    BEGIN CATCH
-        ROLLBACK TRAN; THROW;
-    END CATCH
-END
-GO
 
--- Registrar Compra
-DROP PROC IF EXISTS paCompraRegistrar;
-GO
-CREATE PROC paCompraRegistrar @idProveedor INT, @trackingNumber VARCHAR(100), @estadoEnvio VARCHAR(50), @fechaEstimada DATE, @detalles NVARCHAR(MAX), @total DECIMAL(10,2)
-AS
-BEGIN
-    BEGIN TRY
-        BEGIN TRAN;
-        DECLARE @idCompra INT;
-        
-        INSERT INTO Compra (idProveedor, total, trackingNumber, estadoEnvio, fechaEstimada, usuarioRegistro, fechaRegistro, estado)
-        VALUES (@idProveedor, @total, @trackingNumber, @estadoEnvio, @fechaEstimada, SUSER_NAME(), GETDATE(), 1);
-        SET @idCompra = SCOPE_IDENTITY();
-        
-        INSERT INTO CompraDetalle (idCompra, idProducto, cantidad, precioUnitario, subtotal, usuarioRegistro, fechaRegistro, estado)
-        SELECT @idCompra, j.idProducto, j.cantidad, j.precioUnitario, j.subtotal, SUSER_NAME(), GETDATE(), 1
-        FROM OPENJSON(@detalles) WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad', precioUnitario DECIMAL(10,2) '$.precioUnitario', subtotal DECIMAL(10,2) '$.subtotal') j;
-        
-        UPDATE p SET p.stockActual = p.stockActual + j.cantidad
-        FROM Producto p INNER JOIN OPENJSON(@detalles) WITH (idProducto INT '$.idProducto', cantidad INT '$.cantidad') j ON p.id = j.idProducto;
-        
-        COMMIT TRAN;
-        SELECT @idCompra AS idCompra;
-    END TRY
-    BEGIN CATCH
-        ROLLBACK TRAN; THROW;
-    END CATCH
-END
-GO 
 --Para listar Venta--
 DROP PROC IF EXISTS paVentaListar;
 GO
-ALTER PROC paVentaListar
+CREATE PROC paVentaListar
     @fechaInicio DATETIME = NULL,
     @fechaFin DATETIME = NULL
 AS
@@ -395,8 +337,7 @@ INSERT INTO Proveedor (tipo, razonSocial, pais, contacto) VALUES
 
 -- Clientes
 INSERT INTO Cliente (nombres, apellidos, celular) VALUES
-('Cliente', 'General', NULL),
-('Carlos', 'Mamani', '77712345');
+('elmer', 'champi', 67534493);
 
 -- Empleados
 INSERT INTO Empleado (cedulaIdentidad, nombres, primerApellido, fechaNacimiento, direccion, celular, cargo) VALUES
@@ -419,5 +360,6 @@ INSERT INTO Producto (idCategoria, codigo, nombre, descripcion, pesoKg, precioCo
 
 GO
 
-SELECT * FROM Venta;
+SELECT * FROM Cliente;
+
 
