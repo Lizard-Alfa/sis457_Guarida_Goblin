@@ -140,6 +140,9 @@
           <Property Name="usuarioRegistro" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
           <Property Name="estado" Type="smallint" Nullable="false" />
+          <Property Name="metodoPago" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descuento" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="iva" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="VentaDetalle">
           <Key>
@@ -501,6 +504,9 @@
           <NavigationProperty Name="Cliente" Relationship="Self.fk_Venta_Cliente" FromRole="Venta" ToRole="Cliente" />
           <NavigationProperty Name="Usuario" Relationship="Self.fk_Venta_Usuario" FromRole="Venta" ToRole="Usuario" />
           <NavigationProperty Name="VentaDetalle" Relationship="Self.fk_VD_Venta" FromRole="Venta" ToRole="VentaDetalle" />
+          <Property Name="metodoPago" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descuento" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="iva" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="VentaDetalle">
           <Key>
@@ -922,6 +928,9 @@
           <EntitySetMapping Name="Venta">
             <EntityTypeMapping TypeName="GuaridaModel.Venta">
               <MappingFragment StoreEntitySet="Venta">
+                <ScalarProperty Name="iva" ColumnName="iva" />
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
+                <ScalarProperty Name="metodoPago" ColumnName="metodoPago" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="idCliente" ColumnName="idCliente" />
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />

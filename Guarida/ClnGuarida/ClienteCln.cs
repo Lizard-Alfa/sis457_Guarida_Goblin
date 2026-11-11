@@ -13,23 +13,25 @@ namespace ClnGuarida
         {
             using (var context = new GuaridaEntities())
             {
-                var query = context.Cliente.Where(x => x.estado == (short)Estado.Activo);
-                bool tieneFiltro = !string.IsNullOrEmpty(filtro);
-                if (tieneFiltro)
+                var busacar = context.Cliente.Where(x => x.estado == (short)Estado.Activo);
+                if (!string.IsNullOrEmpty(filtro))
                 {
-                    query = query.Where(x => x.nombres.Contains(filtro) || x.apellidos.Contains(filtro));
+                    string f = filtro.Trim().ToLower();
+                    busacar = busacar.Where(x => x.nombres.ToLower().Contains(f) || x.apellidos.ToLower().Contains(f))
+                                 .OrderBy(x => x.nombres);
                 }
-                var orden = tieneFiltro
-                    ? query.OrderBy(x => x.nombres.StartsWith(filtro) ? 0 : 1).ThenBy(x => x.nombres)
-                    : query.OrderByDescending(x => x.fechaRegistro);
-                return orden
-                    .Take(10)
-                    .Select(x => new {
-                        id = x.id,
-                        ApellidoNombre = x.nombres + " " + x.apellidos
-                    })
-                    .ToList<object>();
+                else
+                {
+                    busacar = busacar.OrderByDescending(x => x.fechaRegistro)
+                                 .Take(10);
+                }
+                return busacar.Select(x => new
+                {
+                    id = x.id,
+                    ApellidoNombre = x.nombres + " " + x.apellidos
+                })
+                            .ToList<object>();
+            }
             }
         }
     }
-}

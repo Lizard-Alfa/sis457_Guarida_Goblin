@@ -113,6 +113,8 @@ namespace CpGuarida
             txtCodigo.Text = producto.codigo;
             txtNombre.Text = producto.nombre;
             txtDescripcion.Text = producto.descripcion;
+            nudStockActual.Value = producto.stockActual;
+            nudStockMinimo.Value = producto.stockMinimo;
             nudPesoKg.Value = producto.pesoKg ?? 0m;
             nudPrecioCostoUsd.Value = producto.precioCostoUsd.GetValueOrDefault();
             nudPrecioCostoBob.Value = producto.precioVentaBob;

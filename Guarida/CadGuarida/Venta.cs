@@ -49,6 +49,12 @@ public partial class Venta
 
     public short estado { get; set; }
 
+    public string metodoPago { get; set; }
+
+    public decimal descuento { get; set; }
+
+    public decimal iva { get; set; }
+
 
 
     public virtual Cliente Cliente { get; set; }
