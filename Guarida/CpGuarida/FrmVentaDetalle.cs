@@ -13,37 +13,46 @@ namespace CpGuarida
 {
     public partial class FrmVentaDetalle : Form
     {
-        private bool todas;
         public FrmVentaDetalle()
         {
             InitializeComponent();
         }
         private void listar()
         {
-            // todas = true  -> sin filtro de fechas (trae activas y anuladas)
-            // todas = false -> por período
-            var ventas = todas
-                ? VentaCln.listarPa(null, null)
-                : VentaCln.listarPa(dtpInicio.Value.Date , dtpFinal.Value.Date);
+            try { 
+            var ventas = VentaCln.listarPa( dtpInicio.Checked ? (DateTime?)dtpInicio.Value.Date : null,dtpFinal.Checked ? (DateTime?)dtpFinal.Value.Date : null
+         );
+
             dgvListar.DataSource = ventas;
             dgvListar.Columns["id"].Visible = false;
-            dgvListar.Columns["usuario"].Visible = false;
-            dgvListar.Columns["fecha"].Visible = false;
-            dgvListar.Columns["subtotal"].Visible = false;
-            dgvListar.Columns["fechaRegistro"].HeaderText = "Fecha de Venta";
+            dgvListar.Columns["idCliente"].Visible = false;
             dgvListar.Columns["Cliente"].HeaderText = "Cliente";
+            dgvListar.Columns["usuario"].HeaderText = "Usuario";
             dgvListar.Columns["transaccion"].HeaderText = "Transacción";
+            dgvListar.Columns["fecha"].HeaderText = "Fecha";
+            dgvListar.Columns["subtotal"].HeaderText = "Subtotal";
+            dgvListar.Columns["descuento"].HeaderText = "Descuento";
+            dgvListar.Columns["iva"].HeaderText = "Iva (13%)";
+            dgvListar.Columns["metodoPago"].HeaderText = "Metodo de Pago";
             dgvListar.Columns["total"].HeaderText = "Total";
-            dgvListar.Columns["observaciones"].HeaderText = "Observaciones";
-            dgvListar.Columns["usuarioRegistro"].HeaderText = "Usuario Registro";
+            dgvListar.Columns["observaciones"].Visible = false;
+            dgvListar.Columns["usuarioRegistro"].Visible = false;
+            dgvListar.Columns["fechaRegistro"].Visible = false;
             dgvListar.Columns["estado"].HeaderText = "Estado";
-            if (ventas.Count > 0) dgvListar.CurrentCell = dgvListar.Rows[0].Cells["cliente"];
+
+            if (ventas.Count > 0) dgvListar.CurrentCell = dgvListar.Rows[0].Cells["Cliente"];
         }
+        catch (Exception ex)
+        {
+        MessageBox.Show(ex.Message, "::: Error - Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+}
 
 
         private void FrmVentaDetalle_Load(object sender, EventArgs e)
         {
-            todas = true;// al iniciar: todas, activas y anuladas
+            dtpInicio.Checked = false;
+            dtpFinal.Checked = false;
             listar(); 
         }
 
@@ -54,15 +63,7 @@ namespace CpGuarida
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            todas = false; // por período
-            try
-            {
-                listar(); 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "::: Error - Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            listar();
         }
 
         private void dgvListar_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -71,50 +72,48 @@ namespace CpGuarida
 
             if (dgvListar.Columns[e.ColumnIndex].Name == "estado")
             {
-                short estado = Convert.ToInt16(e.Value);
-                e.Value = estado == (short)Estado.Activo ? "● Activo" : "● Anulado";
-                e.CellStyle.ForeColor = estado == (short)Estado.Activo ? Color.Green : Color.Red;
-                e.FormattingApplied = true;
+                if (short.TryParse(e.Value.ToString(), out short estado))
+                {
+                    bool esActivo = estado == (short)Estado.Activo;
+                    e.Value = esActivo ? "● Activo" : "● Anulado";
+                    e.CellStyle.ForeColor = esActivo ? Color.Green : Color.Red;
+                    e.FormattingApplied = true;
+                }
             }
         }
 
         private void btxRegarcar_Click(object sender, EventArgs e)
         {
-            todas = true; // trae , activas y anuladas
+            dtpInicio.Checked = false;
+            dtpFinal.Checked = false;
             listar();
         }
 
         private void btnAnular_Click(object sender, EventArgs e)
         {
-            if (dgvListar.CurrentRow == null) return;
-
-            int id = (int)dgvListar.CurrentRow.Cells["id"].Value;
-
-            // La transacción puede ser NULL: si no hay, se muestra el id de la venta
-            object valorTransaccion = dgvListar.CurrentRow.Cells["transaccion"].Value;
-            string referencia = (valorTransaccion == null || valorTransaccion == DBNull.Value)
-                ? $"N° {id}"
-                : valorTransaccion.ToString();
-
-            DialogResult dialog = MessageBox.Show($"¿Está seguro que desea anular la venta {referencia}?\nSe devolverá el stock de los productos.",
-                "::: Confirmación - Guarida Goblin :::", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (dialog == DialogResult.Yes)
+            try
             {
-                try
+                int id = (int)dgvListar.CurrentRow.Cells["id"].Value;
+                string transaccion = dgvListar.CurrentRow.Cells["transaccion"].Value.ToString();
+                DialogResult dialog = MessageBox.Show($"Está seguro que desea dar de baja la venta {transaccion}?",
+                    "::: Confirmación - Guardia Goblin :::", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialog == DialogResult.Yes)
                 {
                     VentaCln.anular(id, Util.usuario.usuario1);
+                    dtpInicio.Checked = false;
+                    dtpFinal.Checked = false;
                     listar();
-                    MessageBox.Show("Venta anulada correctamente", "::: Mensaje - Guarida Goblin :::",
+                    MessageBox.Show("Venta dado de baja correctamente", "::: Mensaje - Guarida Goblin",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "::: Error - Guarida Goblin :::",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "::: Error - Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+ 
 
         private void btnDetalles_Click(object sender, EventArgs e)
         {

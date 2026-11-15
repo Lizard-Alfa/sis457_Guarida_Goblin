@@ -13,26 +13,33 @@ namespace ClnGuarida
        {
             using (var context = new GuaridaEntities())
             {
-                var existe = context.Venta.Where(x => x.transaccion == venta.transaccion).FirstOrDefault();
-                if (existe != null) throw new Exception($"La venta {venta.transaccion} ya existe");
-                context.Venta.Add(venta);
-                context.SaveChanges();
+                int ultimaTransaccion = context.Venta.Max(v => (int?)v.transaccion) ?? 0;
+                venta.transaccion = ultimaTransaccion + 1;
                 foreach (var detalle in detalles)
                 {
                     var producto = context.Producto.Find(detalle.idProducto);
+                    if (producto == null)
+                        throw new Exception($"El producto con ID {detalle.idProducto} no existe.");
 
+                    if (producto.stockActual < detalle.cantidad)
+                        throw new Exception($"No hay suficiente stock para {producto.nombre}. Stock actual: {producto.stockActual}");
+                }
+                foreach (var detalle in detalles)
+                {
+                    var producto = context.Producto.Find(detalle.idProducto);
                     if (producto != null)
                     {
-                        if (producto.stockActual < detalle.cantidad)
-                        {
-                            throw new Exception($"No hay suficiente stock para el producto {producto.nombre}. Stock actual: {producto.stockActual}");
-                        }
-                        producto.stockActual = producto.stockActual - detalle.cantidad;
+                        producto.stockActual -= detalle.cantidad;
                     }
-                    detalle.idVenta = venta.id;
-                    context.VentaDetalle.Add(detalle);
+
+                    detalle.fechaRegistro = DateTime.Now;
+                    detalle.estado = 1;
                 }
-                return context.SaveChanges();
+                venta.VentaDetalle = detalles;
+                context.Venta.Add(venta);
+                context.SaveChanges();
+
+                return venta.id;
             }
         }
        public static List<string> metodPago()
@@ -46,11 +53,16 @@ namespace ClnGuarida
             {
                 var venta = context.Venta.Find(id);
                 if (venta == null) throw new Exception($"La venta con id {id} no existe");
-                if (venta.estado != (short)Estado.Activo) throw new Exception("La venta ya está anulada");
-
-                foreach (var d in context.VentaDetalle.Where(x => x.idVenta == id).ToList())
-                    context.Producto.Find(d.idProducto).stockActual += d.cantidad;
-
+                if (venta.estado == (short)Estado.Inactivo) throw new Exception("La venta ya está anulada");
+                var detalles = context.VentaDetalle.Where(x => x.idVenta == id).ToList();
+                foreach (var detalle in detalles)
+                {
+                    var producto = context.Producto.Find(detalle.idProducto);
+                    if (producto != null)
+                    {
+                        producto.stockActual += detalle.cantidad;
+                    }
+                }
                 venta.estado = (short)Estado.Inactivo;
                 venta.usuarioRegistro = usuario;
                 return context.SaveChanges();
@@ -65,11 +77,16 @@ namespace ClnGuarida
                 return venta;
             }
         }
-
-        // Todas las ventas activas y anuladas (las eliminadas no se muestran)
+        public static List<Venta> listar()
+        {
+            using (var context = new GuaridaEntities())
+            {
+                return context.Venta.Where(x => x.estado == (short)Estado.Activo).OrderBy( x => x.fechaRegistro).ToList();
+            }
+        }
         public static List<paVentaListar_Result> listarPa(DateTime? fechaInicio, DateTime? fechaFin)
         {
-            if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin.Value.Date < fechaInicio.Value.Date)
+            if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin.Value.Date < fechaInicio.Value.Date) 
                 throw new Exception("La fecha final no puede ser menor a la fecha de inicio");
 
             using (var context = new GuaridaEntities())

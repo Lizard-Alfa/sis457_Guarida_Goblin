@@ -9,29 +9,25 @@ namespace ClnGuarida
 {
     public class ClienteCln
     {
-        public static List<object> listar(string filtro)
+        public static int crear(Cliente cliente)
+        {
+            using (var contex = new GuaridaEntities()) 
+            {
+                var existe = contex.Cliente.Where(x => x.cedulaIdentidad == cliente.cedulaIdentidad).FirstOrDefault(); 
+                if (existe != null) throw new Exception($"El cliente con ci o nit {cliente.cedulaIdentidad} ya existe");
+                contex.Cliente.Add(cliente);
+                contex.SaveChanges();
+                return cliente.id;
+            }
+        }
+        public static Cliente buscar(string ci)
         {
             using (var context = new GuaridaEntities())
             {
-                var busacar = context.Cliente.Where(x => x.estado == (short)Estado.Activo);
-                if (!string.IsNullOrEmpty(filtro))
-                {
-                    string f = filtro.Trim().ToLower();
-                    busacar = busacar.Where(x => x.nombres.ToLower().Contains(f) || x.apellidos.ToLower().Contains(f))
-                                 .OrderBy(x => x.nombres);
-                }
-                else
-                {
-                    busacar = busacar.OrderByDescending(x => x.fechaRegistro)
-                                 .Take(10);
-                }
-                return busacar.Select(x => new
-                {
-                    id = x.id,
-                    ApellidoNombre = x.nombres + " " + x.apellidos
-                })
-                            .ToList<object>();
-            }
+                var cliente = context.Cliente.FirstOrDefault(x => x.cedulaIdentidad == ci && x.estado == (short)Estado.Activo);
+                if (cliente == null) throw new Exception($"El cliente con ci o nit {ci} no existe");
+                return cliente;
             }
         }
-    }
+    } 
+}

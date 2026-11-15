@@ -140,6 +140,7 @@
             // 
             this.dtpInicio.Location = new System.Drawing.Point(247, 32);
             this.dtpInicio.Name = "dtpInicio";
+            this.dtpInicio.ShowCheckBox = true;
             this.dtpInicio.Size = new System.Drawing.Size(200, 27);
             this.dtpInicio.TabIndex = 3;
             // 
@@ -184,6 +185,7 @@
             // 
             this.dtpFinal.Location = new System.Drawing.Point(529, 32);
             this.dtpFinal.Name = "dtpFinal";
+            this.dtpFinal.ShowCheckBox = true;
             this.dtpFinal.Size = new System.Drawing.Size(200, 27);
             this.dtpFinal.TabIndex = 7;
             // 

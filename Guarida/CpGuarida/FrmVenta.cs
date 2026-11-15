@@ -1,6 +1,7 @@
 ﻿using CadGuarida;
 using ClnGuarida;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,6 +11,7 @@ namespace CpGuarida
 {
     public partial class FrmVenta : Form
     {
+        private int idClienteSeleccionado = 0;
         public FrmVenta()
         {
             InitializeComponent();
@@ -34,17 +36,7 @@ namespace CpGuarida
 
             if (productos.Count > 0) dgvListaProducto.CurrentCell = dgvListaProducto.Rows[0].Cells["codigo"];
         }
-        private void cargarCLientes()
-        {
 
-            string textoActual = cbxCliente.Text;
-            cbxCliente.DataSource = ClienteCln.listar(textoActual);
-            cbxCliente.ValueMember = "id";
-            cbxCliente.DisplayMember = "ApellidoNombre";
-            cbxCliente.AutoCompleteMode = AutoCompleteMode.None;
-            cbxCliente.Text = textoActual;
-            cbxCliente.SelectionStart = cbxCliente.Text.Length;
-        }
         private void cargarMetodosPago()
         {
             cbxMetoPago.DataSource = VentaCln.metodPago();
@@ -53,22 +45,23 @@ namespace CpGuarida
         private void FrmVenta_Load(object sender, EventArgs e)
         {
             listarDetalles();
-            cargarCLientes();
             listar();
-            txtUsuario.Text = "admin";
+            txtUsuario.Text = Util.usuario.usuario1;
             calcularSubTotal();
             CalcularTotal();
             cargarMetodosPago();
         }
-         
+
         private void listarDetalles()
         {
             dgvDatosVenta.Columns.Clear();
+            dgvDatosVenta.Columns.Add("id", "id");
             dgvDatosVenta.Columns.Add("codigo", "Código");
             dgvDatosVenta.Columns.Add("nombre", "Nombre");
             dgvDatosVenta.Columns.Add("precioVentaBob", "Precio Bolivianos");
             dgvDatosVenta.Columns.Add("cantidad", "Cantidad");
             dgvDatosVenta.Columns.Add("subtotal", "Subtotal");
+            dgvDatosVenta.Columns["id"].Visible = false;
         }
         private void calcularSubTotal()
         {
@@ -92,12 +85,13 @@ namespace CpGuarida
             decimal cambio = 0;
             decimal recibido = 0;
 
-            const decimal PORCENTAJE_IVA = 0.13m;
+            const decimal PORCENTAJE_IVA = 0.13m; 
 
             if (decimal.TryParse(lblSubInfo.Text, out subtotal))
             {
                 decimal porcentajeDescuento = nudDescuento.Value / 100m;
                 descuento = subtotal * porcentajeDescuento;
+
                 if (descuento < 0) descuento = 0;
                 if (descuento > subtotal) descuento = subtotal;
                 baseImponible = subtotal - descuento;
@@ -105,16 +99,19 @@ namespace CpGuarida
                 total = baseImponible + iva;
                 recibido = nudRecibido.Value;
                 cambio = recibido - total;
+
+                if (cambio < 0) cambio = 0;
                 lblTotalInfo.Text = total.ToString("0.00");
                 lblIvaInfo.Text = iva.ToString("0.00");
                 lblCinfo.Text = cambio.ToString("0.00");
+                lblDesRe.Text = descuento.ToString("0.00");
             }
             else
             {
-
                 lblTotalInfo.Text = "0.00";
                 lblIvaInfo.Text = "0.00";
                 lblCinfo.Text = "0.00";
+                lblDesRe.Text = "0:00";
             }
         }
         private void ActualizarFilaSubtotal(DataGridViewRow fila, int nuevaCantidad)
@@ -126,17 +123,12 @@ namespace CpGuarida
 
         private void agregarProductoAlDetalle()
         {
-           if (dgvListaProducto.CurrentRow == null)
-            {
-                MessageBox.Show("Seleccione un producto de la lista", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
+            int idProducto = Convert.ToInt32(dgvListaProducto.CurrentRow.Cells["id"].Value);
             string codigo = dgvListaProducto.CurrentRow.Cells["codigo"].Value.ToString();
             string nombre = dgvListaProducto.CurrentRow.Cells["nombre"].Value.ToString();
             decimal precioVentaBob = Convert.ToDecimal(dgvListaProducto.CurrentRow.Cells["precioVentaBob"].Value);
             int stockActual = Convert.ToInt32(dgvListaProducto.CurrentRow.Cells["stockActual"].Value);
-            int cantidad = 1; 
+            int cantidad = 1;
 
             if (stockActual <= 0)
             {
@@ -155,7 +147,7 @@ namespace CpGuarida
             }
 
             decimal subtotal = precioVentaBob * cantidad;
-            dgvDatosVenta.Rows.Add(codigo, nombre, precioVentaBob, cantidad, subtotal);
+            dgvDatosVenta.Rows.Add(idProducto, codigo, nombre, precioVentaBob, cantidad, subtotal);
             calcularSubTotal();
             CalcularTotal();
             btnCancelar.Enabled = dgvDatosVenta.Rows.Count > 0;
@@ -167,7 +159,7 @@ namespace CpGuarida
 
         private void btnLimpiar_Click_1(object sender, EventArgs e)
         {
-            cbxCliente.AutoCompleteMode = AutoCompleteMode.None;
+            
             txtBuscar.Text = string.Empty;
             listar();
         }
@@ -180,15 +172,8 @@ namespace CpGuarida
         private void tmrFecha_Tick(object sender, EventArgs e)
         {
             txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy - HH:mm:ss");
-           
-        }
 
-        private void cbxCliente_KeyUp(object sender, KeyEventArgs e)
-        {
-            cargarCLientes();
-            cbxCliente.DroppedDown = true;
         }
-
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             agregarProductoAlDetalle();
@@ -217,7 +202,7 @@ namespace CpGuarida
             }
 
             int nuevaCantidad = cantidadActual + 1;
-            ActualizarFilaSubtotal(dgvDatosVenta.CurrentRow, nuevaCantidad); // ¡Adiós duplicidad!
+            ActualizarFilaSubtotal(dgvDatosVenta.CurrentRow, nuevaCantidad);
             calcularSubTotal();
             CalcularTotal();
             btnCancelar.Enabled = dgvDatosVenta.Rows.Count > 0;
@@ -239,7 +224,7 @@ namespace CpGuarida
             }
 
             int nuevaCantidad = cantidadActual - 1;
-            ActualizarFilaSubtotal(dgvDatosVenta.CurrentRow, nuevaCantidad); // ¡Adiós duplicidad!
+            ActualizarFilaSubtotal(dgvDatosVenta.CurrentRow, nuevaCantidad);
             calcularSubTotal();
             CalcularTotal();
             btnCancelar.Enabled = dgvDatosVenta.Rows.Count > 0;
@@ -276,15 +261,23 @@ namespace CpGuarida
         {
             CalcularTotal();
         }
-         private void resetearCampos()
+        private void resetearCampos()
         {
             resetearErrores();
             cbxMetoPago.SelectedIndex = -1;
-            cbxCliente.SelectedIndex = -1;
+            txtCliente.Clear();
+            idClienteSeleccionado = 0;
+            txtCliente.Clear();
             dgvDatosVenta.Rows.Clear();
-            txtObservaciones.Clear();
             nudDescuento.Value = 0;
             nudRecibido.Value = 0;
+            lblCinfo.Text = "0.00";
+            lblSubInfo.Text = "0.00";
+            lblIvaInfo.Text = "0.00";
+            lblTotalInfo.Text = "0.00";
+            lblDesRe.Text = "0:00";
+            txtObservaciones.Clear();
+
         }
         private void resetearErrores()
         {
@@ -292,18 +285,19 @@ namespace CpGuarida
             erpDatosVenta.Clear();
             erpMetoPago.Clear();
             erpRecibido.Clear();
-       
+
         }
         private Boolean validarCampos()
         {
             bool esValido = true;
             resetearErrores();
 
-            if (string.IsNullOrWhiteSpace(cbxCliente.Text))
+            if (string.IsNullOrWhiteSpace(txtResultadoCli.Text))
             {
-                erpCliente.SetError(cbxCliente, "El cliente es obligatorio");
+                erpCliente.SetError(txtResultadoCli, "El cliente es obligatorio");
                 esValido = false;
             }
+
             if (cbxMetoPago.SelectedIndex == -1)
             {
                 erpMetoPago.SetError(cbxMetoPago, "El método de pago es obligatorio");
@@ -324,23 +318,89 @@ namespace CpGuarida
         }
         private void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
-            validarCampos();
+            if (validarCampos())
+            {
+                try
+                {
+                    var venta = new Venta
+                    {
+                        idCliente = idClienteSeleccionado,
+                        idUsuario = Util.usuario.id,
+                        transaccion = null,
+                        fecha = DateTime.Now,
+                        subtotal = Convert.ToDecimal(lblSubInfo.Text),
+                        total = Convert.ToDecimal(lblTotalInfo.Text),
+                        observaciones = txtObservaciones.Text.Trim(),
+                        usuarioRegistro = Util.usuario.usuario1,
+                        fechaRegistro = DateTime.Now,
+                        metodoPago = cbxMetoPago.Text.Trim(),
+                        descuento = Convert.ToDecimal(lblDesRe.Text),
+                        iva = Convert.ToDecimal(lblIvaInfo.Text),
+                        estado = (short)Estado.Activo
+                    };
+
+                    var detalles = new List<VentaDetalle>();
+
+                    foreach (DataGridViewRow row in dgvDatosVenta.Rows)
+                    {
+                        if (row.Cells["codigo"].Value != null)
+                        {
+                            var detalle = new VentaDetalle
+                            {
+                                idProducto = Convert.ToInt32(row.Cells["id"].Value),
+                                cantidad = Convert.ToInt32(row.Cells["cantidad"].Value),
+                                precioUnitario = Convert.ToDecimal(row.Cells["precioVentaBob"].Value),
+                                subtotal = Convert.ToDecimal(row.Cells["subtotal"].Value),
+                                usuarioRegistro = "ADMIN",
+                                fechaRegistro = DateTime.Now,
+                                estado = (short)Estado.Activo,
+                            };
+                            detalles.Add(detalle);
+                        }
+                    }
+
+                    venta.VentaDetalle = detalles;
+
+                    int idVentaRegistrada = VentaCln.crear(venta, detalles);
+
+                    if (idVentaRegistrada > 0)
+                    {
+
+                        MessageBox.Show($"Venta N° {venta.transaccion} registrada correctamente", "::: Guarida Goblin :::",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        resetearCampos();
+                        listar();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo registrar la venta.", "::: Error - Guarida Goblin :::",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Exception inner = ex;
+                    while (inner.InnerException != null) inner = inner.InnerException;
+
+                    MessageBox.Show("Error real: " + inner.Message,
+                        "::: Error - Guardia Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             bool hayDatos = dgvDatosVenta.Rows.Count > 0
-                 || !string.IsNullOrWhiteSpace(cbxCliente.Text)
+                 || idClienteSeleccionado != 0
                  || nudRecibido.Value > 0
                  || nudDescuento.Value > 0
                  || !string.IsNullOrWhiteSpace(txtObservaciones.Text)
                  || !string.IsNullOrWhiteSpace(cbxMetoPago.Text);
             if (!hayDatos)
             {
-                MessageBox.Show("No hay ninguna venta en curso para cancelar.",
-                    "::: Aviso - Guardia Goblin :::",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                Close();
                 return;
             }
             DialogResult respuesta = MessageBox.Show("¿Está seguro que desea cancelar la venta actual?",
@@ -353,6 +413,37 @@ namespace CpGuarida
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void btnBusCli_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                var cliente = ClienteCln.buscar(txtCliente.Text.Trim());
+
+                if (cliente != null)
+                {
+                    txtResultadoCli.Text = $"{cliente.nombres} {cliente.apellidos}";
+                    idClienteSeleccionado = cliente.id;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "::: Error - Guarida Goblin :::",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnLimpiarCli_Click(object sender, EventArgs e)
+        {
+            txtResultadoCli.Text = string.Empty;
+            idClienteSeleccionado = 0;
+            txtCliente.Text = string.Empty;
+        }
+
+        private void btnCliente_Click(object sender, EventArgs e)
+        {
+            new FrmCliente().ShowDialog();
+        }
     }
-    
 }

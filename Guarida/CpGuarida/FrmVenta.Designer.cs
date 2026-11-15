@@ -33,9 +33,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pnlCliente = new System.Windows.Forms.Panel();
             this.btnCliente = new System.Windows.Forms.Button();
+            this.btnLimpiarCli = new System.Windows.Forms.Button();
+            this.txtResultadoCli = new System.Windows.Forms.TextBox();
+            this.btnBusCli = new System.Windows.Forms.Button();
+            this.txtCliente = new System.Windows.Forms.TextBox();
             this.pbxCliente = new System.Windows.Forms.PictureBox();
             this.lblCliente = new System.Windows.Forms.Label();
-            this.cbxCliente = new System.Windows.Forms.ComboBox();
             this.dgvDatosVenta = new System.Windows.Forms.DataGridView();
             this.gbxListaDatosVenta = new System.Windows.Forms.GroupBox();
             this.gbxListaProducto = new System.Windows.Forms.GroupBox();
@@ -54,6 +57,7 @@
             this.pbxHoraFecha = new System.Windows.Forms.PictureBox();
             this.lblfechaHora = new System.Windows.Forms.Label();
             this.pnlDatosVENTA = new System.Windows.Forms.Panel();
+            this.lblDesRe = new System.Windows.Forms.Label();
             this.lblCinfo = new System.Windows.Forms.Label();
             this.nudRecibido = new System.Windows.Forms.NumericUpDown();
             this.cbxMetoPago = new System.Windows.Forms.ComboBox();
@@ -64,7 +68,6 @@
             this.lblIvaInfo = new System.Windows.Forms.Label();
             this.lblSubInfo = new System.Windows.Forms.Label();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
-            this.lblProcentage = new System.Windows.Forms.Label();
             this.nudDescuento = new System.Windows.Forms.NumericUpDown();
             this.lblIva = new System.Windows.Forms.Label();
             this.lblSubToral = new System.Windows.Forms.Label();
@@ -77,18 +80,18 @@
             this.lblSumarRestar = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnBorrarProducto = new System.Windows.Forms.Button();
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnRegistrarVenta = new System.Windows.Forms.Button();
-            this.btnLimpiar = new System.Windows.Forms.Button();
-            this.pbxTitulo = new System.Windows.Forms.PictureBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.lblTotalInfo = new System.Windows.Forms.Label();
             this.pnlAcciones = new System.Windows.Forms.Panel();
-            this.erpCliente = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnRegistrarVenta = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.erpMetoPago = new System.Windows.Forms.ErrorProvider(this.components);
             this.erpRecibido = new System.Windows.Forms.ErrorProvider(this.components);
             this.erpDatosVenta = new System.Windows.Forms.ErrorProvider(this.components);
+            this.erpCliente = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnBorrarProducto = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.pbxTitulo = new System.Windows.Forms.PictureBox();
             this.pnlCliente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxCliente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosVenta)).BeginInit();
@@ -103,13 +106,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudRecibido)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDescuento)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxTitulo)).BeginInit();
             this.panel4.SuspendLayout();
             this.pnlAcciones.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.erpCliente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpMetoPago)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpRecibido)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpDatosVenta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.erpCliente)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxTitulo)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -128,25 +131,75 @@
             // 
             this.pnlCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlCliente.Controls.Add(this.btnCliente);
+            this.pnlCliente.Controls.Add(this.btnLimpiarCli);
+            this.pnlCliente.Controls.Add(this.txtResultadoCli);
+            this.pnlCliente.Controls.Add(this.btnBusCli);
+            this.pnlCliente.Controls.Add(this.txtCliente);
             this.pnlCliente.Controls.Add(this.pbxCliente);
             this.pnlCliente.Controls.Add(this.lblCliente);
-            this.pnlCliente.Controls.Add(this.cbxCliente);
             this.pnlCliente.Location = new System.Drawing.Point(2, 100);
             this.pnlCliente.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pnlCliente.Name = "pnlCliente";
-            this.pnlCliente.Size = new System.Drawing.Size(432, 114);
+            this.pnlCliente.Size = new System.Drawing.Size(523, 114);
             this.pnlCliente.TabIndex = 2;
             // 
             // btnCliente
             // 
             this.btnCliente.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnCliente.FlatAppearance.BorderSize = 0;
+            this.btnCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCliente.Image = global::CpGuarida.Properties.Resources._new;
-            this.btnCliente.Location = new System.Drawing.Point(378, 40);
+            this.btnCliente.Location = new System.Drawing.Point(475, 40);
             this.btnCliente.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCliente.Name = "btnCliente";
-            this.btnCliente.Size = new System.Drawing.Size(49, 61);
+            this.btnCliente.Size = new System.Drawing.Size(43, 51);
             this.btnCliente.TabIndex = 4;
             this.btnCliente.UseVisualStyleBackColor = false;
+            this.btnCliente.Click += new System.EventHandler(this.btnCliente_Click);
+            // 
+            // btnLimpiarCli
+            // 
+            this.btnLimpiarCli.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnLimpiarCli.FlatAppearance.BorderSize = 0;
+            this.btnLimpiarCli.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiarCli.Image = global::CpGuarida.Properties.Resources.icons8_limpiar_32;
+            this.btnLimpiarCli.Location = new System.Drawing.Point(426, 9);
+            this.btnLimpiarCli.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnLimpiarCli.Name = "btnLimpiarCli";
+            this.btnLimpiarCli.Size = new System.Drawing.Size(43, 39);
+            this.btnLimpiarCli.TabIndex = 18;
+            this.btnLimpiarCli.UseVisualStyleBackColor = false;
+            this.btnLimpiarCli.Click += new System.EventHandler(this.btnLimpiarCli_Click);
+            // 
+            // txtResultadoCli
+            // 
+            this.txtResultadoCli.Location = new System.Drawing.Point(248, 52);
+            this.txtResultadoCli.Name = "txtResultadoCli";
+            this.txtResultadoCli.ReadOnly = true;
+            this.txtResultadoCli.Size = new System.Drawing.Size(221, 29);
+            this.txtResultadoCli.TabIndex = 19;
+            // 
+            // btnBusCli
+            // 
+            this.btnBusCli.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnBusCli.FlatAppearance.BorderSize = 0;
+            this.btnBusCli.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBusCli.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBusCli.Image = global::CpGuarida.Properties.Resources.search;
+            this.btnBusCli.Location = new System.Drawing.Point(189, 9);
+            this.btnBusCli.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnBusCli.Name = "btnBusCli";
+            this.btnBusCli.Size = new System.Drawing.Size(48, 41);
+            this.btnBusCli.TabIndex = 18;
+            this.btnBusCli.UseVisualStyleBackColor = false;
+            this.btnBusCli.Click += new System.EventHandler(this.btnBusCli_Click);
+            // 
+            // txtCliente
+            // 
+            this.txtCliente.Location = new System.Drawing.Point(104, 52);
+            this.txtCliente.Name = "txtCliente";
+            this.txtCliente.Size = new System.Drawing.Size(127, 29);
+            this.txtCliente.TabIndex = 4;
             // 
             // pbxCliente
             // 
@@ -164,21 +217,11 @@
             // 
             this.lblCliente.AutoSize = true;
             this.lblCliente.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCliente.Location = new System.Drawing.Point(101, 29);
+            this.lblCliente.Location = new System.Drawing.Point(100, 9);
             this.lblCliente.Name = "lblCliente";
             this.lblCliente.Size = new System.Drawing.Size(68, 21);
             this.lblCliente.TabIndex = 1;
             this.lblCliente.Text = "Cliente:";
-            // 
-            // cbxCliente
-            // 
-            this.cbxCliente.FormattingEnabled = true;
-            this.cbxCliente.Location = new System.Drawing.Point(101, 57);
-            this.cbxCliente.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cbxCliente.Name = "cbxCliente";
-            this.cbxCliente.Size = new System.Drawing.Size(234, 29);
-            this.cbxCliente.TabIndex = 0;
-            this.cbxCliente.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cbxCliente_KeyUp);
             // 
             // dgvDatosVenta
             // 
@@ -191,6 +234,7 @@
             this.dgvDatosVenta.MultiSelect = false;
             this.dgvDatosVenta.Name = "dgvDatosVenta";
             this.dgvDatosVenta.ReadOnly = true;
+            this.dgvDatosVenta.RowHeadersWidth = 51;
             this.dgvDatosVenta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDatosVenta.Size = new System.Drawing.Size(682, 158);
             this.dgvDatosVenta.TabIndex = 0;
@@ -232,6 +276,7 @@
             this.dgvListaProducto.MultiSelect = false;
             this.dgvListaProducto.Name = "dgvListaProducto";
             this.dgvListaProducto.ReadOnly = true;
+            this.dgvListaProducto.RowHeadersWidth = 51;
             this.dgvListaProducto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvListaProducto.Size = new System.Drawing.Size(855, 150);
             this.dgvListaProducto.TabIndex = 0;
@@ -370,6 +415,7 @@
             // pnlDatosVENTA
             // 
             this.pnlDatosVENTA.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.pnlDatosVENTA.Controls.Add(this.lblDesRe);
             this.pnlDatosVENTA.Controls.Add(this.lblCinfo);
             this.pnlDatosVENTA.Controls.Add(this.nudRecibido);
             this.pnlDatosVENTA.Controls.Add(this.cbxMetoPago);
@@ -380,7 +426,6 @@
             this.pnlDatosVENTA.Controls.Add(this.lblIvaInfo);
             this.pnlDatosVENTA.Controls.Add(this.lblSubInfo);
             this.pnlDatosVENTA.Controls.Add(this.txtObservaciones);
-            this.pnlDatosVENTA.Controls.Add(this.lblProcentage);
             this.pnlDatosVENTA.Controls.Add(this.nudDescuento);
             this.pnlDatosVENTA.Controls.Add(this.lblIva);
             this.pnlDatosVENTA.Controls.Add(this.lblSubToral);
@@ -390,6 +435,16 @@
             this.pnlDatosVENTA.Name = "pnlDatosVENTA";
             this.pnlDatosVENTA.Size = new System.Drawing.Size(320, 320);
             this.pnlDatosVENTA.TabIndex = 13;
+            // 
+            // lblDesRe
+            // 
+            this.lblDesRe.AutoSize = true;
+            this.lblDesRe.Font = new System.Drawing.Font("Segoe UI Black", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDesRe.Location = new System.Drawing.Point(216, 127);
+            this.lblDesRe.Name = "lblDesRe";
+            this.lblDesRe.Size = new System.Drawing.Size(51, 25);
+            this.lblDesRe.TabIndex = 18;
+            this.lblDesRe.Text = "0.00";
             // 
             // lblCinfo
             // 
@@ -494,17 +549,6 @@
             this.txtObservaciones.Size = new System.Drawing.Size(285, 29);
             this.txtObservaciones.TabIndex = 8;
             // 
-            // lblProcentage
-            // 
-            this.lblProcentage.AutoSize = true;
-            this.lblProcentage.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.lblProcentage.Font = new System.Drawing.Font("Segoe UI Black", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProcentage.Location = new System.Drawing.Point(265, 124);
-            this.lblProcentage.Name = "lblProcentage";
-            this.lblProcentage.Size = new System.Drawing.Size(29, 25);
-            this.lblProcentage.TabIndex = 7;
-            this.lblProcentage.Text = "%";
-            // 
             // nudDescuento
             // 
             this.nudDescuento.DecimalPlaces = 2;
@@ -513,7 +557,7 @@
             0,
             0,
             65536});
-            this.nudDescuento.Location = new System.Drawing.Point(203, 124);
+            this.nudDescuento.Location = new System.Drawing.Point(129, 128);
             this.nudDescuento.Name = "nudDescuento";
             this.nudDescuento.Size = new System.Drawing.Size(60, 29);
             this.nudDescuento.TabIndex = 6;
@@ -637,37 +681,36 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Eliminar";
             // 
-            // btnBorrarProducto
+            // panel4
             // 
-            this.btnBorrarProducto.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnBorrarProducto.FlatAppearance.BorderSize = 0;
-            this.btnBorrarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBorrarProducto.Image = global::CpGuarida.Properties.Resources.borrar__1_;
-            this.btnBorrarProducto.Location = new System.Drawing.Point(701, 623);
-            this.btnBorrarProducto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnBorrarProducto.Name = "btnBorrarProducto";
-            this.btnBorrarProducto.Size = new System.Drawing.Size(71, 39);
-            this.btnBorrarProducto.TabIndex = 15;
-            this.btnBorrarProducto.UseVisualStyleBackColor = false;
-            this.btnBorrarProducto.Click += new System.EventHandler(this.btnBorrarProducto_Click);
+            this.panel4.BackColor = System.Drawing.Color.Navy;
+            this.panel4.Controls.Add(this.lblTotalInfo);
+            this.panel4.Controls.Add(this.lblTotal);
+            this.panel4.Location = new System.Drawing.Point(887, 534);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(306, 63);
+            this.panel4.TabIndex = 16;
             // 
-            // btnCancelar
+            // lblTotalInfo
             // 
-            this.btnCancelar.BackColor = System.Drawing.Color.Red;
-            this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnCancelar.FlatAppearance.BorderSize = 4;
-            this.btnCancelar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnCancelar.Image = global::CpGuarida.Properties.Resources.borrar;
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(185, 8);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(121, 52);
-            this.btnCancelar.TabIndex = 12;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCancelar.UseVisualStyleBackColor = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.lblTotalInfo.AutoSize = true;
+            this.lblTotalInfo.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalInfo.ForeColor = System.Drawing.Color.White;
+            this.lblTotalInfo.Location = new System.Drawing.Point(166, 7);
+            this.lblTotalInfo.Name = "lblTotalInfo";
+            this.lblTotalInfo.Size = new System.Drawing.Size(83, 45);
+            this.lblTotalInfo.TabIndex = 4;
+            this.lblTotalInfo.Text = "0.00";
+            // 
+            // pnlAcciones
+            // 
+            this.pnlAcciones.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.pnlAcciones.Controls.Add(this.btnRegistrarVenta);
+            this.pnlAcciones.Controls.Add(this.btnCancelar);
+            this.pnlAcciones.Location = new System.Drawing.Point(887, 602);
+            this.pnlAcciones.Name = "pnlAcciones";
+            this.pnlAcciones.Size = new System.Drawing.Size(306, 71);
+            this.pnlAcciones.TabIndex = 17;
             // 
             // btnRegistrarVenta
             // 
@@ -687,11 +730,61 @@
             this.btnRegistrarVenta.UseVisualStyleBackColor = false;
             this.btnRegistrarVenta.Click += new System.EventHandler(this.btnRegistrarVenta_Click);
             // 
+            // btnCancelar
+            // 
+            this.btnCancelar.BackColor = System.Drawing.Color.Red;
+            this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCancelar.FlatAppearance.BorderSize = 4;
+            this.btnCancelar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnCancelar.Image = global::CpGuarida.Properties.Resources.borrar;
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(185, 8);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(121, 52);
+            this.btnCancelar.TabIndex = 12;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // erpMetoPago
+            // 
+            this.erpMetoPago.ContainerControl = this;
+            // 
+            // erpRecibido
+            // 
+            this.erpRecibido.ContainerControl = this;
+            // 
+            // erpDatosVenta
+            // 
+            this.erpDatosVenta.ContainerControl = this;
+            // 
+            // erpCliente
+            // 
+            this.erpCliente.ContainerControl = this;
+            // 
+            // btnBorrarProducto
+            // 
+            this.btnBorrarProducto.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnBorrarProducto.FlatAppearance.BorderSize = 0;
+            this.btnBorrarProducto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBorrarProducto.Image = global::CpGuarida.Properties.Resources.borrar__1_;
+            this.btnBorrarProducto.Location = new System.Drawing.Point(701, 623);
+            this.btnBorrarProducto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnBorrarProducto.Name = "btnBorrarProducto";
+            this.btnBorrarProducto.Size = new System.Drawing.Size(71, 39);
+            this.btnBorrarProducto.TabIndex = 15;
+            this.btnBorrarProducto.UseVisualStyleBackColor = false;
+            this.btnBorrarProducto.Click += new System.EventHandler(this.btnBorrarProducto_Click);
+            // 
             // btnLimpiar
             // 
-            this.btnLimpiar.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btnLimpiar.Image = global::CpGuarida.Properties.Resources.limpieza;
-            this.btnLimpiar.Location = new System.Drawing.Point(799, 237);
+            this.btnLimpiar.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnLimpiar.FlatAppearance.BorderSize = 0;
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.Image = global::CpGuarida.Properties.Resources.icons8_limpiar_32;
+            this.btnLimpiar.Location = new System.Drawing.Point(792, 237);
             this.btnLimpiar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(71, 39);
@@ -710,53 +803,6 @@
             this.pbxTitulo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxTitulo.TabIndex = 1;
             this.pbxTitulo.TabStop = false;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.Navy;
-            this.panel4.Controls.Add(this.lblTotalInfo);
-            this.panel4.Controls.Add(this.lblTotal);
-            this.panel4.Location = new System.Drawing.Point(887, 534);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(306, 63);
-            this.panel4.TabIndex = 16;
-            // 
-            // lblTotalInfo
-            // 
-            this.lblTotalInfo.AutoSize = true;
-            this.lblTotalInfo.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalInfo.ForeColor = System.Drawing.Color.White;
-            this.lblTotalInfo.Location = new System.Drawing.Point(184, 7);
-            this.lblTotalInfo.Name = "lblTotalInfo";
-            this.lblTotalInfo.Size = new System.Drawing.Size(83, 45);
-            this.lblTotalInfo.TabIndex = 4;
-            this.lblTotalInfo.Text = "0.00";
-            // 
-            // pnlAcciones
-            // 
-            this.pnlAcciones.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.pnlAcciones.Controls.Add(this.btnRegistrarVenta);
-            this.pnlAcciones.Controls.Add(this.btnCancelar);
-            this.pnlAcciones.Location = new System.Drawing.Point(887, 602);
-            this.pnlAcciones.Name = "pnlAcciones";
-            this.pnlAcciones.Size = new System.Drawing.Size(306, 71);
-            this.pnlAcciones.TabIndex = 17;
-            // 
-            // erpCliente
-            // 
-            this.erpCliente.ContainerControl = this;
-            // 
-            // erpMetoPago
-            // 
-            this.erpMetoPago.ContainerControl = this;
-            // 
-            // erpRecibido
-            // 
-            this.erpRecibido.ContainerControl = this;
-            // 
-            // erpDatosVenta
-            // 
-            this.erpDatosVenta.ContainerControl = this;
             // 
             // FrmVenta
             // 
@@ -807,14 +853,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudDescuento)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbxTitulo)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.pnlAcciones.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.erpCliente)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpMetoPago)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpRecibido)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpDatosVenta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.erpCliente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxTitulo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -826,7 +872,6 @@
         private System.Windows.Forms.PictureBox pbxTitulo;
         private System.Windows.Forms.Panel pnlCliente;
         private System.Windows.Forms.Label lblCliente;
-        private System.Windows.Forms.ComboBox cbxCliente;
         private System.Windows.Forms.PictureBox pbxCliente;
         private System.Windows.Forms.Button btnCliente;
         private System.Windows.Forms.DataGridView dgvDatosVenta;
@@ -865,7 +910,6 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel pnlAcciones;
         private System.Windows.Forms.NumericUpDown nudDescuento;
-        private System.Windows.Forms.Label lblProcentage;
         private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.Label lblIvaInfo;
         private System.Windows.Forms.Label lblSubInfo;
@@ -877,9 +921,14 @@
         private System.Windows.Forms.Label lblCinfo;
         private System.Windows.Forms.NumericUpDown nudRecibido;
         private System.Windows.Forms.ComboBox cbxMetoPago;
-        private System.Windows.Forms.ErrorProvider erpCliente;
         private System.Windows.Forms.ErrorProvider erpMetoPago;
         private System.Windows.Forms.ErrorProvider erpRecibido;
         private System.Windows.Forms.ErrorProvider erpDatosVenta;
+        private System.Windows.Forms.TextBox txtCliente;
+        private System.Windows.Forms.Button btnBusCli;
+        private System.Windows.Forms.TextBox txtResultadoCli;
+        private System.Windows.Forms.ErrorProvider erpCliente;
+        private System.Windows.Forms.Button btnLimpiarCli;
+        private System.Windows.Forms.Label lblDesRe;
     }
 }

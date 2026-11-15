@@ -46,28 +46,25 @@ namespace CpGuarida
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            var usuario = UsuarioCln.validar(txtUsuario.Text, Util.Encrypt(txtClave.Text));
-            if(usuario == null)
+            if (validarCampos())
             {
-                MessageBox.Show("Usuario y/o contraseña incorrectos", "::: Mensaje - Guarida Goblin",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                Util.usuario = usuario;
-                txtClave.Clear();
-                txtUsuario.Focus();
-                txtUsuario.SelectAll();
-                Hide();
-                new FrmPrincipal(this).ShowDialog();
+                var usuario = UsuarioCln.validar(txtUsuario.Text, Util.Encrypt(txtClave.Text));
+                if (usuario == null)
+                {
+                    MessageBox.Show("Usuario y/o contraseña incorrectos", "::: Mensaje - Guarida Goblin",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    Util.usuario = usuario;
+                    txtClave.Clear();
+                    txtUsuario.Focus();
+                    txtUsuario.SelectAll();
+                    Hide();
+                    new FrmPrincipal(this).ShowDialog();
+                }
             }
         }
-
-        private void frmAutenticacion_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void txtClave_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter) btnIngresar.PerformClick();

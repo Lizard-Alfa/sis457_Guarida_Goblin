@@ -61,7 +61,7 @@
             this.txtUsuario.MaxLength = 30;
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(220, 24);
-            this.txtUsuario.TabIndex = 7;
+            this.txtUsuario.TabIndex = 0;
             // 
             // lblUsuario
             // 
@@ -88,7 +88,7 @@
             this.txtClave.Name = "txtClave";
             this.txtClave.PasswordChar = '*';
             this.txtClave.Size = new System.Drawing.Size(220, 24);
-            this.txtClave.TabIndex = 7;
+            this.txtClave.TabIndex = 1;
             this.txtClave.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtClave_KeyPress);
             // 
             // pbxLogo
@@ -159,7 +159,6 @@
             this.Name = "FrmAutenticacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "::: Login - Guarida Goblin :::";
-            this.Load += new System.EventHandler(this.frmAutenticacion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpUsuario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpClave)).EndInit();

@@ -55,7 +55,12 @@ CREATE TABLE Cliente (
     fechaRegistro DATETIME NOT NULL DEFAULT GETDATE(),
     estado SMALLINT NOT NULL DEFAULT 1
 );
+INSERT INTO Cliente (cedulaIdentidad, nombres, apellidos, celular, direccion, email)
+VALUES ('12345678', 'Juan Carlos', 'Perez Gomez', '77712345', 'Av. Siempre Viva #123', 'juan.perez@email.com');
 
+-- Cliente 2
+INSERT INTO Cliente (cedulaIdentidad, nombres, apellidos, celular, direccion, email)
+VALUES ('87654321', 'Maria Fernanda', 'Lopez Rojas', '78898765', 'Calle Los Olivos #456', 'maria.lopez@email.com');
 -- EMPLEADOS
 CREATE TABLE Empleado (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
@@ -189,7 +194,10 @@ CREATE TABLE VentaDetalle (
 );
 
 GO
-
+--agregamos una columna a la tabla venta para el tipo de pago
+ALTER TABLE Venta ADD metodoPago VARCHAR(50) NOT NULL DEFAULT 'Efectivo';
+ALTER TABLE Venta ADD descuento DECIMAL(10,2) NOT NULL DEFAULT 0,
+    iva DECIMAL(10,2) NOT NULL DEFAULT 0;
 -- 4. ÍNDICES DE RENDIMIENTO
 
 CREATE INDEX idx_Producto_nombre ON Producto(nombre);
@@ -293,11 +301,15 @@ AS
 BEGIN
     SELECT 
         v.id,
-        v.id,c.nombres + ' ' + c.apellidos AS Cliente,
+        v.idCliente,
+        c.nombres + ' ' + c.apellidos AS Cliente,
         u.usuario,
         v.transaccion,
         v.fecha,
         v.subtotal,
+        v.descuento,
+        v.iva,
+        v.metodoPago,
         v.total,
         v.observaciones,
         v.usuarioRegistro,
@@ -360,6 +372,8 @@ INSERT INTO Producto (idCategoria, codigo, nombre, descripcion, pesoKg, precioCo
 
 GO
 
+SELECT * FROM Producto;
+SELECT * FROM Venta;
 SELECT * FROM Cliente;
 
 

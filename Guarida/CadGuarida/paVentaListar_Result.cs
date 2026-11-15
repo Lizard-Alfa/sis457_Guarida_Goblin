@@ -19,6 +19,8 @@ public partial class paVentaListar_Result
 
     public int id { get; set; }
 
+    public int idCliente { get; set; }
+
     public string Cliente { get; set; }
 
     public string usuario { get; set; }
@@ -28,6 +30,12 @@ public partial class paVentaListar_Result
     public System.DateTime fecha { get; set; }
 
     public decimal subtotal { get; set; }
+
+    public decimal descuento { get; set; }
+
+    public decimal iva { get; set; }
+
+    public string metodoPago { get; set; }
 
     public decimal total { get; set; }
 
