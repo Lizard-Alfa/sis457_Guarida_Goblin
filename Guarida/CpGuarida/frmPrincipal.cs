@@ -50,6 +50,15 @@ namespace CpGuarida
             new FrmVentaDetalle().ShowDialog();
         }
 
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("¿Desea cerrar la sesión?", "::: Mensaje - Guarida Goblin",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Close(); // FormClosing vuelve a mostrar el login
+            }
+        }
+
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
             ConfigurarDiseno();
@@ -71,7 +80,7 @@ namespace CpGuarida
             // 3. Contenido central: logo, título y accesos rápidos
             ConstruirContenidoCentral();
 
-            // 4. Barra inferior: usuario, fecha/hora y cerrar sesión
+            // 4. Barra inferior: usuario y fecha/hora
             ConstruirBarraEstado();
 
             pictureBox1.Resize += (s, ev) => CentrarContenido();
@@ -125,7 +134,12 @@ namespace CpGuarida
             flujo.Controls.Add(CrearTarjeta("Registrar Venta", Properties.Resources.carrito_de_compras, btnCaVentas_Click));
             flujo.Controls.Add(CrearTarjeta("Ventas", Properties.Resources.informe, btnVentaDetalles_Click));
             flujo.Controls.Add(CrearTarjeta("Productos", Properties.Resources.producto_1, btnCaProductos_Click));
-            flujo.Controls.Add(CrearTarjeta("Clientes", Properties.Resources.cliente, btnCaClientes_Click));
+            // En el lugar de "Clientes" va "Cerrar sesión" (Clientes sigue en el ribbon y en la venta)
+            var tarjetaSalir = CrearTarjeta("Cerrar sesión", Properties.Resources.security_lock, btnCerrarSesion_Click);
+            tarjetaSalir.FlatAppearance.BorderColor = Color.FromArgb(200, 40, 60);
+            tarjetaSalir.FlatAppearance.MouseOverBackColor = Color.FromArgb(160, 30, 50);
+            tarjetaSalir.FlatAppearance.MouseDownBackColor = Color.FromArgb(120, 20, 40);
+            flujo.Controls.Add(tarjetaSalir);
 
             tblCentro.Controls.Add(picLogo);
             tblCentro.Controls.Add(lblTitulo);
@@ -171,20 +185,8 @@ namespace CpGuarida
             lblFecha.TextAlign = ContentAlignment.MiddleCenter;
             lblFecha.ForeColor = Color.White;
 
-            var btnCerrarSesion = new ToolStripButton("Cerrar sesión");
-            btnCerrarSesion.ForeColor = Color.White;
-            btnCerrarSesion.Click += (s, ev) =>
-            {
-                if (MessageBox.Show("¿Desea cerrar la sesión?", "::: Mensaje - Guarida Goblin",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    Close(); // FormClosing vuelve a mostrar el login
-                }
-            };
-
             barra.Items.Add(lblUsuario);
             barra.Items.Add(lblFecha);
-            barra.Items.Add(btnCerrarSesion);
             Controls.Add(barra);
 
             tmrReloj = new System.Windows.Forms.Timer();
