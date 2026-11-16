@@ -2,14 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClnGuarida
 {
     public class DetalleCln
     {
-        // Lanza error si la venta no existe o está anulada
         public static void validar(int idVenta)
         {
             using (var context = new GuaridaEntities())

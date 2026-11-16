@@ -15,6 +15,8 @@ namespace CpGuarida
     public partial class FrmProducto : Form
     {
         private bool esNuevo;
+        private const decimal COTIZACION_USD = 11.67m;
+
         public FrmProducto()
         {
             InitializeComponent();
@@ -37,15 +39,24 @@ namespace CpGuarida
             dgvLista.Columns["stockMinimo"].HeaderText = "Stock Minimo";
             dgvLista.Columns["usuarioRegistro"].HeaderText = "Usuario Registro";
             dgvLista.Columns["fechaRegistro"].HeaderText = "Fecha Registro";
-
             if (productos.Count > 0) dgvLista.CurrentCell = dgvLista.Rows[0].Cells["codigo"];
             btnEditar.Enabled = productos.Count > 0;
             btnEliminar.Enabled = productos.Count > 0;
         }
 
-        private void cargarCatergorias()
+        private void cargarCategorias()
         {
-            cbxCategoria.DataSource = CategoriaCln.listar();
+            var categorias = CategoriaCln.listar();
+
+            if (categorias == null || categorias.Count == 0)
+            {
+                MessageBox.Show("No hay categorías registradas. Cree al menos una categoría primero.",
+                    "::: Advertencia - Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbxCategoria.DataSource = null;
+                return;
+            }
+
+            cbxCategoria.DataSource = categorias;
             cbxCategoria.ValueMember = "id";
             cbxCategoria.DisplayMember = "nombre";
             cbxCategoria.SelectedIndex = -1;
@@ -54,20 +65,32 @@ namespace CpGuarida
         private void FrmProducto_Load(object sender, EventArgs e)
         {
             Size = new Size(900, 360);
+            cargarCategorias();
             listar();
-            cargarCatergorias();
+
+            nudPrecioCostoUsd.ValueChanged += nudPrecioCostoUsd_ValueChanged;
+            nudPrecioCostoBob.ReadOnly = true;
         }
 
+        private void nudPrecioCostoUsd_ValueChanged(object sender, EventArgs e)
+        {
+            if (nudPrecioCostoUsd.Value > 0)
+            {
+                nudPrecioCostoBob.Value = Math.Round(nudPrecioCostoUsd.Value * COTIZACION_USD, 0);
+            }
+            else
+            {
+                nudPrecioCostoBob.Value = 0;
+            }
+        }
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             listar();
         }
-
         private void txtParametro_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter) listar();
         }
-
         private void resetearCampos()
         {
             cbxCategoria.SelectedIndex = -1;
@@ -81,7 +104,6 @@ namespace CpGuarida
             nudStockMinimo.Value = 0;
             resetearErrores();
         }
-
         private void resetearErrores()
         {
             erpCategoria.Clear();
@@ -92,7 +114,6 @@ namespace CpGuarida
             erpPrecioCostoUsd.Clear();
             erpPrecioCostoBob.Clear();
         }
-
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             esNuevo = true;
@@ -100,13 +121,11 @@ namespace CpGuarida
             pnlAcciones.Enabled = false;
             resetearCampos();
         }
-
         private void btnEditar_Click(object sender, EventArgs e)
         {
             esNuevo = false;
             Size = new Size(900, 520);
             pnlAcciones.Enabled = false;
-
             int id = (int)dgvLista.CurrentRow.Cells["id"].Value;
             var producto = ProductoCln.obtenerUno(id);
             cbxCategoria.SelectedValue = producto.idCategoria;
@@ -117,7 +136,6 @@ namespace CpGuarida
             nudStockMinimo.Value = producto.stockMinimo;
             nudPesoKg.Value = producto.pesoKg ?? 0m;
             nudPrecioCostoUsd.Value = producto.precioCostoUsd.GetValueOrDefault();
-            nudPrecioCostoBob.Value = producto.precioVentaBob;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -131,11 +149,12 @@ namespace CpGuarida
             bool esValido = true;
             resetearErrores();
 
-            if(cbxCategoria.SelectedIndex == -1)
-            {
-                erpCategoria.SetError(cbxCategoria, "La categoria es obligatoria");
+            if(cbxCategoria.SelectedIndex == -1 || cbxCategoria.SelectedValue == null)
+{
+                erpCategoria.SetError(cbxCategoria, "La categoría es obligatoria");
                 esValido = false;
             }
+
             if (string.IsNullOrWhiteSpace(txtCodigo.Text))
             {
                 erpCodigo.SetError(txtCodigo, "El código es obligatorio");
@@ -166,16 +185,25 @@ namespace CpGuarida
                 erpPrecioCostoBob.SetError(nudPrecioCostoBob, "El precio en bolivianos debe ser mayor a 0");
                 esValido = false;
             }
-
             return esValido;
         }
+
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (validarCampos())
+            if (!validarCampos()) return;
+
+            if (cbxCategoria.SelectedValue == null)
+            {
+                MessageBox.Show("Seleccione una categoría válida de la lista",
+                    "::: Error - Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
             {
                 var producto = new Producto
                 {
-                    idCategoria = (int)cbxCategoria.SelectedValue,
+                    idCategoria = Convert.ToInt32(cbxCategoria.SelectedValue),
                     codigo = txtCodigo.Text.Trim(),
                     nombre = txtNombre.Text.Trim(),
                     descripcion = txtDescripcion.Text.Trim(),
@@ -187,38 +215,35 @@ namespace CpGuarida
                     usuarioRegistro = Util.usuario.usuario1
                 };
 
-                try
+                if (esNuevo)
                 {
-                    if (esNuevo)
-                    {
-                        producto.fechaRegistro = DateTime.Now;
-                        producto.estado = (short)Estado.Activo;
-                        ProductoCln.crear(producto);
-                    }
-                    else
-                    {
-                        producto.id = (int)dgvLista.CurrentRow.Cells["id"].Value;
-                        ProductoCln.actualizar(producto);
-                    }
-                    listar();
-                    btnCancelar.PerformClick();
-                    MessageBox.Show("Producto guardado correctamente", "::: Guarida Goblin :::",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    producto.fechaRegistro = DateTime.Now;
+                    producto.estado = (short)Estado.Activo;
+                    ProductoCln.crear(producto);
+                }
+                else
+                {
+                    producto.id = (int)dgvLista.CurrentRow.Cells["id"].Value;
+                    ProductoCln.actualizar(producto);
                 }
 
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "::: Error - Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                listar();
+                btnCancelar.PerformClick();
+                MessageBox.Show("Producto guardado correctamente", "::: Guarida Goblin :::",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "::: Error - Guarida Goblin :::",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             int id = (int)dgvLista.CurrentRow.Cells["id"].Value;
             string codigo = dgvLista.CurrentRow.Cells["codigo"].Value.ToString();
-            DialogResult dialog = MessageBox.Show($"Está seguro que desea dar de baja el producto {codigo}?",
-                "::: Confirmación - Guardia Goblin :::", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dialog = MessageBox.Show($"¿Está seguro que desea dar de baja el producto {codigo}?",
+                "::: Confirmación - Guarida Goblin :::", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialog == DialogResult.Yes)
             {
                 ProductoCln.eliminar(id, Util.usuario.usuario1);

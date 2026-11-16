@@ -19,25 +19,31 @@ public partial class paVentaListar_Result
 
     public int id { get; set; }
 
-    public string Cliente { get; set; }
+    public System.DateTime fecha { get; set; }
 
-    public string usuario { get; set; }
+    public int idCliente { get; set; }
 
     public Nullable<int> transaccion { get; set; }
 
-    public System.DateTime fecha { get; set; }
+    public string metodoPago { get; set; }
+
+    public decimal total { get; set; }
+
+    public short estado { get; set; }
+
+    public string usuario { get; set; }
 
     public decimal subtotal { get; set; }
 
-    public decimal total { get; set; }
+    public decimal descuento { get; set; }
+
+    public string nombres { get; set; }
 
     public string observaciones { get; set; }
 
     public string usuarioRegistro { get; set; }
 
     public System.DateTime fechaRegistro { get; set; }
-
-    public short estado { get; set; }
 
 }
 

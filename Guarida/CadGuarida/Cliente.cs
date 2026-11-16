@@ -33,14 +33,6 @@ public partial class Cliente
 
     public string nombres { get; set; }
 
-    public string apellidos { get; set; }
-
-    public string celular { get; set; }
-
-    public string direccion { get; set; }
-
-    public string email { get; set; }
-
     public string usuarioRegistro { get; set; }
 
     public System.DateTime fechaRegistro { get; set; }

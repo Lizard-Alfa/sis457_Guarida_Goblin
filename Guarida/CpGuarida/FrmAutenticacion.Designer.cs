@@ -35,38 +35,38 @@
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblClave = new System.Windows.Forms.Label();
             this.txtClave = new System.Windows.Forms.TextBox();
-            this.pbxLogo = new System.Windows.Forms.PictureBox();
             this.btnIngresar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.erpUsuario = new System.Windows.Forms.ErrorProvider(this.components);
             this.erpClave = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpUsuario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpClave)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitulo
             // 
+            this.lblTitulo.BackColor = System.Drawing.Color.Transparent;
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.Location = new System.Drawing.Point(2, 0);
+            this.lblTitulo.Location = new System.Drawing.Point(0, 32);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(549, 38);
+            this.lblTitulo.Size = new System.Drawing.Size(484, 38);
             this.lblTitulo.TabIndex = 2;
-            this.lblTitulo.Text = "Iniciar Sesión";
+            this.lblTitulo.Text = "GUARIDA GOBLIN";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(167, 65);
+            this.txtUsuario.Location = new System.Drawing.Point(125, 100);
             this.txtUsuario.MaxLength = 30;
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(220, 24);
-            this.txtUsuario.TabIndex = 7;
+            this.txtUsuario.TabIndex = 0;
             // 
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(69, 68);
+            this.lblUsuario.BackColor = System.Drawing.Color.Transparent;
+            this.lblUsuario.Location = new System.Drawing.Point(122, 79);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(64, 18);
             this.lblUsuario.TabIndex = 6;
@@ -75,7 +75,8 @@
             // lblClave
             // 
             this.lblClave.AutoSize = true;
-            this.lblClave.Location = new System.Drawing.Point(69, 107);
+            this.lblClave.BackColor = System.Drawing.Color.Transparent;
+            this.lblClave.Location = new System.Drawing.Point(122, 139);
             this.lblClave.Name = "lblClave";
             this.lblClave.Size = new System.Drawing.Size(89, 18);
             this.lblClave.TabIndex = 6;
@@ -83,30 +84,20 @@
             // 
             // txtClave
             // 
-            this.txtClave.Location = new System.Drawing.Point(167, 104);
+            this.txtClave.Location = new System.Drawing.Point(125, 160);
             this.txtClave.MaxLength = 30;
             this.txtClave.Name = "txtClave";
             this.txtClave.PasswordChar = '*';
             this.txtClave.Size = new System.Drawing.Size(220, 24);
-            this.txtClave.TabIndex = 7;
+            this.txtClave.TabIndex = 1;
             this.txtClave.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtClave_KeyPress);
-            // 
-            // pbxLogo
-            // 
-            this.pbxLogo.Image = global::CpGuarida.Properties.Resources.security_lock;
-            this.pbxLogo.Location = new System.Drawing.Point(393, 24);
-            this.pbxLogo.Name = "pbxLogo";
-            this.pbxLogo.Size = new System.Drawing.Size(147, 142);
-            this.pbxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbxLogo.TabIndex = 9;
-            this.pbxLogo.TabStop = false;
             // 
             // btnIngresar
             // 
             this.btnIngresar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnIngresar.Image = global::CpGuarida.Properties.Resources.login_ok;
             this.btnIngresar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnIngresar.Location = new System.Drawing.Point(177, 155);
+            this.btnIngresar.Location = new System.Drawing.Point(135, 199);
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(108, 40);
             this.btnIngresar.TabIndex = 8;
@@ -120,7 +111,7 @@
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalir.Image = global::CpGuarida.Properties.Resources.close;
             this.btnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalir.Location = new System.Drawing.Point(291, 155);
+            this.btnSalir.Location = new System.Drawing.Point(249, 199);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(83, 40);
             this.btnSalir.TabIndex = 8;
@@ -141,9 +132,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(561, 208);
-            this.Controls.Add(this.pbxLogo);
+            this.BackColor = System.Drawing.SystemColors.Desktop;
+            this.BackgroundImage = global::CpGuarida.Properties.Resources.login_pergamino;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(484, 261);
             this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.txtClave);
@@ -151,6 +143,7 @@
             this.Controls.Add(this.txtUsuario);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.lblTitulo);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -159,8 +152,7 @@
             this.Name = "FrmAutenticacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "::: Login - Guarida Goblin :::";
-            this.Load += new System.EventHandler(this.frmAutenticacion_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).EndInit();
+            this.Load += new System.EventHandler(this.FrmAutenticacion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.erpUsuario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpClave)).EndInit();
             this.ResumeLayout(false);
@@ -177,7 +169,6 @@
         private System.Windows.Forms.TextBox txtClave;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Button btnIngresar;
-        private System.Windows.Forms.PictureBox pbxLogo;
         private System.Windows.Forms.ErrorProvider erpUsuario;
         private System.Windows.Forms.ErrorProvider erpClave;
     }

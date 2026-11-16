@@ -140,8 +140,10 @@
             // 
             this.dtpInicio.Location = new System.Drawing.Point(247, 32);
             this.dtpInicio.Name = "dtpInicio";
+            this.dtpInicio.ShowCheckBox = true;
             this.dtpInicio.Size = new System.Drawing.Size(200, 27);
             this.dtpInicio.TabIndex = 3;
+            this.dtpInicio.ValueChanged += new System.EventHandler(this.dtpInicio_ValueChanged);
             // 
             // lblsup1
             // 
@@ -184,6 +186,7 @@
             // 
             this.dtpFinal.Location = new System.Drawing.Point(529, 32);
             this.dtpFinal.Name = "dtpFinal";
+            this.dtpFinal.ShowCheckBox = true;
             this.dtpFinal.Size = new System.Drawing.Size(200, 27);
             this.dtpFinal.TabIndex = 7;
             // 
@@ -191,11 +194,11 @@
             // 
             this.lblbus3.AutoSize = true;
             this.lblbus3.Font = new System.Drawing.Font("Yu Gothic UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblbus3.Location = new System.Drawing.Point(467, 36);
+            this.lblbus3.Location = new System.Drawing.Point(453, 36);
             this.lblbus3.Name = "lblbus3";
-            this.lblbus3.Size = new System.Drawing.Size(46, 21);
+            this.lblbus3.Size = new System.Drawing.Size(55, 21);
             this.lblbus3.TabIndex = 6;
-            this.lblbus3.Text = "Asta:";
+            this.lblbus3.Text = "Hasta:";
             // 
             // lblbus2
             // 

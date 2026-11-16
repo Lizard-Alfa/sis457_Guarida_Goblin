@@ -13,9 +13,39 @@ namespace CpGuarida
 {
     public partial class FrmAutenticacion : Form
     {
+
         public FrmAutenticacion()
         {
             InitializeComponent();
+            ConfigurarEstiloMedieval();
+        }
+
+        // Parte visual que esta a prueba revisan
+        private void ConfigurarEstiloMedieval()
+        {
+            // 1. Quitar bordes
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.ControlBox = false;
+            this.Text = "";
+
+            // 2. Configurar TextBox
+            txtUsuario.Location = new Point(125, 100);
+            txtUsuario.BackColor = Color.White;
+            txtUsuario.ForeColor = Color.Black;
+            txtUsuario.BorderStyle = BorderStyle.FixedSingle;
+            txtUsuario.Font = new Font("Arial", 11);
+
+            txtClave.Location = new Point(125, 160);
+            txtClave.BackColor = Color.White;
+            txtClave.ForeColor = Color.Black;
+            txtClave.BorderStyle = BorderStyle.FixedSingle;
+            txtClave.Font = new Font("Arial", 11);
+            txtClave.PasswordChar = '●';
+        }
+
+        private void frmAutenticacion_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -46,31 +76,33 @@ namespace CpGuarida
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            var usuario = UsuarioCln.validar(txtUsuario.Text, Util.Encrypt(txtClave.Text));
-            if(usuario == null)
+            if (validarCampos())
             {
-                MessageBox.Show("Usuario y/o contraseña incorrectos", "::: Mensaje - Guarida Goblin",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                Util.usuario = usuario;
-                txtClave.Clear();
-                txtUsuario.Focus();
-                txtUsuario.SelectAll();
-                Hide();
-                new FrmPrincipal(this).ShowDialog();
+                var usuario = UsuarioCln.validar(txtUsuario.Text, Util.Encrypt(txtClave.Text));
+                if (usuario == null)
+                {
+                    MessageBox.Show("Usuario y/o contraseña incorrectos", "::: Mensaje - Guarida Goblin",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    Util.usuario = usuario;
+                    txtClave.Clear();
+                    txtUsuario.Focus();
+                    txtUsuario.SelectAll();
+                    Hide();
+                    new FrmPrincipal(this).ShowDialog();
+                }
             }
         }
-
-        private void frmAutenticacion_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void txtClave_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter) btnIngresar.PerformClick();
+        }
+
+        private void FrmAutenticacion_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

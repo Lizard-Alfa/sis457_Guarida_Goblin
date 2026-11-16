@@ -38,9 +38,7 @@ namespace CpGuarida
             return clearText;
         }
 
-        /// <summary>
         /// Validar sólo números en el evento KeyPress
-        /// </summary>
         public static void onlyNumbers(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 22 && notPaste) e.Handled = true; //Deshabilitar Ctrl + V (Pegar)
@@ -52,9 +50,7 @@ namespace CpGuarida
             }
         }
 
-        /// <summary>
         /// Validar sólo números enteros o decimales en el evento KeyPress
-        /// </summary>
         public static void onlyDecimals(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 22 && notPaste) e.Handled = true; //Deshabilitar Ctrl + V (Pegar)
@@ -74,9 +70,7 @@ namespace CpGuarida
             }
         }
 
-        /// <summary>
         /// Validar sólo letras en el evento KeyPress
-        /// </summary>
         public static void onlyLetters(object sender, KeyPressEventArgs e)
         {
             if (Char.IsLetter(e.KeyChar)) e.Handled = false;
@@ -85,9 +79,7 @@ namespace CpGuarida
             else e.Handled = true;
         }
 
-        /// <summary>
         /// Validar ni números ni letras en el evento KeyPress
-        /// </summary>
         public static void notNumbersLetters(object sender, KeyPressEventArgs e)
         {
             if (!(Char.IsLetterOrDigit(e.KeyChar) || Char.IsPunctuation(e.KeyChar))) e.Handled = false;

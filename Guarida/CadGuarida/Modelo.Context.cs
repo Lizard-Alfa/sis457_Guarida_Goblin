@@ -37,8 +37,6 @@ public partial class GuaridaEntities : DbContext
 
     public virtual DbSet<Categoria> Categoria { get; set; }
 
-    public virtual DbSet<Cliente> Cliente { get; set; }
-
     public virtual DbSet<Compra> Compra { get; set; }
 
     public virtual DbSet<CompraDetalle> CompraDetalle { get; set; }
@@ -51,9 +49,11 @@ public partial class GuaridaEntities : DbContext
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
-    public virtual DbSet<Venta> Venta { get; set; }
-
     public virtual DbSet<VentaDetalle> VentaDetalle { get; set; }
+
+    public virtual DbSet<Cliente> Cliente { get; set; }
+
+    public virtual DbSet<Venta> Venta { get; set; }
 
 
     public virtual ObjectResult<paClienteListar_Result> paClienteListar(string parametro)
@@ -65,43 +65,6 @@ public partial class GuaridaEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<paClienteListar_Result>("paClienteListar", parametroParameter);
-    }
-
-
-    public virtual ObjectResult<Nullable<int>> paCompraRegistrar(Nullable<int> idProveedor, string trackingNumber, string estadoEnvio, Nullable<System.DateTime> fechaEstimada, string detalles, Nullable<decimal> total)
-    {
-
-        var idProveedorParameter = idProveedor.HasValue ?
-            new ObjectParameter("idProveedor", idProveedor) :
-            new ObjectParameter("idProveedor", typeof(int));
-
-
-        var trackingNumberParameter = trackingNumber != null ?
-            new ObjectParameter("trackingNumber", trackingNumber) :
-            new ObjectParameter("trackingNumber", typeof(string));
-
-
-        var estadoEnvioParameter = estadoEnvio != null ?
-            new ObjectParameter("estadoEnvio", estadoEnvio) :
-            new ObjectParameter("estadoEnvio", typeof(string));
-
-
-        var fechaEstimadaParameter = fechaEstimada.HasValue ?
-            new ObjectParameter("fechaEstimada", fechaEstimada) :
-            new ObjectParameter("fechaEstimada", typeof(System.DateTime));
-
-
-        var detallesParameter = detalles != null ?
-            new ObjectParameter("detalles", detalles) :
-            new ObjectParameter("detalles", typeof(string));
-
-
-        var totalParameter = total.HasValue ?
-            new ObjectParameter("total", total) :
-            new ObjectParameter("total", typeof(decimal));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("paCompraRegistrar", idProveedorParameter, trackingNumberParameter, estadoEnvioParameter, fechaEstimadaParameter, detallesParameter, totalParameter);
     }
 
 
@@ -160,33 +123,6 @@ public partial class GuaridaEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<paUsuarioValidar_Result>("paUsuarioValidar", usuarioParameter, claveParameter);
-    }
-
-
-    public virtual ObjectResult<Nullable<int>> paVentaRegistrar(Nullable<int> idCliente, Nullable<int> idUsuario, string detalles, Nullable<decimal> total)
-    {
-
-        var idClienteParameter = idCliente.HasValue ?
-            new ObjectParameter("idCliente", idCliente) :
-            new ObjectParameter("idCliente", typeof(int));
-
-
-        var idUsuarioParameter = idUsuario.HasValue ?
-            new ObjectParameter("idUsuario", idUsuario) :
-            new ObjectParameter("idUsuario", typeof(int));
-
-
-        var detallesParameter = detalles != null ?
-            new ObjectParameter("detalles", detalles) :
-            new ObjectParameter("detalles", typeof(string));
-
-
-        var totalParameter = total.HasValue ?
-            new ObjectParameter("total", total) :
-            new ObjectParameter("total", typeof(decimal));
-
-
-        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("paVentaRegistrar", idClienteParameter, idUsuarioParameter, detallesParameter, totalParameter);
     }
 
 
