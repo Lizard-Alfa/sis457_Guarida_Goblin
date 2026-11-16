@@ -16,6 +16,7 @@ namespace CpGuarida
         public FrmAutenticacion()
         {
             InitializeComponent();
+            //txtUsuario.Text = Util.Encrypt("iver2003");
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -68,6 +69,11 @@ namespace CpGuarida
         private void txtClave_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter) btnIngresar.PerformClick();
+        }
+
+        private void FrmAutenticacion_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

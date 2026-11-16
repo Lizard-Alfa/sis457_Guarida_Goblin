@@ -3,6 +3,7 @@ using ClnGuarida;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace CpGuarida
         public FrmVenta()
         {
             InitializeComponent();
+          
         }
         private void listar()
         {
@@ -23,16 +25,23 @@ namespace CpGuarida
             dgvListaProducto.Columns["id"].Visible = false;
             dgvListaProducto.Columns["idCategoria"].Visible = false;
             dgvListaProducto.Columns["estado"].Visible = false;
+            dgvListaProducto.Columns["precioCostoUsd"].Visible = false;
+            dgvListaProducto.Columns["usuarioRegistro"].Visible = false;
+            dgvListaProducto.Columns["fechaRegistro"].Visible = false;
             dgvListaProducto.Columns["codigo"].HeaderText = "Código";
             dgvListaProducto.Columns["nombre"].HeaderText = "Nombre";
             dgvListaProducto.Columns["descripcion"].HeaderText = "Descripción";
             dgvListaProducto.Columns["pesoKg"].HeaderText = "Peso en Kg";
-            dgvListaProducto.Columns["precioCostoUsd"].HeaderText = "Precio en Dólares";
-            dgvListaProducto.Columns["precioVentaBob"].HeaderText = "Precio en Bolivianos";
-            dgvListaProducto.Columns["stockActual"].HeaderText = "Stock Actual";
-            dgvListaProducto.Columns["stockMinimo"].HeaderText = "Stock Minimo";
-            dgvListaProducto.Columns["usuarioRegistro"].Visible = false;
-            dgvListaProducto.Columns["fechaRegistro"].Visible = false;
+            dgvListaProducto.Columns["precioVentaBob"].HeaderText = "Precio(BO)";
+            dgvListaProducto.Columns["stockActual"].HeaderText = "Stock";
+            dgvListaProducto.Columns["stockMinimo"].HeaderText = "Stock Mínimo";
+            dgvListaProducto.Columns["nombre"].DisplayIndex = 0;
+            dgvListaProducto.Columns["codigo"].DisplayIndex = 1;
+            dgvListaProducto.Columns["descripcion"].DisplayIndex = 2;
+            dgvListaProducto.Columns["stockActual"].DisplayIndex = 3;
+            dgvListaProducto.Columns["precioVentaBob"].DisplayIndex = 4;
+            dgvListaProducto.Columns["pesoKg"].DisplayIndex = 5;
+            dgvListaProducto.Columns["stockMinimo"].DisplayIndex = 6;
 
             if (productos.Count > 0) dgvListaProducto.CurrentCell = dgvListaProducto.Rows[0].Cells["codigo"];
         }
@@ -46,10 +55,13 @@ namespace CpGuarida
         {
             listarDetalles();
             listar();
-            txtUsuario.Text = Util.usuario.usuario1;
+            txtUsuario.Text =Util.usuario.usuario1;
             calcularSubTotal();
             CalcularTotal();
             cargarMetodosPago();
+            validarEfectivo();
+            nudDescuento.TextChanged += nudDescuento_TabIndexChanged;
+            nudRecibido.TextChanged += nudRecibido_TabIndexChanged;
         }
 
         private void listarDetalles()
@@ -73,46 +85,56 @@ namespace CpGuarida
                     totalsubtotal += Convert.ToDecimal(row.Cells["subtotal"].Value);
                 }
             }
-            lblSubInfo.Text = totalsubtotal.ToString("0.00");
+            lblSubInfo.Text = totalsubtotal.ToString("N2");
         }
+
         private void CalcularTotal()
         {
             decimal subtotal = 0;
             decimal descuento = 0;
-            decimal baseImponible = 0;
-            decimal iva = 0;
             decimal total = 0;
             decimal cambio = 0;
             decimal recibido = 0;
 
-            const decimal PORCENTAJE_IVA = 0.13m; 
-
             if (decimal.TryParse(lblSubInfo.Text, out subtotal))
             {
-                decimal porcentajeDescuento = nudDescuento.Value / 100m;
+                decimal porcentajeDescuento = 0;
+                decimal.TryParse(nudDescuento.Text, out porcentajeDescuento);
+                porcentajeDescuento /= 100m;
                 descuento = subtotal * porcentajeDescuento;
 
                 if (descuento < 0) descuento = 0;
                 if (descuento > subtotal) descuento = subtotal;
-                baseImponible = subtotal - descuento;
-                iva = Math.Round(baseImponible * PORCENTAJE_IVA, 2);
-                total = baseImponible + iva;
-                recibido = nudRecibido.Value;
+                total = subtotal - descuento;
+                decimal.TryParse(nudRecibido.Text, out recibido);
                 cambio = recibido - total;
 
                 if (cambio < 0) cambio = 0;
-                lblTotalInfo.Text = total.ToString("0.00");
-                lblIvaInfo.Text = iva.ToString("0.00");
-                lblCinfo.Text = cambio.ToString("0.00");
-                lblDesRe.Text = descuento.ToString("0.00");
+                lblTotalInfo.Text = total.ToString("N2");
+                lblCinfo.Text = cambio.ToString("N2");
+                lblDesRe.Text = descuento.ToString("N2");
             }
             else
             {
                 lblTotalInfo.Text = "0.00";
-                lblIvaInfo.Text = "0.00";
                 lblCinfo.Text = "0.00";
-                lblDesRe.Text = "0:00";
+                lblDesRe.Text = "0.00";
             }
+        }
+        private void validarEfectivo()
+        {
+            bool esEfectivo = cbxMetoPago.Text == "Efectivo";
+            if (esEfectivo)
+            {
+                nudRecibido.Enabled = true;
+                nudRecibido.ReadOnly = false;   
+            }
+            else
+            {
+                nudRecibido.Enabled = false;   
+                nudRecibido.Value = 0;
+            }
+
         }
         private void ActualizarFilaSubtotal(DataGridViewRow fila, int nuevaCantidad)
         {
@@ -123,16 +145,17 @@ namespace CpGuarida
 
         private void agregarProductoAlDetalle()
         {
+            if (dgvListaProducto.CurrentRow == null) return;
+
             int idProducto = Convert.ToInt32(dgvListaProducto.CurrentRow.Cells["id"].Value);
             string codigo = dgvListaProducto.CurrentRow.Cells["codigo"].Value.ToString();
-            string nombre = dgvListaProducto.CurrentRow.Cells["nombre"].Value.ToString();
+            string nombreProducto = dgvListaProducto.CurrentRow.Cells["nombre"].Value.ToString();
             decimal precioVentaBob = Convert.ToDecimal(dgvListaProducto.CurrentRow.Cells["precioVentaBob"].Value);
             int stockActual = Convert.ToInt32(dgvListaProducto.CurrentRow.Cells["stockActual"].Value);
-            int cantidad = 1;
 
             if (stockActual <= 0)
             {
-                MessageBox.Show($"El producto '{nombre}' no tiene stock disponible.", "Sin Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"El producto '{nombreProducto}' no tiene stock disponible.", "Sin Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -146,8 +169,36 @@ namespace CpGuarida
                 return;
             }
 
+            int cantidad = 0;
+                string inputCantidad = Microsoft.VisualBasic.Interaction.InputBox(
+                    $"Ingrese la cantidad para '{nombreProducto}'\nStock disponible: {stockActual}",
+                    "Cantidad a Vender",
+                    "1");
+
+            if (string.IsNullOrWhiteSpace(inputCantidad))
+            {
+                    return;  
+            }
+
+
+            if (!int.TryParse(inputCantidad, out cantidad) || cantidad <= 0)
+                {
+                    MessageBox.Show("Por favor, ingrese un número entero válido mayor a 0.", "Valor Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+              
+                if (cantidad > stockActual)
+                {
+                    MessageBox.Show($"No hay suficiente stock. Stock disponible: {stockActual}", "Stock Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+            
+
             decimal subtotal = precioVentaBob * cantidad;
-            dgvDatosVenta.Rows.Add(idProducto, codigo, nombre, precioVentaBob, cantidad, subtotal);
+            dgvDatosVenta.Rows.Add(idProducto, codigo, nombreProducto, precioVentaBob, cantidad, subtotal);
+
             calcularSubTotal();
             CalcularTotal();
             btnCancelar.Enabled = dgvDatosVenta.Rows.Count > 0;
@@ -252,15 +303,10 @@ namespace CpGuarida
             }
         }
 
-        private void npnDescuento_ValueChanged(object sender, EventArgs e)
-        {
-            CalcularTotal();
-        }
+       
 
-        private void npnRecibido_ValueChanged(object sender, EventArgs e)
-        {
-            CalcularTotal();
-        }
+    
+
         private void resetearCampos()
         {
             resetearErrores();
@@ -273,9 +319,8 @@ namespace CpGuarida
             nudRecibido.Value = 0;
             lblCinfo.Text = "0.00";
             lblSubInfo.Text = "0.00";
-            lblIvaInfo.Text = "0.00";
             lblTotalInfo.Text = "0.00";
-            lblDesRe.Text = "0:00";
+            lblDesRe.Text = "0.00";
             txtObservaciones.Clear();
 
         }
@@ -283,8 +328,6 @@ namespace CpGuarida
         {
             erpCliente.Clear();
             erpDatosVenta.Clear();
-            erpMetoPago.Clear();
-            erpRecibido.Clear();
 
         }
         private Boolean validarCampos()
@@ -298,16 +341,6 @@ namespace CpGuarida
                 esValido = false;
             }
 
-            if (cbxMetoPago.SelectedIndex == -1)
-            {
-                erpMetoPago.SetError(cbxMetoPago, "El método de pago es obligatorio");
-                esValido = false;
-            }
-            if (nudRecibido.Value == 0)
-            {
-                erpRecibido.SetError(nudRecibido, "El monto recibido debe ser mayor a 0");
-                esValido = false;
-            }
             if (dgvDatosVenta.Rows.Count == 0)
             {
                 erpDatosVenta.SetError(dgvDatosVenta, "El detalle de la venta es obligatorio");
@@ -335,7 +368,6 @@ namespace CpGuarida
                         fechaRegistro = DateTime.Now,
                         metodoPago = cbxMetoPago.Text.Trim(),
                         descuento = Convert.ToDecimal(lblDesRe.Text),
-                        iva = Convert.ToDecimal(lblIvaInfo.Text),
                         estado = (short)Estado.Activo
                     };
 
@@ -351,7 +383,7 @@ namespace CpGuarida
                                 cantidad = Convert.ToInt32(row.Cells["cantidad"].Value),
                                 precioUnitario = Convert.ToDecimal(row.Cells["precioVentaBob"].Value),
                                 subtotal = Convert.ToDecimal(row.Cells["subtotal"].Value),
-                                usuarioRegistro = "ADMIN",
+                                usuarioRegistro = Util.usuario.usuario1,
                                 fechaRegistro = DateTime.Now,
                                 estado = (short)Estado.Activo,
                             };
@@ -368,7 +400,8 @@ namespace CpGuarida
 
                         MessageBox.Show($"Venta N° {venta.transaccion} registrada correctamente", "::: Guarida Goblin :::",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        FrmDetalle frm = new FrmDetalle(idVentaRegistrada);
+                        frm.ShowDialog();
                         resetearCampos();
                         listar();
                     }
@@ -413,37 +446,83 @@ namespace CpGuarida
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-        private void btnBusCli_Click(object sender, EventArgs e)
+        private void btnCliente_Click(object sender, EventArgs e)
         {
+
+            FrmCliente frm = new FrmCliente();
+            if (!string.IsNullOrWhiteSpace(txtCliente.Text))
+            {
+                frm.carnetAEnviar = txtCliente.Text.Trim();
+            }
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                txtCliente_TextChanged(null, null);
+            }
+        }
+
+        private void txtCliente_TextChanged(object sender, EventArgs e)
+        {
+            string criterio = txtCliente.Text.Trim();
+            if (string.IsNullOrEmpty(criterio))
+            {
+                txtResultadoCli.Text = string.Empty;
+                idClienteSeleccionado = 0;
+                return;
+            }
 
             try
             {
-                var cliente = ClienteCln.buscar(txtCliente.Text.Trim());
+                var cliente = ClienteCln.buscar(criterio);
 
                 if (cliente != null)
                 {
-                    txtResultadoCli.Text = $"{cliente.nombres} {cliente.apellidos}";
+                    txtResultadoCli.Text = $"{cliente.nombres}";
                     idClienteSeleccionado = cliente.id;
                 }
+                else
+                {
+                    txtResultadoCli.Text = "No encontrado";
+                    idClienteSeleccionado = 0;
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message, "::: Error - Guarida Goblin :::",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtResultadoCli.Text = string.Empty;
+                idClienteSeleccionado = 0;
             }
         }
 
-        private void btnLimpiarCli_Click(object sender, EventArgs e)
+        private void txtCliente_KeyPress(object sender, KeyPressEventArgs e)
         {
-            txtResultadoCli.Text = string.Empty;
-            idClienteSeleccionado = 0;
-            txtCliente.Text = string.Empty;
+            if (char.IsControl(e.KeyChar)) return;
+            if (!char.IsDigit(e.KeyChar)) e.Handled = true;
         }
 
-        private void btnCliente_Click(object sender, EventArgs e)
+       
+
+        private void nudDescuento_ValueChanged(object sender, EventArgs e)
         {
-            new FrmCliente().ShowDialog();
+            CalcularTotal();
+        }
+
+        private void nudRecibido_ValueChanged(object sender, EventArgs e)
+        {
+            CalcularTotal();
+        }
+
+        private void nudDescuento_TabIndexChanged(object sender, EventArgs e)
+        {
+            CalcularTotal();
+        }
+
+        private void nudRecibido_TabIndexChanged(object sender, EventArgs e)
+        {
+            CalcularTotal();
+        }
+
+        private void cbxMetoPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            validarEfectivo();
         }
     }
 }

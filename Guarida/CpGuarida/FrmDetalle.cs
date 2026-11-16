@@ -15,8 +15,6 @@ namespace CpGuarida
     public partial class FrmDetalle : Form
     {
         private readonly int idVenta;
-        private const string L = "------------------------------------------------------------";
-
         public FrmDetalle(int idVenta)
         {
             InitializeComponent();
@@ -25,40 +23,67 @@ namespace CpGuarida
 
         private void FrmDetalle_Load(object sender, EventArgs e)
         {
+            listar();
+        }
+        private void listar()
+        {
             try
             {
                 var detalles = DetalleCln.listarPorVenta(idVenta);
+
                 if (detalles == null || !detalles.Any())
                 {
-                    MessageBox.Show("No se encontraron detalles para esta venta.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No se encontraron detalles para esta venta.",
+                        "::: Aviso - Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.Close();
                     return;
                 }
+                rtxtexBo.Font = new Font("Consolas", 9.5f, FontStyle.Regular);
+                rtxtexBo.ReadOnly = true;
+                rtxtexBo.WordWrap = false;
+                rtxtexBo.ScrollBars = RichTextBoxScrollBars.Vertical;
+
+                float anchoChar = TextRenderer.MeasureText("WWWWWWWWWW", rtxtexBo.Font).Width / 10f;
+                int totalCols = (int)((rtxtexBo.ClientSize.Width - 6) / anchoChar);
+                int colDer = 18;
+                int colIzq = totalCols - colDer;
+
+                string L = new string('-', totalCols);
+                Func<string, string> centrar = t => t.Length >= totalCols ? t : t.PadLeft((totalCols + t.Length) / 2);
+                Func<string, string, string> fila = (izq, der) =>
+                    (izq.Length > colIzq - 1 ? izq.Substring(0, colIzq - 1) : izq).PadRight(colIzq) + der.PadLeft(colDer);
 
                 var venta = detalles.First().Venta;
+                string clienteNombre = (venta.Cliente?.nombres ?? "S/N").Trim();
+                string clienteCi = (venta.Cliente?.cedulaIdentidad ?? "S/N").Trim();
+                string vendedor = (venta.usuarioRegistro ?? "S/N").Trim();
+                string metodoPago = (venta.metodoPago ?? "S/N").Trim();
+
                 rtxtexBo.Text =
-                    $"\n{"GUARIDA GOBLIN",27}\n{"Sucre, Bolivia",27}\n\n{L}\n{"COMPROBANTE DE VENTA",29}\n{L}\n" +
-                    $"{"Venta N°:",-20}{idVenta,26}\n" +
-                    $"{"Transacción:",-20}{(venta.transaccion?.ToString() ?? "S/N"),26}\n" +
-                    $"{"Fecha:",-20}{venta.fecha:dd/MM/yyyy HH:mm,26}\n" +
-                    $"{"Cliente:",-20}{(venta.Cliente?.nombres + " " + venta.Cliente?.apellidos).Trim(),26}\n" +
-                    $"{"Vendedor:",-20}{venta.usuarioRegistro,26}\n" +
-                    $"{"Método de Pago:",-20}{venta.metodoPago,26}\n" +
+                    $"\n{centrar("GUARIDA GOBLIN")}\n" +
+                    $"{centrar("Sucre, Bolivia")}\n\n" +
+                    $"{L}\n{centrar("COMPROBANTE DE VENTA")}\n{L}\n" +
+                    $"{fila("Venta N°:", idVenta.ToString())}\n" +
+                    $"{fila("Fecha:", venta.fecha.ToString("dd/MM/yyyy HH:mm"))}\n" +
+                    $"{fila("CI/NIT:", clienteCi)}\n" +
+                    $"{fila("Cliente:", clienteNombre)}\n" +
+                    $"{fila("Vendedor:", vendedor)}\n" +
+                    $"{fila("Método de Pago:", metodoPago)}\n" +
                     $"{L}\n" +
-                    $"{"Descripción",-20}{"Subtotal",26}\n" +
+                    $"{fila("Descripción", "Subtotal")}\n" +
                     string.Concat(detalles.Select(d =>
                         $"{d.Producto.nombre}\n" +
-                        $"{"  " + d.cantidad + " x " + d.precioUnitario.ToString("N2"),-20}{d.subtotal,26:N2}\n")) +
+                        $"{fila($"  {d.cantidad} x {d.precioUnitario:N2}", $"{d.subtotal:N2}")}\n")) +
                     $"{L}\n" +
-                    $"{"Subtotal:",-20}{venta.subtotal,26:N2}\n" +
-                    $"{"Descuento:",-20}{venta.descuento,26:N2}\n" +
-                    $"{"IVA (13%):",-20}{venta.iva,26:N2}\n" +
+                    $"{fila("Subtotal:", $"{venta.subtotal:N2}")}\n" +
+                    $"{fila("Descuento:", $"{venta.descuento:N2}")}\n" +
+                    
                     $"{L}\n" +
-                    $"{"TOTAL Bs:",-20}{venta.total,26:N2}\n" +
+                    $"{fila("TOTAL Bs:", $"{venta.total:N2}")}\n" +
                     $"{L}\n\n" +
-                    $"{"¡GRACIAS POR SU COMPRA!",29}";
+                    $"{centrar("¡GRACIAS POR SU COMPRA!")}\n\n";
 
-                Text = $"Detalle de la venta N° {idVenta} - Guardia Goblin";
+                this.Text = $"Venta N° {idVenta} - Guarida Goblin";
             }
             catch (Exception ex)
             {
@@ -67,5 +92,5 @@ namespace CpGuarida
                 this.Close();
             }
         }
+      }
     }
-}

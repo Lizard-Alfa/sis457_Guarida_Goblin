@@ -26,21 +26,22 @@ namespace CpGuarida
             dgvListar.DataSource = ventas;
             dgvListar.Columns["id"].Visible = false;
             dgvListar.Columns["idCliente"].Visible = false;
-            dgvListar.Columns["Cliente"].HeaderText = "Cliente";
             dgvListar.Columns["usuario"].HeaderText = "Usuario";
             dgvListar.Columns["transaccion"].HeaderText = "Transacción";
             dgvListar.Columns["fecha"].HeaderText = "Fecha";
             dgvListar.Columns["subtotal"].HeaderText = "Subtotal";
             dgvListar.Columns["descuento"].HeaderText = "Descuento";
-            dgvListar.Columns["iva"].HeaderText = "Iva (13%)";
             dgvListar.Columns["metodoPago"].HeaderText = "Metodo de Pago";
             dgvListar.Columns["total"].HeaderText = "Total";
             dgvListar.Columns["observaciones"].Visible = false;
             dgvListar.Columns["usuarioRegistro"].Visible = false;
             dgvListar.Columns["fechaRegistro"].Visible = false;
             dgvListar.Columns["estado"].HeaderText = "Estado";
+            dgvListar.Columns["subtotal"].DisplayIndex = 5;
+            dgvListar.Columns["descuento"].DisplayIndex = 6;
+            dgvListar.Columns["usuario"].DisplayIndex = 10;
 
-            if (ventas.Count > 0) dgvListar.CurrentCell = dgvListar.Rows[0].Cells["Cliente"];
+                if (ventas.Count > 0) dgvListar.CurrentCell = dgvListar.Rows[0].Cells["fecha"];
         }
         catch (Exception ex)
         {
@@ -53,9 +54,9 @@ namespace CpGuarida
         {
             dtpInicio.Checked = false;
             dtpFinal.Checked = false;
-            listar(); 
-        }
+            listar();
 
+        }
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             Close();
@@ -93,6 +94,18 @@ namespace CpGuarida
         {
             try
             {
+                short estado = Convert.ToInt16(dgvListar.CurrentRow.Cells["estado"].Value);
+                if (estado != 1)
+                {
+                    return;
+                }
+                DateTime fechaVenta = Convert.ToDateTime(dgvListar.CurrentRow.Cells["fecha"].Value);
+                if ((DateTime.Now - fechaVenta).TotalHours > 24)
+                {
+                    MessageBox.Show("No se puede dar de baja la venta porque ya pasaron más de 24 horas desde su registro.",
+                        "::: Advertencia - Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 int id = (int)dgvListar.CurrentRow.Cells["id"].Value;
                 string transaccion = dgvListar.CurrentRow.Cells["transaccion"].Value.ToString();
                 DialogResult dialog = MessageBox.Show($"Está seguro que desea dar de baja la venta {transaccion}?",
@@ -122,13 +135,18 @@ namespace CpGuarida
 
             try
             {
-                DetalleCln.validar(id);          // si está anulada, lanza el error y no abre nada
+                DetalleCln.validar(id); 
                 new FrmDetalle(id).ShowDialog();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "::: Guarida Goblin :::", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void dtpInicio_ValueChanged(object sender, EventArgs e)
+        {
+            dtpFinal.MinDate = dtpInicio.Value.Date;
         }
     }
 }

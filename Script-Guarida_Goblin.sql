@@ -48,13 +48,10 @@ CREATE TABLE Cliente (
     cedulaIdentidad VARCHAR(15) NULL,
     nombres VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NULL,
-    celular VARCHAR(15) NULL,
-    direccion VARCHAR(200) NULL,
-    email VARCHAR(100) NULL,
     usuarioRegistro VARCHAR(50) NOT NULL DEFAULT SUSER_NAME(),
     fechaRegistro DATETIME NOT NULL DEFAULT GETDATE(),
     estado SMALLINT NOT NULL DEFAULT 1
-);
+); 
 INSERT INTO Cliente (cedulaIdentidad, nombres, apellidos, celular, direccion, email)
 VALUES ('12345678', 'Juan Carlos', 'Perez Gomez', '77712345', 'Av. Siempre Viva #123', 'juan.perez@email.com');
 
@@ -196,8 +193,10 @@ CREATE TABLE VentaDetalle (
 GO
 --agregamos una columna a la tabla venta para el tipo de pago
 ALTER TABLE Venta ADD metodoPago VARCHAR(50) NOT NULL DEFAULT 'Efectivo';
-ALTER TABLE Venta ADD descuento DECIMAL(10,2) NOT NULL DEFAULT 0,
-    iva DECIMAL(10,2) NOT NULL DEFAULT 0;
+ALTER TABLE Venta ADD descuento DECIMAL(10,2) NOT NULL DEFAULT 0;
+ALTER TABLE Venta
+DROP COLUMN iva;
+ALTER TABLE Venta DROP CONSTRAINT DF__Venta__iva__625A9A57;
 -- 4. ÍNDICES DE RENDIMIENTO
 
 CREATE INDEX idx_Producto_nombre ON Producto(nombre);
@@ -294,42 +293,39 @@ GO
 --Para listar Venta--
 DROP PROC IF EXISTS paVentaListar;
 GO
-CREATE PROC paVentaListar
+ALTER PROC paVentaListar
     @fechaInicio DATETIME = NULL,
     @fechaFin DATETIME = NULL
 AS
 BEGIN
     SELECT 
         v.id,
-        v.idCliente,
-        c.nombres + ' ' + c.apellidos AS Cliente,
-        u.usuario,
-        v.transaccion,
         v.fecha,
-        v.subtotal,
-        v.descuento,
-        v.iva,
+        v.idCliente,
+        v.transaccion,
         v.metodoPago,
         v.total,
+        v.estado,
+        u.usuario,
+        v.subtotal,
+        v.descuento,
+        c.nombres,
         v.observaciones,
         v.usuarioRegistro,
-        v.fechaRegistro,
-        v.estado
+        v.fechaRegistro
     FROM Venta v
     INNER JOIN Cliente c ON v.idCliente = c.id
     INNER JOIN Usuario u ON v.idUsuario = u.id
     WHERE v.estado IN (1, 0)   -- 1 = Activo, 0 = Anulado
       AND (@fechaInicio IS NULL OR v.fecha >= CAST(@fechaInicio AS DATE))
       AND (@fechaFin IS NULL OR v.fecha < DATEADD(DAY, 1, CAST(@fechaFin AS DATE)))
-    ORDER BY v.fecha DESC, v.id DESC;
+    ORDER BY v.fecha DESC;
 END
 GO
 EXEC paVentaListar '' ;
 EXEC paVentaListar '2026-01-01', '2026-10-31';
 -- Listar venta
 
-
--- 6. DML
 
 -- Categorías
 INSERT INTO Categoria (nombre, descripcion) VALUES
@@ -348,16 +344,23 @@ INSERT INTO Proveedor (tipo, razonSocial, pais, contacto) VALUES
 ('Nacional', 'El mercader errante Santa Cruz', 'Bolivia', 'Judith Villagomez');
 
 -- Clientes
-INSERT INTO Cliente (nombres, apellidos, celular) VALUES
+INSERT INTO Cliente (nombres) VALUES
 ('elmer', 'champi', 67534493);
 
 -- Empleados
 INSERT INTO Empleado (cedulaIdentidad, nombres, primerApellido, fechaNacimiento, direccion, celular, cargo) VALUES
 ('1234567', 'Juan', 'Fernández', '2006-01-31', 'Calle Siempre viva #123', 72856559, 'Gerente');
-
+INSERT INTO Empleado (cedulaIdentidad, nombres, primerApellido, fechaNacimiento, direccion, celular, cargo) VALUES
+('10346363', 'Iver', 'Sanchez Siagua', '2003-08-24', 'Calle Siempre viva #123', 63759369, 'Cajero');
 -- Usuarios
 INSERT INTO Usuario (idEmpleado, usuario, clave) VALUES
 (1, 'admin', 's1udM8c0+VgaifwGKuOcBUMvh0U8nyJQt6XKeBTNb2s='); --"juego123"
+INSERT INTO Usuario (idEmpleado, usuario, clave) VALUES
+(2, 'Iver', 'jgtvVo0MEvhvh1e+ah7FzmNEpkN2FbcKsdWw725Hxx8='); --"iver2003"
+UPDATE Usuario 
+SET usuario = 'Iver', 
+    clave = 'jgtvVo0MEvhvh1e+ah7FzmNEpkN2FbcKsdWw725Hxx8='
+WHERE idEmpleado = 2;
 
 -- Productos de ejemplo
 INSERT INTO Producto (idCategoria, codigo, nombre, descripcion, pesoKg, precioCostoUsd, precioVentaBob, stockActual, stockMinimo) VALUES
@@ -375,5 +378,6 @@ GO
 SELECT * FROM Producto;
 SELECT * FROM Venta;
 SELECT * FROM Cliente;
-
+SELECT * FROM Usuario;
+SELECT * FROM Empleado;
 

@@ -32,10 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmVenta));
             this.label1 = new System.Windows.Forms.Label();
             this.pnlCliente = new System.Windows.Forms.Panel();
+            this.lblClientess = new System.Windows.Forms.Label();
             this.btnCliente = new System.Windows.Forms.Button();
-            this.btnLimpiarCli = new System.Windows.Forms.Button();
             this.txtResultadoCli = new System.Windows.Forms.TextBox();
-            this.btnBusCli = new System.Windows.Forms.Button();
             this.txtCliente = new System.Windows.Forms.TextBox();
             this.pbxCliente = new System.Windows.Forms.PictureBox();
             this.lblCliente = new System.Windows.Forms.Label();
@@ -65,11 +64,9 @@
             this.lblMetodoPago = new System.Windows.Forms.Label();
             this.lblCambio = new System.Windows.Forms.Label();
             this.lblRecibido = new System.Windows.Forms.Label();
-            this.lblIvaInfo = new System.Windows.Forms.Label();
             this.lblSubInfo = new System.Windows.Forms.Label();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.nudDescuento = new System.Windows.Forms.NumericUpDown();
-            this.lblIva = new System.Windows.Forms.Label();
             this.lblSubToral = new System.Windows.Forms.Label();
             this.lblDescuento = new System.Windows.Forms.Label();
             this.lblOpservaciones = new System.Windows.Forms.Label();
@@ -85,8 +82,6 @@
             this.pnlAcciones = new System.Windows.Forms.Panel();
             this.btnRegistrarVenta = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.erpMetoPago = new System.Windows.Forms.ErrorProvider(this.components);
-            this.erpRecibido = new System.Windows.Forms.ErrorProvider(this.components);
             this.erpDatosVenta = new System.Windows.Forms.ErrorProvider(this.components);
             this.erpCliente = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnBorrarProducto = new System.Windows.Forms.Button();
@@ -108,8 +103,6 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.pnlAcciones.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.erpMetoPago)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.erpRecibido)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpDatosVenta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpCliente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxTitulo)).BeginInit();
@@ -130,10 +123,9 @@
             // pnlCliente
             // 
             this.pnlCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlCliente.Controls.Add(this.lblClientess);
             this.pnlCliente.Controls.Add(this.btnCliente);
-            this.pnlCliente.Controls.Add(this.btnLimpiarCli);
             this.pnlCliente.Controls.Add(this.txtResultadoCli);
-            this.pnlCliente.Controls.Add(this.btnBusCli);
             this.pnlCliente.Controls.Add(this.txtCliente);
             this.pnlCliente.Controls.Add(this.pbxCliente);
             this.pnlCliente.Controls.Add(this.lblCliente);
@@ -143,13 +135,23 @@
             this.pnlCliente.Size = new System.Drawing.Size(523, 114);
             this.pnlCliente.TabIndex = 2;
             // 
+            // lblClientess
+            // 
+            this.lblClientess.AutoSize = true;
+            this.lblClientess.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClientess.Location = new System.Drawing.Point(100, 11);
+            this.lblClientess.Name = "lblClientess";
+            this.lblClientess.Size = new System.Drawing.Size(147, 21);
+            this.lblClientess.TabIndex = 20;
+            this.lblClientess.Text = "Buscar por CI/NIT:";
+            // 
             // btnCliente
             // 
             this.btnCliente.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnCliente.FlatAppearance.BorderSize = 0;
             this.btnCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCliente.Image = global::CpGuarida.Properties.Resources._new;
-            this.btnCliente.Location = new System.Drawing.Point(475, 40);
+            this.btnCliente.Location = new System.Drawing.Point(479, -1);
             this.btnCliente.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCliente.Name = "btnCliente";
             this.btnCliente.Size = new System.Drawing.Size(43, 51);
@@ -157,49 +159,22 @@
             this.btnCliente.UseVisualStyleBackColor = false;
             this.btnCliente.Click += new System.EventHandler(this.btnCliente_Click);
             // 
-            // btnLimpiarCli
-            // 
-            this.btnLimpiarCli.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnLimpiarCli.FlatAppearance.BorderSize = 0;
-            this.btnLimpiarCli.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLimpiarCli.Image = global::CpGuarida.Properties.Resources.icons8_limpiar_32;
-            this.btnLimpiarCli.Location = new System.Drawing.Point(426, 9);
-            this.btnLimpiarCli.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnLimpiarCli.Name = "btnLimpiarCli";
-            this.btnLimpiarCli.Size = new System.Drawing.Size(43, 39);
-            this.btnLimpiarCli.TabIndex = 18;
-            this.btnLimpiarCli.UseVisualStyleBackColor = false;
-            this.btnLimpiarCli.Click += new System.EventHandler(this.btnLimpiarCli_Click);
-            // 
             // txtResultadoCli
             // 
-            this.txtResultadoCli.Location = new System.Drawing.Point(248, 52);
+            this.txtResultadoCli.Location = new System.Drawing.Point(268, 52);
             this.txtResultadoCli.Name = "txtResultadoCli";
             this.txtResultadoCli.ReadOnly = true;
             this.txtResultadoCli.Size = new System.Drawing.Size(221, 29);
             this.txtResultadoCli.TabIndex = 19;
             // 
-            // btnBusCli
-            // 
-            this.btnBusCli.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnBusCli.FlatAppearance.BorderSize = 0;
-            this.btnBusCli.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBusCli.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnBusCli.Image = global::CpGuarida.Properties.Resources.search;
-            this.btnBusCli.Location = new System.Drawing.Point(189, 9);
-            this.btnBusCli.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnBusCli.Name = "btnBusCli";
-            this.btnBusCli.Size = new System.Drawing.Size(48, 41);
-            this.btnBusCli.TabIndex = 18;
-            this.btnBusCli.UseVisualStyleBackColor = false;
-            this.btnBusCli.Click += new System.EventHandler(this.btnBusCli_Click);
-            // 
             // txtCliente
             // 
             this.txtCliente.Location = new System.Drawing.Point(104, 52);
             this.txtCliente.Name = "txtCliente";
-            this.txtCliente.Size = new System.Drawing.Size(127, 29);
+            this.txtCliente.Size = new System.Drawing.Size(143, 29);
             this.txtCliente.TabIndex = 4;
+            this.txtCliente.TextChanged += new System.EventHandler(this.txtCliente_TextChanged);
+            this.txtCliente.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCliente_KeyPress);
             // 
             // pbxCliente
             // 
@@ -217,7 +192,7 @@
             // 
             this.lblCliente.AutoSize = true;
             this.lblCliente.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCliente.Location = new System.Drawing.Point(100, 9);
+            this.lblCliente.Location = new System.Drawing.Point(264, 11);
             this.lblCliente.Name = "lblCliente";
             this.lblCliente.Size = new System.Drawing.Size(68, 21);
             this.lblCliente.TabIndex = 1;
@@ -285,15 +260,15 @@
             // 
             this.lblListaProducto.AutoSize = true;
             this.lblListaProducto.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblListaProducto.Location = new System.Drawing.Point(169, 243);
+            this.lblListaProducto.Location = new System.Drawing.Point(82, 227);
             this.lblListaProducto.Name = "lblListaProducto";
-            this.lblListaProducto.Size = new System.Drawing.Size(134, 21);
+            this.lblListaProducto.Size = new System.Drawing.Size(228, 42);
             this.lblListaProducto.TabIndex = 1;
-            this.lblListaProducto.Text = "Buscar Producto";
+            this.lblListaProducto.Text = "Buscar por Código, Nombre, \r\nDescripción o Categoria:";
             // 
             // txtBuscar
             // 
-            this.txtBuscar.Location = new System.Drawing.Point(326, 243);
+            this.txtBuscar.Location = new System.Drawing.Point(316, 243);
             this.txtBuscar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(361, 29);
@@ -317,7 +292,7 @@
             // 
             this.btnAgregar.BackColor = System.Drawing.Color.ForestGreen;
             this.btnAgregar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnAgregar.Location = new System.Drawing.Point(757, 450);
+            this.btnAgregar.Location = new System.Drawing.Point(754, 450);
             this.btnAgregar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(103, 41);
@@ -423,11 +398,9 @@
             this.pnlDatosVENTA.Controls.Add(this.lblMetodoPago);
             this.pnlDatosVENTA.Controls.Add(this.lblCambio);
             this.pnlDatosVENTA.Controls.Add(this.lblRecibido);
-            this.pnlDatosVENTA.Controls.Add(this.lblIvaInfo);
             this.pnlDatosVENTA.Controls.Add(this.lblSubInfo);
             this.pnlDatosVENTA.Controls.Add(this.txtObservaciones);
             this.pnlDatosVENTA.Controls.Add(this.nudDescuento);
-            this.pnlDatosVENTA.Controls.Add(this.lblIva);
             this.pnlDatosVENTA.Controls.Add(this.lblSubToral);
             this.pnlDatosVENTA.Controls.Add(this.lblDescuento);
             this.pnlDatosVENTA.Controls.Add(this.lblOpservaciones);
@@ -464,6 +437,7 @@
             0,
             0,
             65536});
+            this.nudRecibido.InterceptArrowKeys = false;
             this.nudRecibido.Location = new System.Drawing.Point(174, 250);
             this.nudRecibido.Maximum = new decimal(new int[] {
             999999999,
@@ -473,7 +447,9 @@
             this.nudRecibido.Name = "nudRecibido";
             this.nudRecibido.Size = new System.Drawing.Size(122, 29);
             this.nudRecibido.TabIndex = 16;
-            this.nudRecibido.ValueChanged += new System.EventHandler(this.npnRecibido_ValueChanged);
+            this.nudRecibido.ThousandsSeparator = true;
+            this.nudRecibido.ValueChanged += new System.EventHandler(this.nudRecibido_ValueChanged);
+            this.nudRecibido.TabIndexChanged += new System.EventHandler(this.nudRecibido_TabIndexChanged);
             // 
             // cbxMetoPago
             // 
@@ -483,6 +459,7 @@
             this.cbxMetoPago.Name = "cbxMetoPago";
             this.cbxMetoPago.Size = new System.Drawing.Size(121, 29);
             this.cbxMetoPago.TabIndex = 15;
+            this.cbxMetoPago.SelectedIndexChanged += new System.EventHandler(this.cbxMetoPago_SelectedIndexChanged);
             // 
             // linea
             // 
@@ -522,16 +499,6 @@
             this.lblRecibido.TabIndex = 11;
             this.lblRecibido.Text = "Recibido:";
             // 
-            // lblIvaInfo
-            // 
-            this.lblIvaInfo.AutoSize = true;
-            this.lblIvaInfo.Font = new System.Drawing.Font("Segoe UI Black", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIvaInfo.Location = new System.Drawing.Point(216, 159);
-            this.lblIvaInfo.Name = "lblIvaInfo";
-            this.lblIvaInfo.Size = new System.Drawing.Size(51, 25);
-            this.lblIvaInfo.TabIndex = 10;
-            this.lblIvaInfo.Text = "0.00";
-            // 
             // lblSubInfo
             // 
             this.lblSubInfo.AutoSize = true;
@@ -557,21 +524,13 @@
             0,
             0,
             65536});
-            this.nudDescuento.Location = new System.Drawing.Point(129, 128);
+            this.nudDescuento.InterceptArrowKeys = false;
+            this.nudDescuento.Location = new System.Drawing.Point(150, 128);
             this.nudDescuento.Name = "nudDescuento";
             this.nudDescuento.Size = new System.Drawing.Size(60, 29);
             this.nudDescuento.TabIndex = 6;
-            this.nudDescuento.ValueChanged += new System.EventHandler(this.npnDescuento_ValueChanged);
-            // 
-            // lblIva
-            // 
-            this.lblIva.AutoSize = true;
-            this.lblIva.Font = new System.Drawing.Font("Segoe UI Black", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIva.Location = new System.Drawing.Point(6, 162);
-            this.lblIva.Name = "lblIva";
-            this.lblIva.Size = new System.Drawing.Size(105, 25);
-            this.lblIva.TabIndex = 4;
-            this.lblIva.Text = "IVA(13%):";
+            this.nudDescuento.ValueChanged += new System.EventHandler(this.nudDescuento_ValueChanged);
+            this.nudDescuento.TabIndexChanged += new System.EventHandler(this.nudDescuento_TabIndexChanged);
             // 
             // lblSubToral
             // 
@@ -589,9 +548,9 @@
             this.lblDescuento.Font = new System.Drawing.Font("Segoe UI Black", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDescuento.Location = new System.Drawing.Point(3, 128);
             this.lblDescuento.Name = "lblDescuento";
-            this.lblDescuento.Size = new System.Drawing.Size(116, 25);
+            this.lblDescuento.Size = new System.Drawing.Size(149, 25);
             this.lblDescuento.TabIndex = 1;
-            this.lblDescuento.Text = "Descuento:";
+            this.lblDescuento.Text = "Descuento(%):";
             // 
             // lblOpservaciones
             // 
@@ -688,7 +647,7 @@
             this.panel4.Controls.Add(this.lblTotal);
             this.panel4.Location = new System.Drawing.Point(887, 534);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(306, 63);
+            this.panel4.Size = new System.Drawing.Size(320, 63);
             this.panel4.TabIndex = 16;
             // 
             // lblTotalInfo
@@ -709,7 +668,7 @@
             this.pnlAcciones.Controls.Add(this.btnCancelar);
             this.pnlAcciones.Location = new System.Drawing.Point(887, 602);
             this.pnlAcciones.Name = "pnlAcciones";
-            this.pnlAcciones.Size = new System.Drawing.Size(306, 71);
+            this.pnlAcciones.Size = new System.Drawing.Size(320, 71);
             this.pnlAcciones.TabIndex = 17;
             // 
             // btnRegistrarVenta
@@ -741,20 +700,12 @@
             this.btnCancelar.Location = new System.Drawing.Point(185, 8);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(121, 52);
+            this.btnCancelar.Size = new System.Drawing.Size(132, 52);
             this.btnCancelar.TabIndex = 12;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // erpMetoPago
-            // 
-            this.erpMetoPago.ContainerControl = this;
-            // 
-            // erpRecibido
-            // 
-            this.erpRecibido.ContainerControl = this;
             // 
             // erpDatosVenta
             // 
@@ -856,8 +807,6 @@
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.pnlAcciones.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.erpMetoPago)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.erpRecibido)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpDatosVenta)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpCliente)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxTitulo)).EndInit();
@@ -906,12 +855,10 @@
         private System.Windows.Forms.Button btnRcantidad;
         private System.Windows.Forms.Button btnBorrarProducto;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lblIva;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel pnlAcciones;
         private System.Windows.Forms.NumericUpDown nudDescuento;
         private System.Windows.Forms.TextBox txtObservaciones;
-        private System.Windows.Forms.Label lblIvaInfo;
         private System.Windows.Forms.Label lblSubInfo;
         private System.Windows.Forms.Label lblTotalInfo;
         private System.Windows.Forms.Label lblMetodoPago;
@@ -921,14 +868,11 @@
         private System.Windows.Forms.Label lblCinfo;
         private System.Windows.Forms.NumericUpDown nudRecibido;
         private System.Windows.Forms.ComboBox cbxMetoPago;
-        private System.Windows.Forms.ErrorProvider erpMetoPago;
-        private System.Windows.Forms.ErrorProvider erpRecibido;
         private System.Windows.Forms.ErrorProvider erpDatosVenta;
         private System.Windows.Forms.TextBox txtCliente;
-        private System.Windows.Forms.Button btnBusCli;
         private System.Windows.Forms.TextBox txtResultadoCli;
         private System.Windows.Forms.ErrorProvider erpCliente;
-        private System.Windows.Forms.Button btnLimpiarCli;
         private System.Windows.Forms.Label lblDesRe;
+        private System.Windows.Forms.Label lblClientess;
     }
 }

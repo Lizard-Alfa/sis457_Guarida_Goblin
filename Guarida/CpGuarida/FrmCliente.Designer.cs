@@ -34,16 +34,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblCiNit = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
-            this.lblApellido = new System.Windows.Forms.Label();
-            this.lblCelular = new System.Windows.Forms.Label();
-            this.lblDireccion = new System.Windows.Forms.Label();
-            this.lblEmail = new System.Windows.Forms.Label();
             this.txtCi = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
-            this.txtApellido = new System.Windows.Forms.TextBox();
-            this.txtCelular = new System.Windows.Forms.TextBox();
-            this.txtDrireccion = new System.Windows.Forms.TextBox();
-            this.txtEmail = new System.Windows.Forms.TextBox();
             this.btnRegistrar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.erpCi = new System.Windows.Forms.ErrorProvider(this.components);
@@ -96,46 +88,6 @@
             this.lblNombre.TabIndex = 3;
             this.lblNombre.Text = "Nombres:";
             // 
-            // lblApellido
-            // 
-            this.lblApellido.AutoSize = true;
-            this.lblApellido.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblApellido.Location = new System.Drawing.Point(7, 177);
-            this.lblApellido.Name = "lblApellido";
-            this.lblApellido.Size = new System.Drawing.Size(99, 25);
-            this.lblApellido.TabIndex = 4;
-            this.lblApellido.Text = "Apellidos:";
-            // 
-            // lblCelular
-            // 
-            this.lblCelular.AutoSize = true;
-            this.lblCelular.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCelular.Location = new System.Drawing.Point(7, 214);
-            this.lblCelular.Name = "lblCelular";
-            this.lblCelular.Size = new System.Drawing.Size(80, 25);
-            this.lblCelular.TabIndex = 5;
-            this.lblCelular.Text = "Celular:";
-            // 
-            // lblDireccion
-            // 
-            this.lblDireccion.AutoSize = true;
-            this.lblDireccion.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDireccion.Location = new System.Drawing.Point(7, 249);
-            this.lblDireccion.Name = "lblDireccion";
-            this.lblDireccion.Size = new System.Drawing.Size(101, 25);
-            this.lblDireccion.TabIndex = 6;
-            this.lblDireccion.Text = "Dirección:";
-            // 
-            // lblEmail
-            // 
-            this.lblEmail.AutoSize = true;
-            this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmail.Location = new System.Drawing.Point(7, 286);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(64, 25);
-            this.lblEmail.TabIndex = 7;
-            this.lblEmail.Text = "Email:";
-            // 
             // txtCi
             // 
             this.txtCi.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -154,42 +106,6 @@
             this.txtNombre.Size = new System.Drawing.Size(182, 24);
             this.txtNombre.TabIndex = 9;
             // 
-            // txtApellido
-            // 
-            this.txtApellido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtApellido.Location = new System.Drawing.Point(112, 179);
-            this.txtApellido.MaxLength = 100;
-            this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(182, 24);
-            this.txtApellido.TabIndex = 10;
-            // 
-            // txtCelular
-            // 
-            this.txtCelular.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCelular.Location = new System.Drawing.Point(112, 215);
-            this.txtCelular.MaxLength = 15;
-            this.txtCelular.Name = "txtCelular";
-            this.txtCelular.Size = new System.Drawing.Size(182, 24);
-            this.txtCelular.TabIndex = 11;
-            // 
-            // txtDrireccion
-            // 
-            this.txtDrireccion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDrireccion.Location = new System.Drawing.Point(112, 245);
-            this.txtDrireccion.MaxLength = 200;
-            this.txtDrireccion.Name = "txtDrireccion";
-            this.txtDrireccion.Size = new System.Drawing.Size(182, 24);
-            this.txtDrireccion.TabIndex = 12;
-            // 
-            // txtEmail
-            // 
-            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtEmail.Location = new System.Drawing.Point(112, 288);
-            this.txtEmail.MaxLength = 100;
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(182, 24);
-            this.txtEmail.TabIndex = 13;
-            // 
             // btnRegistrar
             // 
             this.btnRegistrar.BackColor = System.Drawing.Color.ForestGreen;
@@ -199,7 +115,7 @@
             this.btnRegistrar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnRegistrar.Image = global::CpGuarida.Properties.Resources.bien;
             this.btnRegistrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRegistrar.Location = new System.Drawing.Point(12, 343);
+            this.btnRegistrar.Location = new System.Drawing.Point(8, 197);
             this.btnRegistrar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnRegistrar.Name = "btnRegistrar";
             this.btnRegistrar.Size = new System.Drawing.Size(130, 52);
@@ -218,7 +134,7 @@
             this.btnCancelar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btnCancelar.Image = global::CpGuarida.Properties.Resources.borrar;
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(173, 343);
+            this.btnCancelar.Location = new System.Drawing.Point(173, 197);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(121, 52);
@@ -241,19 +157,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(321, 408);
+            this.ClientSize = new System.Drawing.Size(321, 261);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnRegistrar);
-            this.Controls.Add(this.txtEmail);
-            this.Controls.Add(this.txtDrireccion);
-            this.Controls.Add(this.txtCelular);
-            this.Controls.Add(this.txtApellido);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.txtCi);
-            this.Controls.Add(this.lblEmail);
-            this.Controls.Add(this.lblDireccion);
-            this.Controls.Add(this.lblCelular);
-            this.Controls.Add(this.lblApellido);
             this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.lblCiNit);
             this.Controls.Add(this.pictureBox1);
@@ -261,7 +169,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmCliente";
@@ -282,16 +190,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblCiNit;
         private System.Windows.Forms.Label lblNombre;
-        private System.Windows.Forms.Label lblApellido;
-        private System.Windows.Forms.Label lblCelular;
-        private System.Windows.Forms.Label lblDireccion;
-        private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtCi;
         private System.Windows.Forms.TextBox txtNombre;
-        private System.Windows.Forms.TextBox txtApellido;
-        private System.Windows.Forms.TextBox txtCelular;
-        private System.Windows.Forms.TextBox txtDrireccion;
-        private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Button btnRegistrar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ErrorProvider erpCi;

@@ -6,24 +6,24 @@
     <edmx:Diagrams>
       <Diagram DiagramId="530389259857437abdd3bbb4df504c10" Name="Diagram1" ZoomLevel="90">
         <EntityTypeShape EntityType="GuaridaModel.Categoria" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GuaridaModel.Cliente" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.Compra" Width="1.5" PointX="10" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.CompraDetalle" Width="1.5" PointX="12.25" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.Empleado" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.Producto" Width="1.5" PointX="7.375" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.Proveedor" Width="1.5" PointX="11.875" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.Usuario" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GuaridaModel.Venta" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="GuaridaModel.VentaDetalle" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="GuaridaModel.fk_Producto_Categoria" ManuallyRouted="false" />
-        <AssociationConnector Association="GuaridaModel.fk_Venta_Cliente" ManuallyRouted="false" />
         <AssociationConnector Association="GuaridaModel.fk_CD_Compra" ManuallyRouted="false" />
         <AssociationConnector Association="GuaridaModel.fk_Compra_Proveedor" ManuallyRouted="false" />
         <AssociationConnector Association="GuaridaModel.fk_CD_Producto" ManuallyRouted="false" />
         <AssociationConnector Association="GuaridaModel.fk_Usuario_Empleado" ManuallyRouted="false" />
         <AssociationConnector Association="GuaridaModel.fk_VD_Producto" ManuallyRouted="false" />
-        <AssociationConnector Association="GuaridaModel.fk_Venta_Usuario" ManuallyRouted="false" />
-        <AssociationConnector Association="GuaridaModel.fk_VD_Venta" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GuaridaModel.Cliente" Width="1.5" PointX="0.75" PointY="6" />
+        <EntityTypeShape EntityType="GuaridaModel.Venta" Width="1.5" PointX="5.25" PointY="0.875" />
+        <AssociationConnector Association="GuaridaModel.fk_Venta_Cliente" />
+        <AssociationConnector Association="GuaridaModel.fk_Venta_Usuario" />
+        <AssociationConnector Association="GuaridaModel.fk_VD_Venta" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

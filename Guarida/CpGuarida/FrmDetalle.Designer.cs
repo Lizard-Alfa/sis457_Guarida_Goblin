@@ -33,13 +33,9 @@
             // 
             // rtxtexBo
             // 
-            this.rtxtexBo.BackColor = System.Drawing.Color.White;
-            this.rtxtexBo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtxtexBo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtxtexBo.Location = new System.Drawing.Point(12, 12);
+            this.rtxtexBo.Location = new System.Drawing.Point(27, 31);
             this.rtxtexBo.Name = "rtxtexBo";
-            this.rtxtexBo.ReadOnly = true;
-            this.rtxtexBo.Size = new System.Drawing.Size(320, 504);
+            this.rtxtexBo.Size = new System.Drawing.Size(327, 484);
             this.rtxtexBo.TabIndex = 0;
             this.rtxtexBo.Text = "";
             // 
@@ -47,10 +43,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 528);
+            this.ClientSize = new System.Drawing.Size(377, 552);
             this.Controls.Add(this.rtxtexBo);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmDetalle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmDetalle";

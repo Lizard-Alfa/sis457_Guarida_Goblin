@@ -14,14 +14,17 @@ namespace CpGuarida
 {
     public partial class FrmCliente : Form
     {
+        public string carnetAEnviar = "";
         public FrmCliente()
         {
             InitializeComponent();
         }
-
         private void FrmCliente_Load(object sender, EventArgs e)
         {
-
+            if (!string.IsNullOrEmpty(carnetAEnviar))
+            {
+                txtCi.Text = carnetAEnviar;
+            }
         }
 
         private void resetearCampos()
@@ -29,10 +32,6 @@ namespace CpGuarida
             
             txtCi.Clear();
             txtNombre.Clear();
-            txtApellido.Clear();
-            txtCelular.Clear();
-            txtDrireccion.Clear();
-            txtEmail.Clear();
         }
         private void resetearErrores()
         {
@@ -64,27 +63,24 @@ namespace CpGuarida
                 {
                     cedulaIdentidad = txtCi.Text.Trim(),
                     nombres = txtNombre.Text.Trim(),
-                    apellidos = txtApellido.Text.Trim(),
-                    celular = txtCelular.Text.Trim(),
-                    direccion = txtDrireccion.Text.Trim(),
-                    email = txtEmail.Text.Trim(),
                     usuarioRegistro = Util.usuario.usuario1
                 };
                 try
                 {
-                    
-                        cliente.fechaRegistro = DateTime.Now;
-                        cliente.estado =(short)Estado.Activo;
-                        ClienteCln.crear(cliente);
-                      resetearCampos();
-                      resetearErrores();
-                    btnCancelar.PerformClick();
+                    cliente.fechaRegistro = DateTime.Now;
+                    cliente.estado = (short)Estado.Activo;
+                    ClienteCln.crear(cliente);
+                    resetearCampos();
+                    resetearErrores();
+
                     MessageBox.Show("Cliente guardado correctamente", "::: Mensaje - Guarida :::",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK; 
+                    Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "::: Error - Guarida :::",
+                    MessageBox.Show(ex.Message, "::: Error - Guardida :::",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -93,11 +89,8 @@ namespace CpGuarida
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             bool hayDatos = !string.IsNullOrWhiteSpace(txtCi.Text)
-              || !string.IsNullOrWhiteSpace(txtNombre.Text)
-              || !string.IsNullOrWhiteSpace(txtApellido.Text)
-              || !string.IsNullOrWhiteSpace(txtCelular.Text)
-              || !string.IsNullOrWhiteSpace(txtDrireccion.Text)
-              || !string.IsNullOrWhiteSpace(txtEmail.Text);
+              || !string.IsNullOrWhiteSpace(txtNombre.Text);
+
 
             if (hayDatos)
             {
