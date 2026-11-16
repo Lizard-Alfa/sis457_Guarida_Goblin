@@ -17,6 +17,7 @@ namespace CpGuarida
         public FrmAutenticacion()
         {
             InitializeComponent();
+<<<<<<< HEAD
             ConfigurarEstiloMedieval();
         }
 
@@ -46,6 +47,9 @@ namespace CpGuarida
         private void frmAutenticacion_Load(object sender, EventArgs e)
         {
 
+=======
+            //txtUsuario.Text = Util.Encrypt("iver2003");
+>>>>>>> 85419d8ab2d68a0e4551783610e170c1b7dd17a2
         }
 
         private void btnSalir_Click(object sender, EventArgs e)

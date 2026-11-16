@@ -284,9 +284,12 @@
   <ItemGroup>
     <None Include="Resources\large.jpg" />
   </ItemGroup>
+<<<<<<< HEAD
   <ItemGroup>
     <None Include="Resources\login_pergamino1.png" />
   </ItemGroup>
+=======
+>>>>>>> 85419d8ab2d68a0e4551783610e170c1b7dd17a2
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

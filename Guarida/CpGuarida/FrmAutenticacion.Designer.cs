@@ -153,6 +153,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "::: Login - Guarida Goblin :::";
             this.Load += new System.EventHandler(this.FrmAutenticacion_Load);
+<<<<<<< HEAD
+=======
+            ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).EndInit();
+>>>>>>> 85419d8ab2d68a0e4551783610e170c1b7dd17a2
             ((System.ComponentModel.ISupportInitialize)(this.erpUsuario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpClave)).EndInit();
             this.ResumeLayout(false);
