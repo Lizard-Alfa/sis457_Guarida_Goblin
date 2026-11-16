@@ -51,13 +51,7 @@ CREATE TABLE Cliente (
     usuarioRegistro VARCHAR(50) NOT NULL DEFAULT SUSER_NAME(),
     fechaRegistro DATETIME NOT NULL DEFAULT GETDATE(),
     estado SMALLINT NOT NULL DEFAULT 1
-); 
-INSERT INTO Cliente (cedulaIdentidad, nombres, apellidos, celular, direccion, email)
-VALUES ('12345678', 'Juan Carlos', 'Perez Gomez', '77712345', 'Av. Siempre Viva #123', 'juan.perez@email.com');
-
--- Cliente 2
-INSERT INTO Cliente (cedulaIdentidad, nombres, apellidos, celular, direccion, email)
-VALUES ('87654321', 'Maria Fernanda', 'Lopez Rojas', '78898765', 'Calle Los Olivos #456', 'maria.lopez@email.com');
+);
 -- EMPLEADOS
 CREATE TABLE Empleado (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),

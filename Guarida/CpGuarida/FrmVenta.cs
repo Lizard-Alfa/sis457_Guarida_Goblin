@@ -37,9 +37,9 @@ namespace CpGuarida
             dgvListaProducto.Columns["stockMinimo"].HeaderText = "Stock Mínimo";
             dgvListaProducto.Columns["nombre"].DisplayIndex = 0;
             dgvListaProducto.Columns["codigo"].DisplayIndex = 1;
-            dgvListaProducto.Columns["descripcion"].DisplayIndex = 2;
+            dgvListaProducto.Columns["precioVentaBob"].DisplayIndex = 2;
             dgvListaProducto.Columns["stockActual"].DisplayIndex = 3;
-            dgvListaProducto.Columns["precioVentaBob"].DisplayIndex = 4;
+            dgvListaProducto.Columns["descripcion"].DisplayIndex = 4;
             dgvListaProducto.Columns["pesoKg"].DisplayIndex = 5;
             dgvListaProducto.Columns["stockMinimo"].DisplayIndex = 6;
 
