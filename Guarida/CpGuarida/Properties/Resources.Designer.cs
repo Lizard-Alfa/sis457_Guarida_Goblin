@@ -273,6 +273,16 @@ namespace CpGuarida.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap large {
+            get {
+                object obj = ResourceManager.GetObject("large", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap limpieza {
             get {
                 object obj = ResourceManager.GetObject("limpieza", resourceCulture);
