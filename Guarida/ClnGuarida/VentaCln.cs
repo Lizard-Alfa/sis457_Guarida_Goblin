@@ -94,6 +94,16 @@ namespace ClnGuarida
                 return context.paVentaListar(fechaInicio, fechaFin).ToList();
             }
         }
+        public static string cargoUsuario(int idEmpleado)
+        {
+            using (var context = new GuaridaEntities())
+            {
+                return context.Empleado
+                    .Where(e => e.id == idEmpleado)   // <-- aquí va "e.id"
+                    .Select(e => e.cargo)
+                    .FirstOrDefault() ?? "S/N";
+            }
+        }
     }
 
 }

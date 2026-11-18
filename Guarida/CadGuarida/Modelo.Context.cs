@@ -37,10 +37,6 @@ public partial class GuaridaEntities : DbContext
 
     public virtual DbSet<Categoria> Categoria { get; set; }
 
-    public virtual DbSet<Compra> Compra { get; set; }
-
-    public virtual DbSet<CompraDetalle> CompraDetalle { get; set; }
-
     public virtual DbSet<Empleado> Empleado { get; set; }
 
     public virtual DbSet<Producto> Producto { get; set; }

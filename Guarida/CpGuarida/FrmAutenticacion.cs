@@ -13,50 +13,43 @@ namespace CpGuarida
 {
     public partial class FrmAutenticacion : Form
     {
-
         public FrmAutenticacion()
         {
             InitializeComponent();
-<<<<<<< HEAD
             ConfigurarEstiloMedieval();
         }
 
-        // Parte visual que esta a prueba revisan
         private void ConfigurarEstiloMedieval()
         {
             // 1. Quitar bordes
             this.FormBorderStyle = FormBorderStyle.None;
             this.ControlBox = false;
             this.Text = "";
+            this.StartPosition = FormStartPosition.CenterScreen;
 
             // 2. Configurar TextBox
-            txtUsuario.Location = new Point(125, 100);
+            txtUsuario.Location = new Point(475, 260);
+            txtUsuario.Size = new Size(250, 24);
             txtUsuario.BackColor = Color.White;
             txtUsuario.ForeColor = Color.Black;
             txtUsuario.BorderStyle = BorderStyle.FixedSingle;
             txtUsuario.Font = new Font("Arial", 11);
 
-            txtClave.Location = new Point(125, 160);
+            txtClave.Location = new Point(475, 330);
+            txtClave.Size = new Size(250, 24);
             txtClave.BackColor = Color.White;
             txtClave.ForeColor = Color.Black;
             txtClave.BorderStyle = BorderStyle.FixedSingle;
             txtClave.Font = new Font("Arial", 11);
             txtClave.PasswordChar = '●';
+
         }
 
         private void frmAutenticacion_Load(object sender, EventArgs e)
         {
-
-=======
-            //txtUsuario.Text = Util.Encrypt("iver2003");
->>>>>>> 85419d8ab2d68a0e4551783610e170c1b7dd17a2
+            ConfigurarEstiloMedieval();
         }
-
-        private void btnSalir_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
+        // LÓGICA DE NEGOCIO 
         private bool validarCampos()
         {
             bool esValido = true;
@@ -107,6 +100,11 @@ namespace CpGuarida
         private void FrmAutenticacion_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

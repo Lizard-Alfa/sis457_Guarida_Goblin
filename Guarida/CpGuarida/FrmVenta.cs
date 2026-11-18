@@ -62,6 +62,7 @@ namespace CpGuarida
             validarEfectivo();
             nudDescuento.TextChanged += nudDescuento_TabIndexChanged;
             nudRecibido.TextChanged += nudRecibido_TabIndexChanged;
+            txtCargo.Text = VentaCln.cargoUsuario(Util.usuario.idEmpleado);
         }
 
         private void listarDetalles()

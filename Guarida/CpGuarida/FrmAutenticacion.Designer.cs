@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAutenticacion));
-            this.lblTitulo = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblClave = new System.Windows.Forms.Label();
@@ -43,20 +42,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.erpClave)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblTitulo
-            // 
-            this.lblTitulo.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.Location = new System.Drawing.Point(0, 32);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(484, 38);
-            this.lblTitulo.TabIndex = 2;
-            this.lblTitulo.Text = "GUARIDA GOBLIN";
-            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(125, 100);
+            this.txtUsuario.ForeColor = System.Drawing.Color.Transparent;
+            this.txtUsuario.Location = new System.Drawing.Point(475, 260);
             this.txtUsuario.MaxLength = 30;
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(220, 24);
@@ -66,9 +55,11 @@
             // 
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.BackColor = System.Drawing.Color.Transparent;
-            this.lblUsuario.Location = new System.Drawing.Point(122, 79);
+            this.lblUsuario.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsuario.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblUsuario.Location = new System.Drawing.Point(470, 232);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(64, 18);
+            this.lblUsuario.Size = new System.Drawing.Size(86, 25);
             this.lblUsuario.TabIndex = 6;
             this.lblUsuario.Text = "Usuario:";
             // 
@@ -76,15 +67,18 @@
             // 
             this.lblClave.AutoSize = true;
             this.lblClave.BackColor = System.Drawing.Color.Transparent;
-            this.lblClave.Location = new System.Drawing.Point(122, 139);
+            this.lblClave.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClave.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblClave.Location = new System.Drawing.Point(470, 302);
             this.lblClave.Name = "lblClave";
-            this.lblClave.Size = new System.Drawing.Size(89, 18);
+            this.lblClave.Size = new System.Drawing.Size(118, 25);
             this.lblClave.TabIndex = 6;
             this.lblClave.Text = "Contraseña:";
             // 
             // txtClave
             // 
-            this.txtClave.Location = new System.Drawing.Point(125, 160);
+            this.txtClave.ForeColor = System.Drawing.Color.Transparent;
+            this.txtClave.Location = new System.Drawing.Point(475, 330);
             this.txtClave.MaxLength = 30;
             this.txtClave.Name = "txtClave";
             this.txtClave.PasswordChar = '*';
@@ -94,30 +88,34 @@
             // 
             // btnIngresar
             // 
+            this.btnIngresar.BackColor = System.Drawing.Color.DarkGoldenrod;
             this.btnIngresar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIngresar.Image = global::CpGuarida.Properties.Resources.login_ok;
+            this.btnIngresar.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnIngresar.Image = global::CpGuarida.Properties.Resources.d20_;
             this.btnIngresar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnIngresar.Location = new System.Drawing.Point(135, 199);
+            this.btnIngresar.Location = new System.Drawing.Point(475, 380);
             this.btnIngresar.Name = "btnIngresar";
-            this.btnIngresar.Size = new System.Drawing.Size(108, 40);
+            this.btnIngresar.Size = new System.Drawing.Size(113, 40);
             this.btnIngresar.TabIndex = 8;
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnIngresar.UseVisualStyleBackColor = true;
+            this.btnIngresar.UseVisualStyleBackColor = false;
             this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
             // 
             // btnSalir
             // 
+            this.btnSalir.BackColor = System.Drawing.Color.MediumOrchid;
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalir.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnSalir.Image = global::CpGuarida.Properties.Resources.close;
             this.btnSalir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalir.Location = new System.Drawing.Point(249, 199);
+            this.btnSalir.Location = new System.Drawing.Point(612, 380);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(83, 40);
             this.btnSalir.TabIndex = 8;
             this.btnSalir.Text = "Salir";
             this.btnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.UseVisualStyleBackColor = false;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // erpUsuario
@@ -133,16 +131,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.BackgroundImage = global::CpGuarida.Properties.Resources.login_pergamino;
+            this.BackgroundImage = global::CpGuarida.Properties.Resources.fondo_login;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(484, 261);
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.txtClave);
             this.Controls.Add(this.lblClave);
             this.Controls.Add(this.txtUsuario);
             this.Controls.Add(this.lblUsuario);
-            this.Controls.Add(this.lblTitulo);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -153,10 +150,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "::: Login - Guarida Goblin :::";
             this.Load += new System.EventHandler(this.FrmAutenticacion_Load);
-<<<<<<< HEAD
-=======
-            ((System.ComponentModel.ISupportInitialize)(this.pbxLogo)).EndInit();
->>>>>>> 85419d8ab2d68a0e4551783610e170c1b7dd17a2
             ((System.ComponentModel.ISupportInitialize)(this.erpUsuario)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.erpClave)).EndInit();
             this.ResumeLayout(false);
@@ -165,8 +158,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label lblClave;

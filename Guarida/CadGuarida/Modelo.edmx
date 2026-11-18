@@ -27,37 +27,6 @@
           <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
           <Property Name="estado" Type="smallint" Nullable="false" />
         </EntityType>
-        <EntityType Name="Compra">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idProveedor" Type="int" Nullable="false" />
-          <Property Name="fecha" Type="date" Nullable="false" />
-          <Property Name="subtotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="trackingNumber" Type="varchar" MaxLength="100" />
-          <Property Name="estadoEnvio" Type="varchar" MaxLength="50" />
-          <Property Name="fechaEstimada" Type="date" />
-          <Property Name="observaciones" Type="varchar" MaxLength="500" />
-          <Property Name="usuarioRegistro" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
-          <Property Name="estado" Type="smallint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CompraDetalle">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idCompra" Type="int" Nullable="false" />
-          <Property Name="idProducto" Type="int" Nullable="false" />
-          <Property Name="cantidad" Type="int" Nullable="false" />
-          <Property Name="precioUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="subtotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="usuarioRegistro" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
-          <Property Name="estado" Type="smallint" Nullable="false" />
-        </EntityType>
         <EntityType Name="Empleado">
           <Key>
             <PropertyRef Name="id" />
@@ -153,42 +122,6 @@
           <Property Name="fechaRegistro" Type="datetime" Nullable="false" />
           <Property Name="estado" Type="smallint" Nullable="false" />
         </EntityType>
-        <Association Name="fk_CD_Compra">
-          <End Role="Compra" Type="Self.Compra" Multiplicity="1" />
-          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Compra">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CompraDetalle">
-              <PropertyRef Name="idCompra" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_CD_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CompraDetalle">
-              <PropertyRef Name="idProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Compra_Proveedor">
-          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
-          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Compra">
-              <PropertyRef Name="idProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_Producto_Categoria">
           <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
@@ -285,26 +218,12 @@
         <EntityContainer Name="GuaridaModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Compra" EntityType="Self.Compra" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CompraDetalle" EntityType="Self.CompraDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venta" EntityType="Self.Venta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaDetalle" EntityType="Self.VentaDetalle" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="fk_CD_Compra" Association="Self.fk_CD_Compra">
-            <End Role="Compra" EntitySet="Compra" />
-            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="fk_CD_Producto" Association="Self.fk_CD_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Compra_Proveedor" Association="Self.fk_Compra_Proveedor">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="Compra" EntitySet="Compra" />
-          </AssociationSet>
           <AssociationSet Name="fk_Producto_Categoria" Association="Self.fk_Producto_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
@@ -346,41 +265,6 @@
           <Property Name="estado" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Producto" Relationship="Self.fk_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
         </EntityType>
-        <EntityType Name="Compra">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idProveedor" Type="Int32" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="subtotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="trackingNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estadoEnvio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="fechaEstimada" Type="DateTime" Precision="0" />
-          <Property Name="observaciones" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="usuarioRegistro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="estado" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="CompraDetalle" Relationship="Self.fk_CD_Compra" FromRole="Compra" ToRole="CompraDetalle" />
-          <NavigationProperty Name="Proveedor" Relationship="Self.fk_Compra_Proveedor" FromRole="Compra" ToRole="Proveedor" />
-        </EntityType>
-        <EntityType Name="CompraDetalle">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idCompra" Type="Int32" Nullable="false" />
-          <Property Name="idProducto" Type="Int32" Nullable="false" />
-          <Property Name="cantidad" Type="Int32" Nullable="false" />
-          <Property Name="precioUnitario" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="subtotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="usuarioRegistro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="estado" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Compra" Relationship="Self.fk_CD_Compra" FromRole="CompraDetalle" ToRole="Compra" />
-          <NavigationProperty Name="Producto" Relationship="Self.fk_CD_Producto" FromRole="CompraDetalle" ToRole="Producto" />
-        </EntityType>
         <EntityType Name="Empleado">
           <Key>
             <PropertyRef Name="id" />
@@ -417,7 +301,6 @@
           <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="estado" Type="Int16" Nullable="false" />
           <NavigationProperty Name="Categoria" Relationship="Self.fk_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
-          <NavigationProperty Name="CompraDetalle" Relationship="Self.fk_CD_Producto" FromRole="Producto" ToRole="CompraDetalle" />
           <NavigationProperty Name="VentaDetalle" Relationship="Self.fk_VD_Producto" FromRole="Producto" ToRole="VentaDetalle" />
         </EntityType>
         <EntityType Name="Proveedor">
@@ -435,7 +318,6 @@
           <Property Name="usuarioRegistro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="estado" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="Compra" Relationship="Self.fk_Compra_Proveedor" FromRole="Proveedor" ToRole="Compra" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -479,42 +361,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_CD_Compra">
-          <End Role="Compra" Type="Self.Compra" Multiplicity="1" />
-          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Compra">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CompraDetalle">
-              <PropertyRef Name="idCompra" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Compra_Proveedor">
-          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
-          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Compra">
-              <PropertyRef Name="idProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_CD_Producto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CompraDetalle">
-              <PropertyRef Name="idProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_Usuario_Empleado">
           <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -541,8 +387,6 @@
         </Association>
         <EntityContainer Name="GuaridaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" />
-          <EntitySet Name="Compra" EntityType="Self.Compra" />
-          <EntitySet Name="CompraDetalle" EntityType="Self.CompraDetalle" />
           <EntitySet Name="Empleado" EntityType="Self.Empleado" />
           <EntitySet Name="Producto" EntityType="Self.Producto" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
@@ -551,18 +395,6 @@
           <AssociationSet Name="fk_Producto_Categoria" Association="Self.fk_Producto_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="fk_CD_Compra" Association="Self.fk_CD_Compra">
-            <End Role="Compra" EntitySet="Compra" />
-            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Compra_Proveedor" Association="Self.fk_Compra_Proveedor">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="Compra" EntitySet="Compra" />
-          </AssociationSet>
-          <AssociationSet Name="fk_CD_Producto" Association="Self.fk_CD_Producto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
           </AssociationSet>
           <AssociationSet Name="fk_Usuario_Empleado" Association="Self.fk_Usuario_Empleado">
             <End Role="Empleado" EntitySet="Empleado" />
@@ -768,39 +600,6 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
-                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Compra">
-            <EntityTypeMapping TypeName="GuaridaModel.Compra">
-              <MappingFragment StoreEntitySet="Compra">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="trackingNumber" ColumnName="trackingNumber" />
-                <ScalarProperty Name="estadoEnvio" ColumnName="estadoEnvio" />
-                <ScalarProperty Name="fechaEstimada" ColumnName="fechaEstimada" />
-                <ScalarProperty Name="observaciones" ColumnName="observaciones" />
-                <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
-                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CompraDetalle">
-            <EntityTypeMapping TypeName="GuaridaModel.CompraDetalle">
-              <MappingFragment StoreEntitySet="CompraDetalle">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idCompra" ColumnName="idCompra" />
-                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="precioUnitario" ColumnName="precioUnitario" />
-                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
                 <ScalarProperty Name="usuarioRegistro" ColumnName="usuarioRegistro" />
                 <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
                 <ScalarProperty Name="estado" ColumnName="estado" />

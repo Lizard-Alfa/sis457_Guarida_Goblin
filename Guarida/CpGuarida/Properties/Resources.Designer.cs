@@ -213,6 +213,36 @@ namespace CpGuarida.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap d20 {
+            get {
+                object obj = ResourceManager.GetObject("d20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap d20_ {
+            get {
+                object obj = ResourceManager.GetObject("d20_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap d201 {
+            get {
+                object obj = ResourceManager.GetObject("d201", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
@@ -246,6 +276,16 @@ namespace CpGuarida.Properties {
         internal static System.Drawing.Bitmap fecha_limite {
             get {
                 object obj = ResourceManager.GetObject("fecha-limite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fondo_login {
+            get {
+                object obj = ResourceManager.GetObject("fondo_login", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -306,6 +346,16 @@ namespace CpGuarida.Properties {
         internal static System.Drawing.Bitmap login_pergamino {
             get {
                 object obj = ResourceManager.GetObject("login_pergamino", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap login_pergamino1 {
+            get {
+                object obj = ResourceManager.GetObject("login_pergamino1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

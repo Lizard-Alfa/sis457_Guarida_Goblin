@@ -62,12 +62,6 @@
     <Compile Include="Cliente.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>
-    <Compile Include="Compra.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CompraDetalle.cs">
-      <DependentUpon>Modelo.tt</DependentUpon>
-    </Compile>
     <Compile Include="Empleado.cs">
       <DependentUpon>Modelo.tt</DependentUpon>
     </Compile>

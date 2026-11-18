@@ -42,14 +42,22 @@ namespace CpGuarida
                 rtxtexBo.ReadOnly = true;
                 rtxtexBo.WordWrap = false;
                 rtxtexBo.ScrollBars = RichTextBoxScrollBars.Vertical;
-
+                rtxtexBo.SelectAll();
+                rtxtexBo.SelectionIndent = 20;   
+                rtxtexBo.DeselectAll();
                 float anchoChar = TextRenderer.MeasureText("WWWWWWWWWW", rtxtexBo.Font).Width / 10f;
                 int totalCols = (int)((rtxtexBo.ClientSize.Width - 6) / anchoChar);
                 int colDer = 18;
                 int colIzq = totalCols - colDer;
 
                 string L = new string('-', totalCols);
-                Func<string, string> centrar = t => t.Length >= totalCols ? t : t.PadLeft((totalCols + t.Length) / 2);
+                Func<string, string> centrar = t =>
+                {
+                    if (t.Length >= totalCols) return t;
+                    int espaciosTotales = totalCols - t.Length;
+                    int espaciosIzquierda = espaciosTotales / 2;
+                    return new string(' ', espaciosIzquierda) + t;
+                };
                 Func<string, string, string> fila = (izq, der) =>
                     (izq.Length > colIzq - 1 ? izq.Substring(0, colIzq - 1) : izq).PadRight(colIzq) + der.PadLeft(colDer);
 
@@ -68,7 +76,9 @@ namespace CpGuarida
                     $"{fila("CI/NIT:", clienteCi)}\n" +
                     $"{fila("Cliente:", clienteNombre)}\n" +
                     $"{fila("Vendedor:", vendedor)}\n" +
+                    $"{fila("Descuento:", $"{venta.observaciones:N2}")}\n" +
                     $"{fila("Método de Pago:", metodoPago)}\n" +
+
                     $"{L}\n" +
                     $"{fila("Descripción", "Subtotal")}\n" +
                     string.Concat(detalles.Select(d =>

@@ -304,7 +304,6 @@
             0,
             0});
             this.nudPrecioCostoBob.Name = "nudPrecioCostoBob";
-            this.nudPrecioCostoBob.ReadOnly = true;
             this.nudPrecioCostoBob.Size = new System.Drawing.Size(80, 24);
             this.nudPrecioCostoBob.TabIndex = 3;
             // 
@@ -319,7 +318,6 @@
             this.nudPrecioCostoUsd.Name = "nudPrecioCostoUsd";
             this.nudPrecioCostoUsd.Size = new System.Drawing.Size(80, 24);
             this.nudPrecioCostoUsd.TabIndex = 3;
-            this.nudPrecioCostoUsd.ValueChanged += new System.EventHandler(this.nudPrecioCostoUsd_ValueChanged);
             // 
             // nudPesoKg
             // 
@@ -347,7 +345,7 @@
             this.txtDescripcion.Location = new System.Drawing.Point(104, 108);
             this.txtDescripcion.MaxLength = 500;
             this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(471, 24);
+            this.txtDescripcion.Size = new System.Drawing.Size(220, 24);
             this.txtDescripcion.TabIndex = 2;
             // 
             // cbxCategoria

@@ -87,6 +87,8 @@
             this.btnBorrarProducto = new System.Windows.Forms.Button();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.pbxTitulo = new System.Windows.Forms.PictureBox();
+            this.lblCargo = new System.Windows.Forms.Label();
+            this.txtCargo = new System.Windows.Forms.TextBox();
             this.pnlCliente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxCliente)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatosVenta)).BeginInit();
@@ -317,6 +319,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblCargo);
+            this.panel1.Controls.Add(this.txtCargo);
             this.panel1.Controls.Add(this.pbxUsuario);
             this.panel1.Controls.Add(this.lblUsuario);
             this.panel1.Controls.Add(this.txtUsuario);
@@ -324,15 +328,15 @@
             this.panel1.Controls.Add(this.pbxHoraFecha);
             this.panel1.Controls.Add(this.lblfechaHora);
             this.panel1.Controls.Add(this.txtFecha);
-            this.panel1.Location = new System.Drawing.Point(693, 96);
+            this.panel1.Location = new System.Drawing.Point(603, 96);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(514, 106);
+            this.panel1.Size = new System.Drawing.Size(604, 106);
             this.panel1.TabIndex = 10;
             // 
             // pbxUsuario
             // 
             this.pbxUsuario.Image = global::CpGuarida.Properties.Resources.usuario;
-            this.pbxUsuario.Location = new System.Drawing.Point(310, 9);
+            this.pbxUsuario.Location = new System.Drawing.Point(286, 9);
             this.pbxUsuario.Name = "pbxUsuario";
             this.pbxUsuario.Size = new System.Drawing.Size(47, 34);
             this.pbxUsuario.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -343,7 +347,7 @@
             // 
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(363, 9);
+            this.lblUsuario.Location = new System.Drawing.Point(339, 9);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(94, 30);
             this.lblUsuario.TabIndex = 14;
@@ -351,10 +355,10 @@
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(323, 62);
+            this.txtUsuario.Location = new System.Drawing.Point(434, 8);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.ReadOnly = true;
-            this.txtUsuario.Size = new System.Drawing.Size(167, 29);
+            this.txtUsuario.Size = new System.Drawing.Size(156, 29);
             this.txtUsuario.TabIndex = 13;
             // 
             // pictureBox1
@@ -755,6 +759,24 @@
             this.pbxTitulo.TabIndex = 1;
             this.pbxTitulo.TabStop = false;
             // 
+            // lblCargo
+            // 
+            this.lblCargo.AutoSize = true;
+            this.lblCargo.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCargo.Location = new System.Drawing.Point(339, 56);
+            this.lblCargo.Name = "lblCargo";
+            this.lblCargo.Size = new System.Drawing.Size(77, 30);
+            this.lblCargo.TabIndex = 17;
+            this.lblCargo.Text = "Cargo:";
+            // 
+            // txtCargo
+            // 
+            this.txtCargo.Location = new System.Drawing.Point(434, 57);
+            this.txtCargo.Name = "txtCargo";
+            this.txtCargo.ReadOnly = true;
+            this.txtCargo.Size = new System.Drawing.Size(156, 29);
+            this.txtCargo.TabIndex = 16;
+            // 
             // FrmVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
@@ -779,8 +801,11 @@
             this.Controls.Add(this.pbxTitulo);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmVenta";
             this.Padding = new System.Windows.Forms.Padding(11, 12, 11, 12);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -874,5 +899,7 @@
         private System.Windows.Forms.ErrorProvider erpCliente;
         private System.Windows.Forms.Label lblDesRe;
         private System.Windows.Forms.Label lblClientess;
+        private System.Windows.Forms.Label lblCargo;
+        private System.Windows.Forms.TextBox txtCargo;
     }
 }

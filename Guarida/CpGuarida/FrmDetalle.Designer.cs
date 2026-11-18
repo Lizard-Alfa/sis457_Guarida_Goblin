@@ -33,10 +33,14 @@
             // 
             // rtxtexBo
             // 
+            this.rtxtexBo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtxtexBo.BackColor = System.Drawing.Color.White;
             this.rtxtexBo.ForeColor = System.Drawing.Color.Black;
-            this.rtxtexBo.Location = new System.Drawing.Point(26, 35);
+            this.rtxtexBo.Location = new System.Drawing.Point(0, -2);
             this.rtxtexBo.Name = "rtxtexBo";
-            this.rtxtexBo.Size = new System.Drawing.Size(327, 484);
+            this.rtxtexBo.Size = new System.Drawing.Size(377, 554);
             this.rtxtexBo.TabIndex = 0;
             this.rtxtexBo.Text = "";
             // 
