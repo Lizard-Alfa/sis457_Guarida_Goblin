@@ -1,0 +1,52 @@
+@model IEnumerable<WebGuarida.Models.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Portada</th>
+            <th>Nombre de Juego</th>
+            <th>Descripcion</th>
+            <th>Peso</th>
+            <th>Precio Usd</th>
+            <th>Precio Bs</th>
+            <th>Stock Actual</th>
+            <th>Stock Minimo</th>
+            <th>Usuario Registro</th>
+            <th>Descuento Detalle</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => item.Codigo)</td>
+                <td>@Html.DisplayFor(model => item.ImagenUrl)</td>
+                <td>@Html.DisplayFor(model => item.Nombre)</td>
+                <td>@Html.DisplayFor(model => item.Descripcion)</td>
+                <td>@Html.DisplayFor(model => item.PesoKg)</td>
+                <td>@Html.DisplayFor(model => item.PrecioCostoUsd)</td>
+                <td>@Html.DisplayFor(model => item.PrecioVentaBob)</td>
+                <td>@Html.DisplayFor(model => item.StockActual)</td>
+                <td>@Html.DisplayFor(model => item.StockMinimo)</td>
+                <td>@Html.DisplayFor(model => item.UsuarioRegistro)</td>
+                <td>@Html.DisplayFor(model => item.DescuentoDetalle)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

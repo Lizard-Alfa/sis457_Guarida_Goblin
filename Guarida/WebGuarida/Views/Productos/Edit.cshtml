@@ -1,0 +1,120 @@
+@model WebGuarida.Models.Producto
+
+@{
+    ViewData["Title"] = "Editar Producto";
+}
+
+<h1>Editar</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UsuarioRegistro" />
+            <input type="hidden" asp-for="FechaRegistro" />
+            <input type="hidden" asp-for="Estado" />
+
+            <div class="form-group">
+                <label class="control-label">Categoría</label>
+                <select asp-for="IdCategoria" class="form-select" asp-items="ViewBag.Categorias" required>
+                    <option disabled selected value="">Seleccione un elemento</option>
+                </select>
+                <span asp-validation-for="IdCategoria" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Código</label>
+                <input asp-for="Codigo" class="form-control" style="text-transform: uppercase;" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Imagen de Juego</label>
+                <input asp-for="ImagenUrl" class="form-control" />
+                <span asp-validation-for="ImagenUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Nombre de Juego</label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Descripción</label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Peso de Juego</label>
+                <input asp-for="PesoKg" class="form-control" type="text" inputmode="decimal" step="any" />
+                <span asp-validation-for="PesoKg" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Precio en Usd</label>
+                <input asp-for="PrecioCostoUsd" class="form-control" type="text" inputmode="decimal" step="any" id="precioUsd" />
+                <span asp-validation-for="PrecioCostoUsd" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Precio en Bs</label>
+                <input asp-for="PrecioVentaBob" class="form-control" type="text" inputmode="decimal" step="any" id="precioBob" />
+                <span asp-validation-for="PrecioVentaBob" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Stock Actual</label>
+                <input asp-for="StockActual" class="form-control" />
+                <span asp-validation-for="StockActual" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Stock Minimo</label>
+                <input asp-for="StockMinimo" class="form-control" />
+                <span asp-validation-for="StockMinimo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la Lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        // Cotización del dólar (cambia aquí o lee de appsettings)
+        const COTIZACION_USD = 11.67;
+
+        const precioUsdInput = document.getElementById('precioUsd');
+        const precioBobInput = document.getElementById('precioBob');
+
+        precioUsdInput.addEventListener('input', function() {
+            const precioUsd = parseFloat(this.value);
+
+            if (!isNaN(precioUsd) && precioUsd > 0) {
+                // Calcular y redondear
+                const precioBob = Math.round(precioUsd * COTIZACION_USD);
+                precioBobInput.value = precioBob;
+            } else {
+                precioBobInput.value = '';
+            }
+        });
+
+        // Si ya hay un valor (en Edit), calcular al cargar
+        if (precioUsdInput.value) {
+            precioUsdInput.dispatchEvent(new Event('input'));
+        }
+    </script>
+
+}

@@ -1,0 +1,58 @@
+@model WebGuarida.Models.Producto
+
+@{
+    ViewData["Title"] = "Eliminar Producto";
+}
+
+<h1>Eliminar</h1>
+
+<h3>Esta seguro que desea dar de baja este elemento?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdCategoria)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdCategoria)
+        </dd>
+        <dt class="col-sm-2">Código</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Codigo)</dd>
+
+        <dt class="col-sm-2">Imagen de Juego</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.ImagenUrl)</dd>
+
+        <dt class="col-sm-2">Nombre de Juego</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Nombre)</dd>
+
+        <dt class="col-sm-2">Descripción</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Descripcion)</dd>
+
+        <dt class="col-sm-2">Peso</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.PesoKg)</dd>
+
+        <dt class="col-sm-2">Precio en Usd</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.PrecioCostoUsd)</dd>
+
+        <dt class="col-sm-2">Precio en Bos</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.PrecioVentaBob)</dd>
+
+        <dt class="col-sm-2">Stock Actual</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.StockActual)</dd>
+
+        <dt class="col-sm-2">Stock Minimo</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.StockMinimo)</dd>
+
+        <dt class="col-sm-2">Usuario Registro</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.UsuarioRegistro)</dd>
+
+        <dt class="col-sm-2">Descuento Detalle</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DescuentoDetalle)</dd>
+
+    </dl>
+    <form asp-action="Eliminar">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la Lista</a>
+    </form>
+</div>
