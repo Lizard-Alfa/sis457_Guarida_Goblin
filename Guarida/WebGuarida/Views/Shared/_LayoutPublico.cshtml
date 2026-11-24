@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Guarida Goblin</title>
+
+    <!-- Bootstrap -->
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <!-- Estilos SB Admin 2 -->
+    <link href="~/css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <style>
+            body {
+                background-color: #f8f9fc;
+            }
+
+            .hero-banner {
+                /* Poner wwwroot/img/banner.jpg con overlay oscuro.
+                           Si NO existe, gradiente azul de respaldo. */
+                background: linear-gradient(rgba(20, 30, 70, 0.6), rgba(20, 30, 70, 0.6)), url('@Url.Content("~/img/banner.jpg")') center/cover no-repeat, linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+                color: white;
+                padding: 80px 0;
+                margin-bottom: 40px;
+            }
+
+            .section-title {
+                text-align: center;
+                color: #5a5c69;
+                font-weight: 600;
+                border-bottom: 2px solid #e3e6f0;
+                padding-bottom: 10px;
+                margin-bottom: 30px;
+            }
+
+            .product-card {
+                transition: transform 0.2s, box-shadow 0.2s;
+                border: none;
+            }
+
+                .product-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+                }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR HORIZONTAL -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" asp-controller="Home" asp-action="Index">
+                <i class="fas fa-dice-d20"></i> GUARIDA GOBLIN
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Catalogo">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacidad</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="btn btn-light btn-sm" asp-controller="Account" asp-action="Login">
+                            <i class="fas fa-user"></i> Iniciar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">© 2026 Guarida Goblin - Sucre, Bolivia</p>
+        </div>
+    </footer>
+
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

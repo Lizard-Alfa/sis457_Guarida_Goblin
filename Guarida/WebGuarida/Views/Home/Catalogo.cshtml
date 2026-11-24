@@ -1,0 +1,104 @@
+﻿@model WebGuarida.Models.CatalogoViewModel
+
+@{
+    Layout = "_LayoutPublico";
+    ViewData["Title"] = "Catálogo de Productos";
+    // URL para mantener el filtro al cambiar de página
+    var urlFiltro = Model.CategoriaSeleccionada.HasValue ? $"?categoria={Model.CategoriaSeleccionada}" : "";
+}
+
+<div class="container py-5">
+    <!-- Encabezado y Filtro -->
+<div class="col-md-4">
+    <form asp-action="Catalogo" method="get">
+        <select name="categoria" class="form-control" onchange="this.form.submit()">
+            <option value="">Todas las categorías</option>
+                @foreach (var cat in Model.Categorias)
+                {
+                    <option value="@cat.Id" selected="@(Model.CategoriaSeleccionada == cat.Id)">
+                        @cat.Nombre
+                    </option>
+                }
+        </select>
+    </form>
+</div>
+
+<!-- GRID 4x5 (col-6 col-md-3 mb-4 en vez de row-cols) -->
+<div class="row">
+    @foreach (var item in Model.Productos)
+    {
+        var imagen = string.IsNullOrWhiteSpace(item.ImagenUrl)
+            ? "https://via.placeholder.com/300x400?text=" + Uri.EscapeDataString(item.Nombre)
+            : item.ImagenUrl;
+        <div class="col-6 col-md-3 mb-4">
+            <div class="card product-card h-100 shadow-sm">
+                <img src="@imagen" class="card-img-top" alt="@item.Nombre" style="height:220px;object-fit:cover;">
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title font-weight-bold text-truncate" title="@item.Nombre">@item.Nombre</h6>
+                    <p class="card-text text-muted small flex-grow-1">@item.Descripcion</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <span class="h5 mb-0 text-primary font-weight-bold">Bs. @item.PrecioVentaBob.ToString("N2")</span>
+                        @if (item.StockActual <= item.StockMinimo)
+                        {
+                            <span class="badge badge-warning text-dark">Poco Stock</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+        <!-- Paginación -->
+        @if (Model.TotalPaginas > 1)
+        {
+            <nav aria-label="Navegación de páginas" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <!-- Botón Anterior -->
+                    <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("Catalogo", new { categoria = Model.CategoriaSeleccionada, pagina = Model.PaginaActual - 1 })">
+                            Anterior
+                        </a>
+                    </li>
+
+                    <!-- Nrs de página -->
+                    @for (int i = 1; i <= Model.TotalPaginas; i++)
+                    {
+                        <li class="page-item @(Model.PaginaActual == i ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Catalogo", new { categoria = Model.CategoriaSeleccionada, pagina = i })">
+                                @i
+                            </a>
+                        </li>
+                    }
+
+                    <!-- Botón Siguiente -->
+                    <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
+                        <a class="page-link" href="@Url.Action("Catalogo", new { categoria = Model.CategoriaSeleccionada, pagina = Model.PaginaActual + 1 })">
+                            Siguiente
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    }
+    else
+    {
+        <!-- Mensaje cuando no hay productos -->
+        <div class="text-center py-5">
+            <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+            <h2>No se encontraron productos</h2>
+            <p class="text-muted">Intenta con otra categoría o vuelve más tarde.</p>
+        </div>
+    }
+</div>
+
+<!-- Estilo opcional para efecto hover en las cards -->
+<style>
+    .hover-shadow {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>

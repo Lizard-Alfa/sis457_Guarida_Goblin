@@ -8,7 +8,6 @@ using WebGuarida.Models;
 
 namespace WebGuarida.Controllers
 {
-
     [Authorize]
     public class AccountController : Controller
     {
@@ -33,33 +32,42 @@ namespace WebGuarida.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "Intentos de inicio de sesión no válidos.");
                 return View(model);
             }
 
-            var usuario = _context.Usuario.Include(e => e.IdEmpleadoNavigation)
+            //Validar Admin
+            var usuario = _context.Usuario
+                .Include(e => e.IdEmpleadoNavigation)
                 .FirstOrDefault(x => x.Estado == (int)Estado.Activo &&
-                    x.Usuario1 == model.usuario &&
-                    x.Clave == Util.Encrypt(model.clave));
+                                     x.Usuario1 == model.usuario &&
+                                     x.Clave == Util.Encrypt(model.clave));
+
             if (usuario != null)
             {
                 TempData["isLogged"] = true;
+
+                // ROL DINÁMICO x cargo empleado
+                string cargo = usuario.IdEmpleadoNavigation?.Cargo ?? "";
+                string rol = cargo.Contains("Administrador", StringComparison.OrdinalIgnoreCase)
+                             ? "Admin"
+                             : "Cajero";
+
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, usuario.Usuario1),
-                new Claim("FullName", $"{usuario.IdEmpleadoNavigation.Nombres} {usuario.IdEmpleadoNavigation.PrimerApellido} {usuario.IdEmpleadoNavigation.SegundoApellido}"),
-                new Claim(ClaimTypes.Email, "vaca.noel@usfx.bo"),
-                new Claim(ClaimTypes.Role, "admin", ClaimValueTypes.String)
-            };
+                {
+                    new Claim(ClaimTypes.Name, usuario.Usuario1),
+                    new Claim("FullName", $"{usuario.IdEmpleadoNavigation.Nombres} {usuario.IdEmpleadoNavigation.PrimerApellido}"),
+                    new Claim(ClaimTypes.Role, rol, ClaimValueTypes.String)
+                };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
                 var authProperties = new AuthenticationProperties
                 {
                     AllowRefresh = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(5), //Limita el tiempo de login
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
                     IsPersistent = model.recordarme
                 };
 
@@ -70,12 +78,12 @@ namespace WebGuarida.Controllers
 
                 if (returnUrl == null) returnUrl = ViewData["ReturnUrl"]?.ToString();
                 if (returnUrl != null) return Redirect(returnUrl);
-                else return RedirectToAction(nameof(HomeController.Index), "Home");
+
+                return RedirectToAction("Dashboard", "Home");
             }
             else
             {
-                ViewBag.ReturnUrl = returnUrl;
-                ModelState.AddModelError("", "Intentos de inicio de sesión no válidos.");
+                ModelState.AddModelError("", "Usuario o contraseña incorrectos.");
                 return View(model);
             }
         }
@@ -86,7 +94,7 @@ namespace WebGuarida.Controllers
         {
             TempData["isLogged"] = false;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

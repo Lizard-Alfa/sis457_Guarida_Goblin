@@ -56,6 +56,12 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
+//Vista pa clinete
+app.MapControllerRoute(
+    name: "catalogo",
+    pattern: "Catalogo",
+    defaults: new { controller = "Home", action = "Catalogo" });
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")

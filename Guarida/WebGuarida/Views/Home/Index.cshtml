@@ -1,8 +1,36 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "_LayoutPublico";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="hero-banner text-center">
+    <div class="container">
+        <h1 class="display-4 font-weight-bold">GUARIDA GOBLIN </h1>
+        <p class="lead">Tu tienda de juegos de mesa, rol y accesorios geek en Sucre</p>
+        <a asp-controller="Home" asp-action="Catalogo" class="btn btn-light btn-lg mt-3">
+            Ver Catálogo <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <h3 class="section-title">ÚLTIMAS NOVEDADES</h3>
+    <div class="row">
+        @foreach (var item in (List<WebGuarida.Models.Producto>)ViewData["Novedades"])
+        {
+            var img = string.IsNullOrWhiteSpace(item.ImagenUrl)
+                ? "https://via.placeholder.com/300x400?text=" + Uri.EscapeDataString(item.Nombre)
+                : item.ImagenUrl;
+            <div class="col-6 col-md-3 mb-4">
+                <!-- 4 por fila en desktop -->
+                <div class="card product-card h-100 shadow-sm">
+                    <img src="@img" class="card-img-top" alt="@item.Nombre" style="height:220px;object-fit:cover;">
+                    <div class="card-body text-center">
+                        <h6 class="card-title font-weight-bold text-truncate">@item.Nombre</h6>
+                        <p class="text-primary font-weight-bold mb-0">Bs. @item.PrecioVentaBob.ToString("N2")</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
