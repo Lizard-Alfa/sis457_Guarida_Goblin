@@ -50,6 +50,11 @@ namespace CpGuarida
             new FrmVentaDetalle().ShowDialog();
         }
 
+        private void btnCaCompras_Click(object sender, EventArgs e)
+        {
+            new FrmCompra().ShowDialog();
+        }
+
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("¿Desea cerrar la sesión?", "::: Mensaje - Guarida Goblin",
@@ -134,6 +139,7 @@ namespace CpGuarida
             flujo.Controls.Add(CrearTarjeta("Registrar Venta", Properties.Resources.carrito_de_compras, btnCaVentas_Click));
             flujo.Controls.Add(CrearTarjeta("Ventas", Properties.Resources.informe, btnVentaDetalles_Click));
             flujo.Controls.Add(CrearTarjeta("Productos", Properties.Resources.producto_1, btnCaProductos_Click));
+            flujo.Controls.Add(CrearTarjeta("Compras", Properties.Resources.provider, btnCaCompras_Click));
             // En el lugar de "Clientes" va "Cerrar sesión" (Clientes sigue en el ribbon y en la venta)
             var tarjetaSalir = CrearTarjeta("Cerrar sesión", Properties.Resources.security_lock, btnCerrarSesion_Click);
             tarjetaSalir.FlatAppearance.BorderColor = Color.FromArgb(200, 40, 60);

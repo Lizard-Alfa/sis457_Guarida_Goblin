@@ -38,6 +38,8 @@
           <Property Name="fecha" Type="date" Nullable="false" />
           <Property Name="subtotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="moneda" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="tipoCambio" Type="decimal" Precision="10" Scale="4" Nullable="false" />
           <Property Name="trackingNumber" Type="varchar" MaxLength="100" />
           <Property Name="estadoEnvio" Type="varchar" MaxLength="50" />
           <Property Name="fechaEstimada" Type="date" />
@@ -475,6 +477,8 @@
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="subtotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="moneda" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipoCambio" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
           <Property Name="trackingNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="estadoEnvio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="fechaEstimada" Type="DateTime" Precision="0" />
@@ -1022,6 +1026,8 @@
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="subtotal" ColumnName="subtotal" />
                 <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="moneda" ColumnName="moneda" />
+                <ScalarProperty Name="tipoCambio" ColumnName="tipoCambio" />
                 <ScalarProperty Name="trackingNumber" ColumnName="trackingNumber" />
                 <ScalarProperty Name="estadoEnvio" ColumnName="estadoEnvio" />
                 <ScalarProperty Name="fechaEstimada" ColumnName="fechaEstimada" />

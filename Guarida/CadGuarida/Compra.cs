@@ -25,6 +25,8 @@ namespace CadGuarida
         public System.DateTime fecha { get; set; }
         public decimal subtotal { get; set; }
         public decimal total { get; set; }
+        public string moneda { get; set; }
+        public decimal tipoCambio { get; set; }
         public string trackingNumber { get; set; }
         public string estadoEnvio { get; set; }
         public Nullable<System.DateTime> fechaEstimada { get; set; }
