@@ -1,79 +1,61 @@
 @model WebGuarida.Models.Descuento
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Descuento";
 }
 
-<h1>Edit</h1>
+<h1>Editar Descuento</h1>
 
-<h4>Descuento</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UsuarioRegistro" />
+            <input type="hidden" asp-for="FechaRegistro" />
+            <input type="hidden" asp-for="Estado" />
+
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
+                <label class="control-label">Nombre de la promoción</label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Porcentaje" class="control-label"></label>
-                <input asp-for="Porcentaje" class="form-control" />
+                <label class="control-label">Porcentaje(%)</label>
+                <input asp-for="Porcentaje" type="number" step="0.01" class="form-control" />
                 <span asp-validation-for="Porcentaje" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="FechaInicio" class="control-label"></label>
-                <input asp-for="FechaInicio" class="form-control" />
+                <label class="control-label">Fecha de inicio</label>
+                <input asp-for="FechaInicio" type="date" class="form-control" />
                 <span asp-validation-for="FechaInicio" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="FechaFin" class="control-label"></label>
-                <input asp-for="FechaFin" class="form-control" />
+                <label class="control-label">Fecha fin</label>
+                <input asp-for="FechaFin" type="date" class="form-control" />
                 <span asp-validation-for="FechaFin" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
+                <label class="control-label">Descripción</label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UsuarioRegistro" class="control-label"></label>
-                <input asp-for="UsuarioRegistro" class="form-control" />
-                <span asp-validation-for="UsuarioRegistro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaRegistro" class="control-label"></label>
-                <input asp-for="FechaRegistro" class="form-control" />
-                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DescuentoDetalle" class="control-label"></label>
-                <input asp-for="DescuentoDetalle" class="form-control" />
-                <span asp-validation-for="DescuentoDetalle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Venta" class="control-label"></label>
-                <input asp-for="Venta" class="form-control" />
-                <span asp-validation-for="Venta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Volver a lista</a>
 </div>
 
-@section Scripts {
+@*section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+}*@

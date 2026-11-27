@@ -576,3 +576,4 @@ SELECT 'Proveedores', COUNT(*) FROM Proveedor UNION ALL
 SELECT 'Descuentos', COUNT(*) FROM Descuento UNION ALL
 SELECT 'Productos', COUNT(*) FROM Producto;
 GO
+SELECT * FROM Producto;

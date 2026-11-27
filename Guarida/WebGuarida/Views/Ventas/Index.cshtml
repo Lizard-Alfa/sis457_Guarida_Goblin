@@ -1,0 +1,64 @@
+@model IEnumerable<WebGuarida.Models.Venta>
+
+@{
+    ViewData["Title"] = "Ventas";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="m-0">Ventas</h2>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Registrado por</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FechaRegistro.ToString("dd/MM/yyyy")</td>
+                    <td>@Html.DisplayFor(model => item.IdClienteNavigation.Nombres)</td>
+                    <td>@Html.DisplayFor(model => item.IdUsuarioNavigation.Usuario1)</td>
+                    <td>@Html.DisplayFor(model => item.Total)</td>
+                    <td>
+                        @switch ((Estado)item.Estado)
+                        {
+                            case Estado.Activo:
+                                <span class="badge bg-success">Activo</span>
+                                break;
+                            case Estado.Inactivo:
+                                <span class="badge bg-danger">Anulado</span>
+                                break;
+                        }
+                    </td>
+                    <td class="text-end">
+                        <a asp-controller="VentaDetalles" asp-action="Index" asp-route-id="@item.Id"
+                           class="btn btn-sm btn-success">Detalle</a>
+                        <form asp-action="Anular" asp-route-id="@item.Id" method="post"
+                              onsubmit="return confirm('¿Estás seguro de que deseas anular esta venta #@item.Id?');"
+                              class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Anular
+                            </button>
+                        </form>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    .badge {
+        color: #000 !important;
+    }
+    .btn{
+        color: #000 !important;
+    }
+</style>

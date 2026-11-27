@@ -1,0 +1,48 @@
+@model WebGuarida.Models.Venta
+
+@{
+    ViewData["Title"] = "Detalle de venta";
+}
+
+<h2>Venta N° @Model.Id</h2>
+
+<h4>Datos de la venta</h4>
+<ul>
+    <li><strong>Fecha:</strong> @Model.Fecha.ToString("dd/MM/yyyy HH:mm")</li>
+    <li><strong>Cliente:</strong> @Model.IdClienteNavigation.Nombres</li>
+    <li><strong>CI/NIT:</strong> @Model.IdClienteNavigation.CedulaIdentidad</li>
+    <li><strong>Vendedor:</strong> @Model.UsuarioRegistro</li>
+    <li><strong>Método de pago:</strong> @Model.MetodoPago</li>
+    <li><strong>Observaciones:</strong> @Model.Observaciones</li>
+</ul>
+
+<h4>Productos</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.VentaDetalle)
+        {
+            <tr>
+                <td>@d.IdProductoNavigation.Nombre</td>
+                <td>@d.PrecioUnitario.ToString("N2")</td>
+                <td>@d.Cantidad</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Totales</h4>
+<ul>
+    <li><strong>Subtotal:</strong> @Model.Subtotal.ToString("N2")</li>
+    <li><strong>Descuento:</strong> - @Model.MontoDescuentoAplicado.ToString("N2")</li>
+    <li><strong>Total:</strong> Bs @Model.Total.ToString("N2")</li>
+</ul>
+
+<a asp-controller="Ventas" asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+<a asp-controller="Ventas" asp-action="Create" class="btn btn-secondary">ir a ventas</a>

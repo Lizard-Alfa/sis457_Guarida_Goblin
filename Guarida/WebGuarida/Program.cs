@@ -5,7 +5,11 @@ using System.Globalization;
 using WebGuarida.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-//Configurar a Español - Bolivia
+
+// 1. Registrar servicios de localización
+builder.Services.AddLocalization();
+
+// Configurar a Español - Bolivia
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[] { new CultureInfo("es-BO") };
@@ -32,31 +36,24 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 
-//Activa localización (debe ir ANTES de UseAuthorization)
+// 2. Activar localización ANTES de UseRouting()
 app.UseRequestLocalization();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
+app.UseRouting();
 
 app.UseCookiePolicy();
 app.UseSession();
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapStaticAssets();
 
-//Vista pa clinete
+// Vista para cliente
 app.MapControllerRoute(
     name: "catalogo",
     pattern: "Catalogo",
@@ -66,6 +63,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

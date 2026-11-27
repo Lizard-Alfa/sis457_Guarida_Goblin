@@ -11,9 +11,9 @@ public partial class Descuento
 
     public decimal Porcentaje { get; set; }
 
-    public DateOnly FechaInicio { get; set; }
+    public DateOnly? FechaInicio { get; set; }
 
-    public DateOnly FechaFin { get; set; }
+    public DateOnly? FechaFin { get; set; }
 
     public string? Descripcion { get; set; }
 

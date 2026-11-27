@@ -1,8 +1,11 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebGuarida;
 using WebGuarida.Models;
 
+[Authorize]
 public class DescuentosController : Controller
 {
     private readonly GuaridaContext _context;
@@ -13,14 +16,20 @@ public class DescuentosController : Controller
     }
 
     // GET: DESCUENTOS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
-        return View(await _context.Descuento.ToListAsync());
+        await ActualizarEstadosVencidosAsync();
+        return View(await _context.Descuento
+            .OrderBy(x => x.FechaRegistro)
+            .Where(x => x.Estado == (int)Estado.Activo || x.Estado == (int)Estado.Inactivo)
+            .ToListAsync());
+
     }
 
     // GET: DESCUENTOS/Details/5
     public async Task<IActionResult> Details(int? id)
     {
+        await ActualizarEstadosVencidosAsync();
         if (id == null)
         {
             return NotFound();
@@ -47,20 +56,34 @@ public class DescuentosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Nombre,Porcentaje,FechaInicio,FechaFin,Descripcion,UsuarioRegistro,FechaRegistro,Estado,DescuentoDetalle,Venta")] Descuento descuento)
+    public async Task<IActionResult> Create(Descuento descuento)
     {
-        if (ModelState.IsValid)
+
+        if (ValidarCampos(descuento))
         {
-            _context.Add(descuento);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                descuento.UsuarioRegistro = User.Identity?.Name;
+                descuento.FechaRegistro = DateTime.Now;
+                descuento.Estado = (int)Estado.Activo;
+
+                _context.Add(descuento);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error al guardar: {ex.Message}");
+            }
         }
+
         return View(descuento);
     }
 
     // GET: DESCUENTOS/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
+        await ActualizarEstadosVencidosAsync();
         if (id == null)
         {
             return NotFound();
@@ -79,17 +102,18 @@ public class DescuentosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Nombre,Porcentaje,FechaInicio,FechaFin,Descripcion,UsuarioRegistro,FechaRegistro,Estado,DescuentoDetalle,Venta")] Descuento descuento)
+    public async Task<IActionResult> Edit(int? id, Descuento descuento)
     {
         if (id != descuento.Id)
         {
             return NotFound();
         }
 
-        if (ModelState.IsValid)
+        if (ValidarCampos(descuento, descuento.Id))
         {
             try
             {
+
                 _context.Update(descuento);
                 await _context.SaveChangesAsync();
             }
@@ -108,6 +132,7 @@ public class DescuentosController : Controller
         }
         return View(descuento);
     }
+   
 
     // GET: DESCUENTOS/Delete/5
     public async Task<IActionResult> Delete(int? id)
@@ -135,7 +160,8 @@ public class DescuentosController : Controller
         var descuento = await _context.Descuento.FindAsync(id);
         if (descuento != null)
         {
-            _context.Descuento.Remove(descuento);
+            descuento.Estado = (int)Estado.Eliminado;
+          
         }
 
         await _context.SaveChangesAsync();
@@ -146,4 +172,81 @@ public class DescuentosController : Controller
     {
         return _context.Descuento.Any(e => e.Id == id);
     }
+    private async Task ActualizarEstadosVencidosAsync()
+    {
+        var hoy = DateOnly.FromDateTime(DateTime.Now);
+
+        var descuentosVencidos = await _context.Descuento
+            .Where(d => d.Estado == (int)Estado.Activo && d.FechaFin < hoy)
+            .ToListAsync();
+
+        if (descuentosVencidos.Any())
+        {
+            foreach (var d in descuentosVencidos)
+            {
+                d.Estado = (int)Estado.Inactivo;
+            }
+            await _context.SaveChangesAsync();
+        }
+    }
+    private void ResetearErrores()
+    {
+        ModelState.Clear();
+    }
+
+    private bool ValidarCampos(Descuento descuento, int? idActual = null)
+    {
+        bool esValido = true;
+        ResetearErrores();
+
+        if (string.IsNullOrWhiteSpace(descuento.Nombre))
+        {
+            ModelState.AddModelError(nameof(descuento.Nombre), "El nombre de la promoción es obligatorio.");
+            esValido = false;
+        }
+
+        if (descuento.Porcentaje <= 0 || descuento.Porcentaje > 100)
+        {
+            ModelState.AddModelError(nameof(descuento.Porcentaje), "El porcentaje debe ser mayor a 0 y hasta 100.");
+            esValido = false;
+        }
+
+        if (descuento.FechaInicio == default)
+        {
+            ModelState.AddModelError(nameof(descuento.FechaInicio), "La fecha de inicio es obligatoria.");
+            esValido = false;
+        }
+
+        if (descuento.FechaFin == default)
+        {
+            ModelState.AddModelError(nameof(descuento.FechaFin), "La fecha de fin es obligatoria.");
+            esValido = false;
+        }
+        else if (descuento.FechaInicio != default && descuento.FechaFin < descuento.FechaInicio)
+        {
+            ModelState.AddModelError(nameof(descuento.FechaFin), "La fecha fin no puede ser menor a la fecha inicio.");
+            esValido = false;
+        }
+
+        if (descuento.FechaInicio != default && descuento.FechaFin != default)
+        {
+            bool haySolapamiento = _context.Descuento
+                .Any(d => d.Estado == (int)Estado.Activo
+                       && d.FechaInicio != default
+                       && d.FechaFin != default
+                       && d.FechaInicio <= descuento.FechaFin
+                       && descuento.FechaInicio <= d.FechaFin
+                       && (!idActual.HasValue || d.Id != idActual.Value));
+
+            if (haySolapamiento)
+            {
+                ModelState.AddModelError(nameof(descuento.FechaFin),
+                    "Ya existe un descuento activo que se cruza con ese rango de fechas.");
+                esValido = false;
+            }
+        }
+
+        return esValido;
+    }
 }
+
